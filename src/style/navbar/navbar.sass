@@ -1,0 +1,62 @@
+@use '../variables'
+
+.navbar
+    background-color: variables.$medium-color
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    max-width: 100vw
+    padding: 10px
+
+.navbar-logo
+    display: flex
+    align-items: center
+    min-width: 185px
+    h2
+        font-family: variables.$title-font
+        font-size: 28px
+        color: variables.$white-color
+        transition: scale 1s
+        margin-left: 10%
+
+.navbar-list
+    display: flex
+    list-style: none
+    li
+        margin: 5px 10px
+        align-items: center
+
+.navbar-links
+    margin-right: 10px
+    display: flex
+    justify-content: center
+    align-items: center
+
+.navbar-link
+    text-decoration: none
+    color: variables.$white-color
+    font-family: 'Roboto Slab', sans-serif
+    &:hover
+        background: #5ABFA6
+        color: variables.$white-color
+        text-decoration: none
+        padding: 10px
+        border-radius: 5px
+        font-family: 'Roboto Slab', sans-serif
+
+.active
+    background: variables.$medium-two-color
+    color: variables.$white-color
+    text-decoration: none
+    padding: 10px
+    border-radius: 5px
+    font-family: 'Roboto Slab', sans-serif
+
+.navbar-cart
+    text-decoration: none
+    color: variables.$white-color
+    font-family: 'Roboto Slab', sans-serif
+
+.logo-title
+    text-decoration: none
+    
