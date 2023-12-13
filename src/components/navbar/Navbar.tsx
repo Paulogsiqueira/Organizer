@@ -1,7 +1,11 @@
 import { NavLink, Link } from 'react-router-dom'
 import '@/style/navbar/Navbar.sass'
+import { useSelector } from 'react-redux'
+import { useUser } from '@/redux/sliceUser'
 
 const NavBar = () => {
+    const menu = useSelector(useUser)
+    const isLogged = (menu.isLogged)
 
     return (
         <nav className='navbar'>

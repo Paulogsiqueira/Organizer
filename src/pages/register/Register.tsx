@@ -1,11 +1,26 @@
 import { useForm } from 'react-hook-form';
-import '@/style/register/Register.sass'
+import '@/style/register/Register.sass';
+import Axios from "axios";
+import { useState } from 'react';
 
 const Register = () => {
-    const { register, handleSubmit, formState: { errors }} = useForm()
+    const { register, handleSubmit, formState: { errors }, getValues } = useForm()
+    const [message, setMessage] = useState('')
 
     const registerUser = () => {
-        console.log("Cadastro")
+        Axios.post("http://localhost:3001/register", {
+            name: getValues('name'),
+            email: getValues('email'),
+            password: getValues('password'),
+            confirmPassword: getValues('confirmPassword')
+        }).then((response) => {
+            setMessage(response.data.msg)
+        })
+
+        setTimeout(() => {
+            setMessage('')
+        }, 3000);
+
     }
 
     return (
@@ -43,7 +58,7 @@ const Register = () => {
                     <div className='register-input'>
                         <div className='details-input'>
                             <p>Senha</p>
-                            <input type="text" placeholder='Digite sua senha' {...register("password", { required: true, pattern:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/})} />
+                            <input type="password" placeholder='Digite sua senha' {...register("password", { required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/ })} />
                         </div>
                         <div className='details-error'>
                             {errors?.password?.type == 'required' && <p >Campo obrigatório</p>}
@@ -55,7 +70,7 @@ const Register = () => {
                     <div className='register-input'>
                         <div className='details-input'>
                             <p>Confirmar Senha</p>
-                            <input type="text" placeholder='Digite sua senha novamente' {...register("confirmPassword", { required: true, pattern:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/ })}/>
+                            <input type="password" placeholder='Digite sua senha novamente' {...register("confirmPassword", { required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/ })} />
                         </div>
                         <div className='details-error'>
                             {errors?.confirmPassword?.type == 'required' && <p >Campo obrigatório</p>}
@@ -63,7 +78,8 @@ const Register = () => {
                         </div>
                     </div>
                 </label>
-                <button className='btn-cep' type="submit">Cadastrar</button>
+                <p className={`${message == "Usuário cadastrado com sucesso!" ? 'message-success' : 'message-error'}`}>{message}</p>
+                <button className='btn-register' type="submit">Cadastrar</button>
             </form >
         </div>
     )
