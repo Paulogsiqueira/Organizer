@@ -6,13 +6,9 @@ import Axios from "axios";
 
 
 const Perfil = () => {
-    const { register, handleSubmit, formState: { errors }, getValues,watch } = useForm()
+    const { register, handleSubmit, formState: { errors }, getValues} = useForm()
     const [message, setMessage] = useState('')
     const user = useSelector(useUser)
-    console.log(user)
-
-    const password = watch('password');
-    const confirmPassword = watch('confirmPassword');
 
     const changeInfo = () => {
         Axios.post("http://localhost:3001/editUser", {
