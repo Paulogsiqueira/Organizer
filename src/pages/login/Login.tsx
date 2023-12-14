@@ -2,18 +2,13 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import Axios from "axios";
 import { useDispatch } from 'react-redux'
-import { login } from '@/redux/sliceUser.tsx'
+import { loginUser } from '@/redux/sliceUser'
 import { AppDispatch } from '@/redux/store'
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, getValues } = useForm()
     const [message, setMessage] = useState('')
-
     const dispatch = useDispatch<AppDispatch>();
-
-    const handleLogin = () => {
-        dispatch(login());
-      };
 
     const login = () => {
         Axios.post("http://localhost:3001/login", {
@@ -21,9 +16,20 @@ const Login = () => {
             password: getValues('password'),
         }).then((response) => {
             const msg = response.data.msg
+            const userInfo = response.data.user
+            const matchResult = userInfo.match(/^(\d+)\|\/\|(.+)$/);
+            const id = matchResult[1];
+            const name = matchResult[2];
+            const userDetails = {
+                isLogged: true,
+                idUser: id,
+                name: name,
+                email: getValues('email')
+            };
+
             setMessage(msg)
             if (msg == "Usuário logado com sucesso!") {
-                handleLogin()
+                dispatch(loginUser(userDetails));
             }
         })
 

@@ -2,10 +2,18 @@ import { NavLink, Link } from 'react-router-dom'
 import '@/style/navbar/Navbar.sass'
 import { useSelector } from 'react-redux'
 import { useUser } from '@/redux/sliceUser'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/redux/store'
+import { logoutUser } from '@/redux/sliceUser'
 
 const NavBar = () => {
-    const menu = useSelector(useUser)
-    const isLogged = (menu.isLogged)
+    const user = useSelector(useUser)
+    const userLogged: boolean = (user.isLogged)
+    const dispatch = useDispatch<AppDispatch>();
+
+    const handleLogout = () => {
+        dispatch(logoutUser());
+    };
 
     return (
         <nav className='navbar'>
@@ -21,9 +29,11 @@ const NavBar = () => {
                             Home
                         </NavLink>
                     </li>
-                    <li><NavLink className='navbar-link' to="/login">Entrar</NavLink></li>
-                    <li><NavLink className='navbar-link' to="/register">Cadastrar</NavLink></li>
-                    <li><Link className='navbar-link' to="/">Sair</Link> </li>
+                    {!userLogged && <li><NavLink className='navbar-link' to="/login">Entrar</NavLink></li>}
+                    {!userLogged && <li><NavLink className='navbar-link' to="/register">Cadastrar</NavLink></li>}
+                    {userLogged && <li><NavLink className='navbar-link' to="/dashboard">Painel</NavLink></li>}
+                    {userLogged && <li><NavLink className='navbar-link' to="/perfil">Perfil</NavLink></li>}
+                    {userLogged && <li onClick={handleLogout}><Link className='navbar-link' to="/">Sair</Link> </li>}
                 </ul>
             </div>
 
