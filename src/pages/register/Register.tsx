@@ -1,26 +1,17 @@
 import { useForm } from 'react-hook-form';
 import '@/style/register/Register.sass';
-import Axios from "axios";
+import { userRegister } from '@/methods/user/userMethods';
 import { useState } from 'react';
+import { cleanMessage } from '@/methods/others/othersMethods';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors }, getValues } = useForm()
     const [message, setMessage] = useState('')
 
-    const registerUser = () => {
-        Axios.post("http://localhost:3001/register", {
-            name: getValues('name'),
-            email: getValues('email'),
-            password: getValues('password'),
-            confirmPassword: getValues('confirmPassword')
-        }).then((response) => {
-            setMessage(response.data.msg)
-        })
-
-        setTimeout(() => {
-            setMessage('')
-        }, 3000);
-
+    const handleRegister = async () => {
+        const msg = await userRegister(getValues("name"),getValues('email'), getValues('password'), getValues('confirmPassword'))
+        setMessage(msg)
+        cleanMessage( setMessage,'',2000)
     }
 
     return (
@@ -29,7 +20,7 @@ const Register = () => {
                 <h2>Crie sua conta</h2>
                 <p>Começe agora a organizar suas tarefas e gerenciar melhor o seu tempo!</p>
             </div>
-            <form className='register-form' onSubmit={handleSubmit(registerUser)}>
+            <form className='register-form' onSubmit={handleSubmit(handleRegister)}>
                 <label className='register-label'>
                     <div className='register-input'>
                         <div className='details-input'>

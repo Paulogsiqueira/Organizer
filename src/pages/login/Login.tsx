@@ -1,49 +1,33 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import Axios from "axios";
-import { useDispatch } from 'react-redux'
+import { userLogin } from '@/methods/user/userMethods';
 import { loginUser } from '@/redux/sliceUser'
-import { AppDispatch } from '@/redux/store'
+import { useDispatch } from 'react-redux'
+import { cleanMessage } from '@/methods/others/othersMethods';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, getValues } = useForm()
     const [message, setMessage] = useState('')
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch()
 
-    const login = () => {
-        Axios.post("http://localhost:3001/login", {
-            email: getValues('email'),
-            password: getValues('password'),
-        }).then((response) => {
-            const msg = response.data.msg
-            const userInfo = response.data.user
-            const matchResult = userInfo.match(/^(\d+)\|\/\|(.+)$/);
-            const id = matchResult[1];
-            const name = matchResult[2];
-            const userDetails = {
-                isLogged: true,
-                idUser: id,
-                name: name,
-                email: getValues('email')
-            };
-
-            setMessage(msg)
-            if (msg == "Usuário logado com sucesso!") {
-                dispatch(loginUser(userDetails));
-            }
-        })
-
-        setTimeout(() => {
-            setMessage('')
-        }, 3000);
+    const handleLogin = async () => {
+        const msg = await userLogin(getValues('email'), getValues('password'))
+        if (typeof msg === 'object') {
+            dispatch(loginUser(msg));
+            setMessage("Usuário logado com sucesso!")
+        } else {
+            setMessage("Usuário inválido!")
+        }
+        cleanMessage( setMessage,'',2000)
     }
+
     return (
         <div className='register-page'>
             <div className='register-text'>
                 <h2>Login</h2>
                 <p>Entre com sua conta para gerenciar suas atividades</p>
             </div>
-            <form className='register-form' onSubmit={handleSubmit(login)}>
+            <form className='register-form' onSubmit={handleSubmit(handleLogin)}>
 
                 <label className='register-label'>
                     <div className='register-input'>

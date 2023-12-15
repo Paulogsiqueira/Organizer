@@ -31,7 +31,7 @@ const NavBar = () => {
                     </li>
                     {!userLogged && <li><NavLink className='navbar-link' to="/login">Entrar</NavLink></li>}
                     {!userLogged && <li><NavLink className='navbar-link' to="/register">Cadastrar</NavLink></li>}
-                    {userLogged && <li><NavLink className='navbar-link' to="/dashboard">Painel</NavLink></li>}
+                    {userLogged && <li><NavLink className='navbar-link' to="/dashboard">Dashboard</NavLink></li>}
                     {userLogged && <li><NavLink className='navbar-link' to="/perfil">Perfil</NavLink></li>}
                     {userLogged && <li onClick={handleLogout}><Link className='navbar-link' to="/">Sair</Link> </li>}
                 </ul>
