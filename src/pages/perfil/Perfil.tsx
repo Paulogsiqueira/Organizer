@@ -4,16 +4,18 @@ import { useSelector } from 'react-redux'
 import { useUser } from '@/redux/sliceUser'
 import { validForm } from '@/methods/validation/validationMethods';
 import { cleanMessage } from '@/methods/others/othersMethods';
+import noPhoto from '/user/NoPhoto.jpg';
+import '@/style/perfil/perfil.sass'
 
 const Perfil = () => {
-    const { register, handleSubmit, formState: { errors }, getValues} = useForm()
+    const { register, handleSubmit, formState: { errors }, getValues } = useForm()
     const [message, setMessage] = useState('')
     const user = useSelector(useUser)
 
-    const handleValid = async ()  => {
-       const msg = await validForm(user.idUser,getValues('name'),getValues('email'),getValues('password'),getValues('newPassword'),getValues('confirmNewPassword'))
+    const handleValid = async () => {
+        const msg = await validForm(user.idUser, getValues('name'), getValues('email'), getValues('password'), getValues('newPassword'), getValues('confirmNewPassword'))
         setMessage(msg)
-        cleanMessage( setMessage,'',2000)
+        cleanMessage(setMessage, '', 2000)
     }
 
     return (
@@ -21,7 +23,11 @@ const Perfil = () => {
             <div className='register-text'>
                 <h2>Perfil</h2>
             </div>
+
             <form className='register-form' onSubmit={handleSubmit(handleValid)}>
+                <div className='perfil-photo'>
+                    <img src={noPhoto} />
+                </div>
                 <label className='register-label'>
                     <div className='register-input'>
                         <div className='details-input'>

@@ -1,0 +1,48 @@
+@use '../variables'
+
+.dashboard-page
+    width: 100%
+    display: flex
+    flex-direction: column
+    justify-content: center
+    h1
+        color: variables.$medium-color
+        margin: 30px auto 10px auto
+        font-size: 36px
+        width: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+    p
+        width: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+        margin-bottom: 40px
+        font-family: variables.$text-font
+        color: variables.$medium-dark-color
+
+.dashboard
+    width: 95%
+    margin: 0 auto
+    border: 1px solid variables.$medium-color
+    border-radius: 10px
+    background-color: variables.$light-color
+    display: flex
+    justify-content: space-around
+    padding: 20px
+    min-height: 80vh
+
+.dashboard-column
+    width: 30%
+    background-color: variables.$white-color
+    border-radius: 10px
+    h3
+        background-color: variables.$medium-color
+        padding: 10px
+        color: variables.$white-color
+        display: flex
+        justify-content: center
+        align-items: center
+        font-size: 22px
+        border-radius: 5px 5px 0px 0px
