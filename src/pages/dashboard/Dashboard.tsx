@@ -12,7 +12,8 @@ const Dashboard = () => {
     { id: "3c4d", title: "Segunda Tarefa" },
     { id: "123", title: "Terceira Tarefa" },
     { id: "124", title: "Quarta Tarefa" },
-    { id: "1243", title: "Quinta Tarefa" }
+    { id: "12432", title: "Quinta Tarefa" },
+    { id: "124322", title: "Sexta Tarefa" },
   ];
 
   const days = [
