@@ -13,11 +13,10 @@ const Dashboard = () => {
     { id: "123", title: "Terceira Tarefa" },
     { id: "124", title: "Quarta Tarefa" },
     { id: "12432", title: "Quinta Tarefa" },
-    { id: "12", title: "Sexta Tarefa" },
-    { id: "12221", title: "Sabado Tarefa" }
+    { id: "12", title: "Sexta Tarefa" }
   ];
 
-  const days = [
+  const missions = [
     { id: "111", title: "Primeira Tarefa" },
     { id: "222", title: "Segunda Tarefa" },
     { id: "3333", title: "Terceira Tarefa" },
