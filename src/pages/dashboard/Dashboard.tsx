@@ -23,12 +23,6 @@ const Dashboard = () => {
     { id: "4444", title: "Quarta Tarefa" }
   ];
 
-  const test = [
-    { id: "1", title: "TEste1" },
-    { id: "2", title: "Teste2" },
-    { id: "3", title: "Teste3" },
-    { id: "4", title: "Teste4" }
-  ];
 
   return (
     <div className="dashboard-page">
