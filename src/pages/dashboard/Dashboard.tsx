@@ -16,11 +16,10 @@ const Dashboard = () => {
     { id: "12", title: "Sexta Tarefa" }
   ];
 
-  const missions = [
+  const jobs = [
     { id: "111", title: "Primeira Tarefa" },
     { id: "222", title: "Segunda Tarefa" },
-    { id: "3333", title: "Terceira Tarefa" },
-    { id: "4444", title: "Quarta Tarefa" }
+    { id: "3333", title: "Terceira Tarefa" }
   ];
 
 
