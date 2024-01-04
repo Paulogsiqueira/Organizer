@@ -16,18 +16,6 @@ const Dashboard = () => {
     { id: "12", title: "Sexta Tarefa" }
   ];
 
-  const jobs = [
-    { id: "111", title: "Primeira Tarefa" },
-    { id: "222", title: "Segunda Tarefa" },
-    { id: "34444", title: "Quarta Tarefa" }
-  ];
-  const jobsSegundo = [
-    { id: "111", title: "Primeira Tarefa" },
-    { id: "222", title: "Segunda Tarefa" },
-    { id: "3333", title: "Terceira Tarefa" }
-  ];
-
-
 
   return (
     <div className="dashboard-page">
