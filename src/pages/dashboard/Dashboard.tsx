@@ -21,6 +21,11 @@ const Dashboard = () => {
     { id: "222", title: "Segunda Tarefa" },
     { id: "3333", title: "Terceira Tarefa" }
   ];
+  const jobs2 = [
+    { id: "111", title: "Primeira Tarefa" },
+    { id: "222", title: "Segunda Tarefa" },
+    { id: "3333", title: "Terceira Tarefa" }
+  ];
 
 
   return (
