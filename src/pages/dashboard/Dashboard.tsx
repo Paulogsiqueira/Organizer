@@ -15,7 +15,8 @@ const Dashboard = () => {
     { id: "12432", title: "Quinta Tarefa" },
     { id: "12", title: "Sexta Tarefa" },
     { id: "123", title: "Setima Tarefa" },
-    { id: "1234", title: "Oitava Tarefa" }
+    { id: "1234", title: "Oitava Tarefa" },
+    { id: "12345", title: "Nona Tarefa" }
   ];
 
 
