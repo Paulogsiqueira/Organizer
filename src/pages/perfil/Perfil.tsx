@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useSelector } from 'react-redux'
-import { useUser } from '@/redux/sliceUser'
+import { selectUser } from '@/redux/sliceUser'
 import { validForm } from '@/methods/validation/validationMethods';
 import { cleanMessage } from '@/methods/others/othersMethods';
 import noPhoto from '/user/NoPhoto.jpg';
@@ -10,7 +10,7 @@ import '@/style/perfil/perfil.sass'
 const Perfil = () => {
     const { register, handleSubmit, formState: { errors }, getValues } = useForm()
     const [message, setMessage] = useState('')
-    const user = useSelector(useUser)
+    const user = useSelector(selectUser)
 
     const handleValid = async () => {
         const msg = await validForm(user.idUser, getValues('name'), getValues('email'), getValues('password'), getValues('newPassword'), getValues('confirmNewPassword'))

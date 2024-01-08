@@ -1,5 +1,16 @@
 @use '../variables'
 
+.dashboard
+    width: 95%
+    margin: 0 auto
+    border: 1px solid variables.$medium-color
+    border-radius: 10px
+    background-color: variables.$light-color
+    display: flex
+    justify-content: space-around
+    padding: 20px
+    min-height: 80vh
+
 .dashboard-page
     width: 100%
     display: flex
@@ -22,27 +33,17 @@
         font-family: variables.$text-font
         color: variables.$medium-dark-color
 
-.dashboard
-    width: 95%
-    margin: 0 auto
-    border: 1px solid variables.$medium-color
-    border-radius: 10px
-    background-color: variables.$light-color
-    display: flex
-    justify-content: space-around
-    padding: 20px
-    min-height: 80vh
-
 .dashboard-column
     width: 30%
-    background-color: variables.$white-color
+    background: #bed5d08b
+    border: 1px solid variables.$medium-color
     border-radius: 10px
-    h3
+    h2
+        width: 100%
         background-color: variables.$medium-color
-        padding: 10px
+        border-radius: 8px 8px 0 0
+        text-align: center
+        padding: 5px
+        margin-bottom: 20px
         color: variables.$white-color
-        display: flex
-        justify-content: center
-        align-items: center
-        font-size: 22px
-        border-radius: 5px 5px 0px 0px
+

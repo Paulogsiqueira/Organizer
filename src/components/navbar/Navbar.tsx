@@ -1,15 +1,17 @@
 import { NavLink, Link } from 'react-router-dom'
 import '@/style/navbar/Navbar.sass'
 import { useSelector } from 'react-redux'
-import { useUser } from '@/redux/sliceUser'
+import { selectUser } from '@/redux/sliceUser'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/redux/store'
 import { logoutUser } from '@/redux/sliceUser'
 
 const NavBar = () => {
-    const user = useSelector(useUser)
+    const user = useSelector(selectUser)
     const userLogged: boolean = (user.isLogged)
     const dispatch = useDispatch<AppDispatch>();
+
+    console.log(userLogged)
 
     const handleLogout = () => {
         dispatch(logoutUser());
