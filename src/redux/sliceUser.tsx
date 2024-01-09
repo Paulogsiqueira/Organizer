@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from './store';
 
 
@@ -6,13 +6,14 @@ export const sliceUser = createSlice({
     name: 'user',
     initialState: {
         isLogged: false,
+        idUser:''
     },
     reducers: {
-        loginUser(state) {
-            return { ...state, isLogged: true, };
-        },
+        loginUser(state, action: PayloadAction<string>) {
+            return { ...state, idUser: action.payload, isLogged: true };
+          },
         logoutUser(state) {
-            return { ...state, isLogged: false }
+            return { ...state,idUser:'', isLogged: false }
         },
     }
 })

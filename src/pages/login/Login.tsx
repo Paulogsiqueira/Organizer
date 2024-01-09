@@ -13,7 +13,7 @@ const Login = () => {
     const handleLogin = async () => {
         const msg = await userLogin(getValues('email'), getValues('password'))
         if (typeof msg === 'object') {
-            dispatch(loginUser(msg));
+            dispatch(loginUser(msg.idUser));
             setMessage("Usuário logado com sucesso!")
         } else {
             setMessage("Usuário inválido!")

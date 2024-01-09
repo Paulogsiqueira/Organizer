@@ -11,8 +11,6 @@ const NavBar = () => {
     const userLogged: boolean = (user.isLogged)
     const dispatch = useDispatch<AppDispatch>();
 
-    console.log(userLogged)
-
     const handleLogout = () => {
         dispatch(logoutUser());
     };
