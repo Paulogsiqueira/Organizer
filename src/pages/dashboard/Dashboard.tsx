@@ -19,7 +19,7 @@ const Dashboard = () => {
     },
   ])
 
-  const [doing, setDoing] = useState([
+  const [doing] = useState([
     {
       id: "0",
       name: "Estudar react com typescript"
@@ -34,7 +34,7 @@ const Dashboard = () => {
     },
   ])
 
-  const [done, setDone] = useState([
+  const [done] = useState([
     {
       id: "0",
       name: "Estudar react com typescript"
