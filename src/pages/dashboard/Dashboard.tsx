@@ -1,53 +1,39 @@
 import '@/style/dashboard/dashboard.sass'
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { DragDropContext, Droppable } from '@hello-pangea/dnd'
 import Task from './task/Task';
+import { toDoUser,toDoUserReorder } from '@/methods/others/othersMethods';
+import { selectUser } from '@/redux/sliceUser'
+import { useSelector } from 'react-redux'
 
 const Dashboard = () => {
-  const [toDo, setToDo] = useState([
-    {
-      id: "0",
-      name: "Estudar react com typescript"
-    },
-    {
-      id: "1",
-      name: "Inscrever no canal do Sujeito Programador"
-    },
-    {
-      id: "2",
-      name: "Pagar o aluguel"
-    },
-  ])
+  const user = useSelector(selectUser)
+
+  async function getToDo(): Promise<void> {
+    const userInfo = await toDoUser('1');
+    const toDoString = userInfo[0].toDO
+    const toDoObject = (JSON.parse(toDoString));
+    setToDo(toDoObject)
+  }
+
+  useEffect(() => {
+    getToDo();
+  }, []);
+
+  const [toDo, setToDo] = useState([])
 
   const [doing] = useState([
     {
-      id: "0",
-      name: "Estudar react com typescript"
-    },
-    {
-      id: "1",
-      name: "Inscrever no canal do Sujeito Programador"
-    },
-    {
-      id: "2",
-      name: "Pagar o aluguel"
-    },
+      id:'1',
+      name:'teste'
+    }
   ])
 
-  const [done] = useState([
-    {
-      id: "0",
-      name: "Estudar react com typescript"
-    },
-    {
-      id: "1",
-      name: "Inscrever no canal do Sujeito Programador"
-    },
-    {
-      id: "2",
-      name: "Pagar o aluguel"
-    },
-  ])
+  const [done] = useState([  {
+    id:'1',
+    name:'teste'
+  }])
+
 
   function reorder<T>(list: T[], startIndex: number, endIndex: number) {
     const result = Array.from(list);
@@ -67,6 +53,8 @@ const Dashboard = () => {
     const items = reorder(toDo, result.source.index, result.destination.index)
     console.log(items)
     setToDo(items)
+    const toDoString = JSON.stringify(toDo)
+    toDoUserReorder(user.idUser,toDoString)
   }
 
   return (
