@@ -1,8 +1,8 @@
 import '@/style/dashboard/dashboard.sass'
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { DragDropContext, Droppable } from '@hello-pangea/dnd'
 import Task from './task/Task';
-import { toDoUser,toDoUserReorder } from '@/methods/others/othersMethods';
+import { toDoUser, toDoUserReorder } from '@/methods/others/othersMethods';
 import { selectUser } from '@/redux/sliceUser'
 import { useSelector } from 'react-redux'
 
@@ -24,14 +24,14 @@ const Dashboard = () => {
 
   const [doing] = useState([
     {
-      id:'1',
-      name:'teste'
+      id: '1',
+      name: 'teste'
     }
   ])
 
-  const [done] = useState([  {
-    id:'1',
-    name:'teste'
+  const [done] = useState([{
+    id: '1',
+    name: 'teste'
   }])
 
 
@@ -54,7 +54,7 @@ const Dashboard = () => {
     console.log(items)
     setToDo(items)
     const toDoString = JSON.stringify(toDo)
-    toDoUserReorder(user.idUser,toDoString)
+    toDoUserReorder(user.idUser, toDoString)
   }
 
   return (
