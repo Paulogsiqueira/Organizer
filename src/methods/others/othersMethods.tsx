@@ -34,43 +34,4 @@ export const userInfo = async  (idUser:string) =>{
     }
 }
 
-export const toDoUser = async  (idUser:string) =>{
-    try {
-        const response = await Axios.post("http://localhost:3001/toDoUser", {
-            idUser:idUser
-        });
-
-        const msg = response.data.msg;
-        const userInfo = response.data.user;
-
-        if (msg === "Usuário encontrado") {
-            return userInfo;
-        } else {
-            return "Usuário inválido"
-        }
-    } catch (error) {
-        console.error("Erro ao processar a solicitação:", error);
-        throw error;
-    }
-}
-
-
-export const toDoUserReorder = async (idUser:string,toDo:string) =>{
-    console.log(toDo)
-    try {
-        const response = await Axios.post("http://localhost:3001/toDoReorder", {
-            idUser:idUser,
-            toDoString: toDo
-        });
-
-        const msg = response.data.msg;
-        return msg;
-
-    } catch (error) {
-        console.error("Erro ao processar a solicitação:", error);
-        throw error;
-    }
-
-}
-
 
