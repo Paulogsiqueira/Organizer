@@ -2,7 +2,7 @@ import '@/style/dashboard/dashboard.sass'
 import { useState, useEffect, ChangeEvent } from "react";
 import { DragDropContext, Droppable } from '@hello-pangea/dnd'
 import Task from './task/Task';
-import { tasksUserReorder } from '@/methods/dashboard/dashboardMethods';
+import { tasksUserReorder, biggestId , reorder} from '@/methods/dashboard/dashboardMethods';
 import { selectUser } from '@/redux/sliceUser'
 import { useSelector } from 'react-redux'
 import { TaskInterface } from '@/interfaces/task';
@@ -16,16 +16,22 @@ const Dashboard = () => {
   const [doing, setDoing] = useState<TaskInterface[]>([])
   const [done,setDone] = useState<TaskInterface[]>([])
 
-  
   useEffect(() => {
     getTasks(user.idUser,setToDo,setDoing,setDone);
   }, []);
 
-  function reorder<T>(list: T[], startIndex: number, endIndex: number) {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1)
-    result.splice(endIndex, 0, removed)
-    return result
+  function addTask(option: string, task: string) {
+    let column = option === '1' ? toDo : option === '2' ? doing : done;
+    const id = biggestId(column)
+    let newId = (id + 1).toString()
+    const newTask = {
+      id: newId,
+      name: task,
+    }
+    const newList = [...column, newTask]
+    const listToString = JSON.stringify(newList)
+    tasksUserReorder(user.idUser, listToString,option)
+    option === '1' ? setToDo(newList) : option === '2' ? setDoing(newList) : setDone(newList);
   }
 
   function onDragEnd(result: any) {
@@ -46,50 +52,6 @@ const Dashboard = () => {
     }
     const tasksString = JSON.stringify(items)
     tasksUserReorder(user.idUser, tasksString, result.destination.droppableId)
-  }
-
-
-
-  function addTask(option: string, task: string) {
-    let column = []
-    if (option == '1') {
-      column = toDo
-    } else if (option == '2') {
-      column = doing
-    } else {
-      column = done
-    }
-
-    const id = biggestId(column)
-    let newId = (id + 1).toString()
-    const newTask = {
-      id: newId,
-      name: task,
-    }
-    const list = column
-    const newList = [...list, newTask]
-    const listToString = JSON.stringify(newList)
-
-    tasksUserReorder(user.idUser, listToString,option)
-    if (option == '1') {
-      setToDo(newList)
-    } else if (option == '2') {
-      setDoing(newList)
-    } else {
-      setDone(newList)
-    }
-  }
-
-  function biggestId(list: Array<TaskInterface>) {
-    let maiorId: number = -1;
-    list.forEach((objeto: TaskInterface) => {
-      const idAtual: number = parseInt(objeto.id, 10); // Converte o id para número
-      if (idAtual > maiorId) {
-        maiorId = idAtual;
-      }
-    });
-    return maiorId
-
   }
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -124,7 +86,7 @@ const Dashboard = () => {
                 <article ref={provided.innerRef} {...provided.droppableProps}>
                   <ul>
                     {toDo.map((item, index) =>
-                      <Task key={item.id} task={item} index={index} />
+                      <Task key={item.id} task={item} index={index} column="toDo"/>
                     )}
                   </ul>
                   {provided.placeholder}
@@ -141,7 +103,7 @@ const Dashboard = () => {
                 <article ref={provided.innerRef} {...provided.droppableProps}>
                   <ul>
                     {doing.map((item, index) =>
-                      <Task key={item.id} task={item} index={index} />
+                      <Task key={item.id} task={item} index={index} column="doing" />
                     )}
                   </ul>
                   {provided.placeholder}
@@ -158,7 +120,7 @@ const Dashboard = () => {
                 <article ref={provided.innerRef} {...provided.droppableProps}>
                   <ul>
                     {done.map((item, index) =>
-                      <Task key={item.id} task={item} index={index} />
+                      <Task key={item.id} task={item} index={index} column="done"/>
                     )}
                   </ul>
                   {provided.placeholder}
