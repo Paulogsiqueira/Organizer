@@ -20,6 +20,12 @@ const Dashboard = () => {
     getTasks(user.idUser,setToDo,setDoing,setDone);
   }, []);
 
+  function reloadTasks(){
+    setTimeout(() => {
+      getTasks(user.idUser,setToDo,setDoing,setDone);
+      
+    }, 100);
+  }
   function addTask(option: string, task: string) {
     let column = option === '1' ? toDo : option === '2' ? doing : done;
     const id = biggestId(column)
@@ -86,7 +92,7 @@ const Dashboard = () => {
                 <article ref={provided.innerRef} {...provided.droppableProps}>
                   <ul>
                     {toDo.map((item, index) =>
-                      <Task key={item.id} task={item} index={index} column="toDo"/>
+                      <Task key={item.id} task={item} index={index} column="toDo" reloadTask={reloadTasks}/>
                     )}
                   </ul>
                   {provided.placeholder}
@@ -103,7 +109,7 @@ const Dashboard = () => {
                 <article ref={provided.innerRef} {...provided.droppableProps}>
                   <ul>
                     {doing.map((item, index) =>
-                      <Task key={item.id} task={item} index={index} column="doing" />
+                      <Task key={item.id} task={item} index={index} column="doing" reloadTask={reloadTasks} />
                     )}
                   </ul>
                   {provided.placeholder}
@@ -120,7 +126,7 @@ const Dashboard = () => {
                 <article ref={provided.innerRef} {...provided.droppableProps}>
                   <ul>
                     {done.map((item, index) =>
-                      <Task key={item.id} task={item} index={index} column="done"/>
+                      <Task key={item.id} task={item} index={index} column="done" reloadTask={reloadTasks}/>
                     )}
                   </ul>
                   {provided.placeholder}

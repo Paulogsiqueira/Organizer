@@ -80,27 +80,16 @@ export async function getTasks(id: string, setToDo: React.Dispatch<React.SetStat
     const doingString = userInfo[0].doing
     const doneString = userInfo[0].done
 
-    if (toDoString == null) {
-        setToDo([])
-    } else {
-        const toDoObject = (JSON.parse(toDoString));
-        setToDo(toDoObject)
-    }
+    setToDo(toDoString === null ? [] : JSON.parse(toDoString));
+    setDoing(doingString === null ? [] : JSON.parse(doingString));
+    setDone(doneString === null ? [] : JSON.parse(doneString));
+}
 
-    if (doingString == null) {
-        setDoing([])
-    } else {
-        const doingObject = (JSON.parse(doingString));
-        setDoing(doingObject)
-    }
+export  async function getTask(id: string, column:string) {
+    const userInfo = await toDoUser(id);
+    let list = column === 'done' ? userInfo[0].done : column === 'doing' ? userInfo[0].doing : userInfo[0].toDO;
 
-    if (doneString == null) {
-        setDone([])
-    } else {
-        const doneObject = (JSON.parse(doneString));
-        setDone(doneObject)
-    }
-
+    return list
 }
 
 export function biggestId(list: Array<TaskInterface>) {
