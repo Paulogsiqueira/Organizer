@@ -9,25 +9,25 @@ const FormAddTask = () => {
     return (
     <div>
         <h3>Adicionar Nova Tarefa</h3>
-        <form className='address-form' onSubmit={handleSubmit(onSubmit)}>
+        <form className='dashboard-page' onSubmit={handleSubmit(onSubmit)}>
                 <label className='address-label'>
                     <div className='address-input'>
                         <div className='details-input'>
-                            <p>Logradouro</p>
-                            <input type="text" placeholder='Digite o logradouro' {...register("street", { required: true})} readOnly />
+                            <p>Atividade</p>
+                            <input type="text" placeholder='Digite o nome da atividade' {...register("activity", { required: true})} />
                         </div>
                         <div className='details-error'>
-                            {errors?.street?.type == 'required' && <p >Campo obrigatório</p>}
+                            {errors?.activity?.type == 'required' && <p >Campo obrigatório</p>}
                         </div>
                     </div>
                     <div className='address-input'>
                         <div className='details-input'>
-                            <p>Número</p>
-                            <input type="text" placeholder='Digite o Número' {...register("number", { required: true, pattern: /^[0-9]+$/ })} />
+                            <p>Tempo estimado</p>
+                            <input type="text" placeholder='Digite o Número' {...register("estimatedTime", { required: true, pattern: /^[0-9]+$/ })} />
                         </div>
                         <div className='details-error'>
-                            {errors?.number?.type == 'required' && <p >Campo obrigatório</p>}
-                            {errors?.number?.type == 'pattern' && <p >Número inválido</p>}
+                            {errors?.estimatedTime?.type == 'required' && <p >Campo obrigatório</p>}
+                            {errors?.estimatedTime?.type == 'pattern' && <p >Número inválido</p>}
                         </div>
                     </div>
                 </label>
@@ -48,27 +48,8 @@ const FormAddTask = () => {
                         </div>
                     </div>
                 </label>
-                <label className='address-label'>
-                    <div className='address-input'>
-                        <div className='details-input'>
-                            <p>Cidade</p>
-                            <input type="text" placeholder='Digite o nome da cidade' {...register("city", { required: true})} readOnly />
-                        </div>
-                        <div className='details-error'>
-                            {errors?.city?.type == 'required' && <p >Campo obrigatório</p>}
-                        </div>
-                    </div>
-                    <div className='address-input'>
-                        <div className='details-input'>
-                            <p>Estado</p>
-                            <input type="text" placeholder='Digite o nome do estado' {...register("state", { required: true})} readOnly />
-                        </div>
-                        <div className='details-error'>
-                            {errors?.state?.type == 'required' && <p >Campo obrigatório</p>}
-                        </div>
-                    </div>
-                </label>
-                <button className='btn-cep' type="submit">Confirmar dados</button>
+                
+                <button className='btn-cep' type="submit">Adicionar</button>
             </form >
     </div>
   )
