@@ -7,6 +7,7 @@ import { selectUser } from '@/redux/sliceUser'
 import { useSelector } from 'react-redux'
 import { TaskInterface } from '@/interfaces/task';
 import { getTasks} from '@/methods/dashboard/dashboardMethods';
+import FormAddTask from './form/FormAddTask';
 
 const Dashboard = () => {
   const user = useSelector(selectUser)
@@ -26,13 +27,13 @@ const Dashboard = () => {
       
     }, 100);
   }
-  function addTask(option: string, task: string) {
+  function addTask(option: string, acitivity: string) {
     let column = option === '1' ? toDo : option === '2' ? doing : done;
     const id = biggestId(column)
     let newId = (id + 1).toString()
     const newTask = {
       id: newId,
-      name: task,
+      name: acitivity,
     }
     const newList = [...column, newTask]
     const listToString = JSON.stringify(newList)
@@ -83,6 +84,7 @@ const Dashboard = () => {
         </select>
         <button type="submit" onClick={() => addTask(selectValue, newTask)}>Adicionar Tarefa</button>
       </div>
+      <FormAddTask/>
       <section className='dashboard'>
         <div className='dashboard-column'>
           <h2>TO DO</h2>

@@ -64,7 +64,7 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
           </div>
         )}
       </Draggable>
-      <EditCardModal closeModal={closeModal} modalErrorIsOpen={modalErrorIsOpen} />
+      <EditCardModal closeModal={closeModal} modalErrorIsOpen={modalErrorIsOpen} task={task} column={column} reloadTask={reloadTask} />
     </div>
   );
 }
