@@ -60,7 +60,7 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
                 <img src={deleteButton} alt="delete button" />
               </div>
             </div>
-            <p>{task.name}</p>
+            <p className='dashboard-subtitle'>{task.name}</p>
           </div>
         )}
       </Draggable>

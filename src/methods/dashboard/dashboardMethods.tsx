@@ -1,6 +1,12 @@
 import Axios from "axios";
 import { TaskInterface } from "@/interfaces/task";
 
+interface Response {
+    data: {
+      msg: string;
+    };
+  }
+
 /*---------------- Conexões com o Back ------------------- */
 
 export const toDoUser = async (idUser: string) => {
@@ -23,53 +29,31 @@ export const toDoUser = async (idUser: string) => {
     }
 }
 
-
-export const tasksUserReorder = async (idUser: string, list: string, option: string) => {
-    if (option == "1") {
-        try {
-            const response = await Axios.post("http://localhost:3001/toDoReorder", {
-                idUser: idUser,
-                toDoString: list
-            });
-
-            const msg = response.data.msg;
-            return msg;
-
-        } catch (error) {
-            console.error("Erro ao processar a solicitação:", error);
-            throw error;
-        }
-    } else if (option == "2") {
-        try {
-            const response = await Axios.post("http://localhost:3001/doingReorder", {
-                idUser: idUser,
-                doingString: list
-            });
-
-            const msg = response.data.msg;
-            return msg;
-
-        } catch (error) {
-            console.error("Erro ao processar a solicitação:", error);
-            throw error;
-        }
-    } else {
-        try {
-            const response = await Axios.post("http://localhost:3001/doneReorder", {
-                idUser: idUser,
-                doneString: list
-            });
-
-            const msg = response.data.msg;
-            return msg;
-
-        } catch (error) {
-            console.error("Erro ao processar a solicitação:", error);
-            throw error;
-        }
+  export const tasksUserReorder = async (idUser: string, list: string, option: '1' | '2' | '3'): Promise<string> => {
+    const endpoints: Record<'1' | '2' | '3', string> = {
+      '1': 'http://localhost:3001/toDoReorder',
+      '2': 'http://localhost:3001/doingReorder',
+      '3': 'http://localhost:3001/doneReorder',
+    };
+  
+    const endpoint = endpoints[option];
+  
+    try {
+      const response: Response = await Axios.post(endpoint, {
+        idUser,
+        [`${getOptionString(option)}String`]: list,
+      });
+  
+      return response.data.msg;
+    } catch (error) {
+      console.error("Erro ao processar a solicitação:", error);
+      throw error;
     }
-
-}
+  };
+  
+  const getOptionString = (option: '1' | '2' | '3'): string => {
+    return option === '1' ? 'toDo' : option === '2' ? 'doing' : 'done';
+  };
 
 
 /*---------------- Demais funções ------------------- */

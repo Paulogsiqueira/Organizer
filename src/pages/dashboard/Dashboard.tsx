@@ -71,7 +71,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-page">
       <h1>Dashboard</h1>
-      <p>Organize suas tarefas para conseguir gerenciar melhor o seu tempo</p>
+      <p className='dashboard-subtitle'>Organize suas tarefas para conseguir gerenciar melhor o seu tempo</p>
       <div className='dashboard-input'>
         <input type="text" placeholder='Digite a atividade que deseja adicionar' onChange={handleInputChange} />
         <select
