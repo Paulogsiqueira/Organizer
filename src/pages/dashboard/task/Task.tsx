@@ -14,6 +14,11 @@ interface TaskProps {
   task: {
     id: string;
     name: string;
+    estimatedTime: string;
+    criticaly: string;
+    deadline: string;
+    timeWorked: string
+
   },
   index: number,
   column: string,
@@ -24,6 +29,8 @@ interface TaskProps {
 const Task = ({ task, index, column, reloadTask }: TaskProps) => {
   const user = useSelector(selectUser)
   const [modalErrorIsOpen, setModalErrorIsOpen] = useState(false)
+  const formattedDate = new Date(task.deadline).toLocaleDateString("pt-BR");
+  const formatedCriticaly = task.criticaly == '1' ? 'Baixa' : task.criticaly == '2' ? 'Média' : 'Alta'
 
   const openModalError = () => {
     setModalErrorIsOpen(true)
@@ -34,7 +41,7 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
   }
 
   async function deleteCard(id: string, column: string) {
-    let option = column === 'done' ? '3' : column === 'doing' ? '2' : '1';
+    let option: "1" | "2" | "3" = column === 'done' ? '3' : column === 'doing' ? '2' : '1';
     const list = await getTask(user.idUser, column)
     const arrayList = JSON.parse(list)
     const newList = arrayList.filter((item: TaskInterface) => item.id !== id);
@@ -60,7 +67,17 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
                 <img src={deleteButton} alt="delete button" />
               </div>
             </div>
-            <p className='dashboard-subtitle'>{task.name}</p>
+            <p className='card-title'>{task.name}</p>
+            <div className='card-fields'>
+              <p className='dashboard-subtitle'>Data limite: {formattedDate}</p>
+              {formatedCriticaly === "Baixa" && <p className='dashboard-subtitle'><p className="lowCrit"> Criticidade: {formatedCriticaly}</p></p>}
+              {formatedCriticaly === "Média" && <p className='dashboard-subtitle'><p className="mediumCrit">Criticidade: {formatedCriticaly}</p></p>}
+              {formatedCriticaly === "Alta" && <p className='dashboard-subtitle'><p className="highCrit">Criticidade: {formatedCriticaly}</p></p>}
+            </div>
+            <div className='card-fields'>
+              <p className='dashboard-subtitle'>Tempo estimado: {task.estimatedTime.replace(/\s/g, "")} hrs</p>
+              <p className='dashboard-subtitle'>Tempo trabalhado: {task.timeWorked} hrs</p>
+            </div>
           </div>
         )}
       </Draggable>

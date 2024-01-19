@@ -1,5 +1,5 @@
 import '@/style/dashboard/dashboard.sass'
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect } from "react";
 import { DragDropContext, Droppable } from '@hello-pangea/dnd'
 import Task from './task/Task';
 import { tasksUserReorder, biggestId , reorder} from '@/methods/dashboard/dashboardMethods';
@@ -11,8 +11,6 @@ import FormAddTask from './form/FormAddTask';
 
 const Dashboard = () => {
   const user = useSelector(selectUser)
-  const [newTask, setNewTask] = useState('')
-  const [selectValue, setSelectValue] = useState('1');
   const [toDo, setToDo] = useState<TaskInterface[]>([]);
   const [doing, setDoing] = useState<TaskInterface[]>([])
   const [done,setDone] = useState<TaskInterface[]>([])
@@ -27,14 +25,19 @@ const Dashboard = () => {
       
     }, 100);
   }
-  function addTask(option: string, acitivity: string) {
+  function addTask(acitivity: string, time:string,criticaly:string,option: "1" | "2" | "3", date:string) {
     let column = option === '1' ? toDo : option === '2' ? doing : done;
     const id = biggestId(column)
     let newId = (id + 1).toString()
     const newTask = {
       id: newId,
       name: acitivity,
+      estimatedTime: time,
+      criticaly: criticaly,
+      deadline:date,
+      timeWorked:'00:00'
     }
+    console.log(newTask);
     const newList = [...column, newTask]
     const listToString = JSON.stringify(newList)
     tasksUserReorder(user.idUser, listToString,option)
@@ -61,30 +64,11 @@ const Dashboard = () => {
     tasksUserReorder(user.idUser, tasksString, result.destination.droppableId)
   }
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setNewTask(event.target.value);
-  };
-  const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectValue(event.target.value);
-  };
-
   return (
     <div className="dashboard-page">
       <h1>Dashboard</h1>
       <p className='dashboard-subtitle'>Organize suas tarefas para conseguir gerenciar melhor o seu tempo</p>
-      <div className='dashboard-input'>
-        <input type="text" placeholder='Digite a atividade que deseja adicionar' onChange={handleInputChange} />
-        <select
-          value={selectValue}
-          onChange={handleSelectChange}
-        >
-          <option value='1'>To Do</option>
-          <option value='2'>Doing</option>
-          <option value='3'>Done</option>
-        </select>
-        <button type="submit" onClick={() => addTask(selectValue, newTask)}>Adicionar Tarefa</button>
-      </div>
-      <FormAddTask/>
+      <FormAddTask addTask={addTask}/>
       <section className='dashboard'>
         <div className='dashboard-column'>
           <h2>TO DO</h2>

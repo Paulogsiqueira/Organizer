@@ -2,18 +2,16 @@
 
 .dashboard-item
     background-color: variables.$white-color
-    margin: 0 5px
+    margin: 15px 7px
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2)
-    border-radius:3px
-    p
-        color: variables.$medium-two-color
-        padding: 0px 10px 10px 10px
-        font-weight: bold
+    border-radius:10px
 
 .task-button
     width: 100%
     display: flex
     justify-content: right
+    background-color: variables.$medium-dark-color
+    border-radius: 5px 5px 0 0
 
 .delete-button
     background-color: #F78F8F
@@ -40,3 +38,29 @@
         align-items: center
         display: flex
         align-content: center
+
+.card-title
+    color: variables.$white-color
+    background-color: variables.$medium-dark-color
+    display: flex
+    justify-content: center
+    margin-bottom: 20px
+    padding-bottom: 10px
+    flex-wrap: wrap
+    font-weight: bold
+    font-size: 18px
+    
+
+.card-fields
+    display: flex
+    height: 30px
+    p
+    font-size:14px
+
+.dashboard-subtitle
+    .lowCrit
+        color: variables.$medium-color
+    .mediumCrit
+        color: variables.$yellow
+    .highCrit
+        color: variables.$red
