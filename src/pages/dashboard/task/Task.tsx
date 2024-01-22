@@ -10,6 +10,8 @@ import { useState } from 'react';
 import EditCardModal from '../modal/EditCardModal';
 
 
+// Adiciar botão de encerrar tarefa quando na coluna done, salvar se tempo trabalhado > tempo estimado, salvar se data da tarefa foi suficiente para encerrar. Depois fazer pagina com gráficos
+
 interface TaskProps {
   task: {
     id: string;
