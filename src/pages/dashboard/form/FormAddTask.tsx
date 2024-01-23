@@ -33,7 +33,7 @@ const FormAddTask = ({ addTask }: FormAdd) => {
         <div className='dashboard-form'>
             <h3>Nova Tarefa</h3>
             <form className='dashboard-form__body' onSubmit={handleSubmit(onSubmit)}>
-                <label>
+                <section>
                     <div className='form-input__long'>
                         <div className='input-button'>
                             <p>Atividade:</p>
@@ -54,8 +54,8 @@ const FormAddTask = ({ addTask }: FormAdd) => {
                             {errors?.estimatedTime?.type == 'pattern' && <p >Número inválido</p>}
                         </div>
                     </div>
-                </label>
-                <label>
+                </section>
+                <section>
                     <div className='form-input__short'>
                         <div className='input-button'>
                             <p>Criticidade:</p>
@@ -99,7 +99,7 @@ const FormAddTask = ({ addTask }: FormAdd) => {
                             {errors?.deadline?.type == 'required' && <p >Campo obrigatório</p>}
                         </div>
                     </div>
-                </label>
+                </section>
 
                 <div className='dashboard-form__button'>
                     <button type="submit" onClick={() => (onSubmit)}>Adicionar Tarefa</button>

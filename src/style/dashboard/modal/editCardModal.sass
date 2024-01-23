@@ -1,5 +1,17 @@
 @use '../../variables'
 
+.modalEditForm
+    button
+        margin-left: 20px
+        min-width: 160px
+        padding: 5px
+        border-radius: 15px
+        border: 1px solid transparent
+        background-color: variables.$medium-color
+        color: variables.$white-color
+        font-size: 16px
+        font-weight: bold
+
 .modal-content
     border: 1px solid variables.$medium-color
     border-radius: 10px
@@ -36,18 +48,54 @@
     margin-bottom: 10px
 
 .modal-form
-
-    padding: 20px
+    padding: 15px
     label
         color: variables.$medium-color
         font-weight: bold
         font-size: 17px
     input
         width: 75%
-        margin-left: 15px
         border: 1px solid gray
         border-radius: 10px
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2)
         color: variables.$medium-color
         font-weight: bold
         padding: 5px
+
+.modal-section
+    display: flex
+    justify-content: space-around
+    width: 100%
+
+.modal-field
+    display: flex
+    flex-direction: column
+    align-items: center
+    text-align: center
+    p
+        color: variables.$medium-color
+        font-weight: bold
+    input
+        color: #767676
+        border: 1px solid #c4c3c3
+        text-align: center
+        width: 400px
+
+.modal-fields
+    display: flex
+    flex-direction: column
+    align-items: center
+    text-align: center
+    p
+        color: variables.$medium-color
+        font-weight: bold
+    input
+        color: #767676
+        border: 1px solid #c4c3c3
+        text-align: center
+    select
+        border-radius: 5px
+        width: 80px
+        height: 25px
+        border: 1px solid #c4c3c3
+        text-align: center

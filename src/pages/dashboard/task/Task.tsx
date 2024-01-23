@@ -31,7 +31,9 @@ interface TaskProps {
 const Task = ({ task, index, column, reloadTask }: TaskProps) => {
   const user = useSelector(selectUser)
   const [modalErrorIsOpen, setModalErrorIsOpen] = useState(false)
-  const formattedDate = new Date(task.deadline).toLocaleDateString("pt-BR");
+  const parts = task.deadline.split('-');
+  const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+
   const formatedCriticaly = task.criticaly == '1' ? 'Baixa' : task.criticaly == '2' ? 'Média' : 'Alta'
 
   const openModalError = () => {
