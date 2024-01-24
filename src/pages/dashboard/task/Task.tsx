@@ -1,4 +1,4 @@
-import { Draggable } from '@hello-pangea/dnd';
+import { Draggable } from '@hello-pangea/dnd'
 import '@/style/dashboard/task/task.sass'
 import deleteButton from '/dashboard/delete.png';
 import editButton from '/dashboard/edit.png';
@@ -50,13 +50,13 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
     const arrayList = JSON.parse(list)
     const newList = arrayList.filter((item: TaskInterface) => item.id !== id);
     const listToString = JSON.stringify(newList)
-    tasksUserReorder(user.idUser, listToString, option)
+    await tasksUserReorder(user.idUser, listToString, option)
     reloadTask()
   }
 
   return (
     <div>
-      <Draggable draggableId={task.id} index={index}>
+      <Draggable draggableId={task.id} index={index} key={task.id}>
         {(provided) => (
           <div className='dashboard-item'
             {...provided.dragHandleProps}

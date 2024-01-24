@@ -76,18 +76,6 @@ export  async function getTask(id: string, column:string) {
     return list
 }
 
-export function biggestId(list: Array<TaskInterface>) {
-    let maiorId: number = -1;
-    list.forEach((objeto: TaskInterface) => {
-        const idAtual: number = parseInt(objeto.id, 10);
-        if (idAtual > maiorId) {
-            maiorId = idAtual;
-        }
-    });
-    return maiorId
-
-}
-
 export function reorder<T>(list: T[], startIndex: number, endIndex: number) {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1)
