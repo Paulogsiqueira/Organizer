@@ -7,9 +7,9 @@ import { useSelector } from 'react-redux'
 import { useForm, SubmitHandler, UseFormReturn, Controller } from 'react-hook-form';
 
 
-interface ModalErrorProps {
-    modalErrorIsOpen: boolean,
-    closeModal: () => void;
+interface ModalEditProps {
+    modalEditIsOpen: boolean,
+    closeModal: (type:string) => void;
     task: TaskInterface,
     column: string,
     reloadTask: () => void
@@ -25,7 +25,7 @@ interface FormData {
 
 
 
-const EditCardModal = ({ closeModal, modalErrorIsOpen, task, column, reloadTask }: ModalErrorProps) => {
+const EditCardModal = ({ closeModal, modalEditIsOpen, task, column, reloadTask }: ModalEditProps) => {
     const { register, handleSubmit, formState: { errors }, control }: UseFormReturn<FormData> = useForm<FormData>({
         defaultValues: {
             activity: task.name,
@@ -56,7 +56,7 @@ const EditCardModal = ({ closeModal, modalErrorIsOpen, task, column, reloadTask 
         }
         const listToString = JSON.stringify(newList)
         tasksUserReorder(user.idUser, listToString, option)
-        closeModal()
+        closeModal('edit')
         reloadTask()
     }
 
@@ -73,8 +73,8 @@ const EditCardModal = ({ closeModal, modalErrorIsOpen, task, column, reloadTask 
     return (
         <div>
             <Modal
-                isOpen={modalErrorIsOpen}
-                onRequestClose={closeModal}
+                isOpen={modalEditIsOpen}
+                onRequestClose={() => closeModal("edit")}
                 className='modal-content'>
                 <div className='modal'>
                     <div className='modal-title'>
@@ -108,7 +108,7 @@ const EditCardModal = ({ closeModal, modalErrorIsOpen, task, column, reloadTask 
                                 <div className='modal-fields'>
                                     <div >
                                         <p >Tempo trabalhado</p>
-                                        <input type="text" placeholder='00:00' {...register("timeWorked", { required: true, pattern: /^(\d{2} : \d{2}|\d{3} : \d{2}|\d{4}|\d{5})$/, onChange: handleInputChangeTime })} />
+                                        <input type="text" placeholder='00:00' {...register("timeWorked", { required: false, pattern: /^(\d{2} : \d{2}|\d{3} : \d{2}|\d{4}|\d{5})$/, onChange: handleInputChangeTime })} />
                                     </div>
                                     <div className='form-error'>
                                         {errors?.estimatedTime?.type == 'required' && <p >Campo obrigatório</p>}
