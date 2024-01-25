@@ -4,17 +4,20 @@ import { userLogin } from '@/methods/user/userMethods';
 import { loginUser } from '@/redux/sliceUser'
 import { useDispatch } from 'react-redux'
 import { cleanMessage } from '@/methods/others/othersMethods';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, getValues } = useForm()
     const [message, setMessage] = useState('')
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleLogin = async () => {
         const msg = await userLogin(getValues('email'), getValues('password'))
         if (typeof msg === 'object') {
             dispatch(loginUser(msg.idUser));
             setMessage("Usuário logado com sucesso!")
+            navigate("/dashboard")
         } else {
             setMessage("Usuário inválido!")
         }
