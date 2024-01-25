@@ -5,7 +5,8 @@ import editButton from '/dashboard/edit.png';
 import show from '/dashboard/show.png';
 import hide from '/dashboard/hide.png';
 import finish from '/dashboard/finish.png';
-import { getTask, tasksUserReorder } from '@/methods/dashboard/dashboardMethods';
+import { getTask, tasksUserReorder, updateCompletedTasks } from '@/methods/dashboard/dashboardMethods';
+import { compareAndSetDeadlineHours,compareAndSetDeadlineDate } from '@/methods/dashboard/dashboardMethods';
 import { TaskInterface } from '@/interfaces/task';
 import { selectUser } from '@/redux/sliceUser'
 import { useSelector } from 'react-redux'
@@ -13,8 +14,6 @@ import { useState } from 'react';
 import EditCardModal from '../modal/EditCardModal';
 import FinishCardModal from '../modal/FinishCardModal';
 
-
-// Adiciar botão de encerrar tarefa quando na coluna done, salvar se tempo trabalhado > tempo estimado, salvar se data da tarefa foi suficiente para encerrar. Depois fazer pagina com gráficos
 
 interface TaskProps {
   task: {
@@ -37,12 +36,14 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
   const [showTask, setShowTask] = useState(true)
   const [modalEditIsOpen, setModalEditIsOpen] = useState(false)
   const [finishModalIsOpen, setFinishModalIsOpen] = useState(false)
+  const [deadlineDate, setDeadlineDate] = useState('')
+  const [deadlineHours, setDeadlineHours] = useState('')
   const parts = task.deadline.split('-');
-  const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+  const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
   const formatedCriticaly = task.criticaly == '1' ? 'Baixa' : task.criticaly == '2' ? 'Média' : 'Alta'
-  console.log(task.timeWorked)
 
-  const openModal = (type:string) => {
+
+  const openModal = async  (type:string) => {
     if(type == "edit"){
       setModalEditIsOpen(true)
     }else{
@@ -59,7 +60,6 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
     
   }
 
-
   async function deleteCard(id: string, column: string) {
     let option: "1" | "2" | "3" = column === 'done' ? '3' : column === 'doing' ? '2' : '1';
     const list = await getTask(user.idUser, column)
@@ -68,6 +68,13 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
     const listToString = JSON.stringify(newList)
     await tasksUserReorder(user.idUser, listToString, option)
     reloadTask()
+  }
+  
+  function finishTask() {
+    compareAndSetDeadlineDate(task.deadline,setDeadlineDate)
+    compareAndSetDeadlineHours(task.estimatedTime,task.timeWorked,setDeadlineHours)
+    updateCompletedTasks(user.idUser,task.deadline,task.timeWorked,task.estimatedTime)
+    openModal("finish")
   }
 
   return (
@@ -86,7 +93,7 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
               <div className='edit-button'>
                 <img src={editButton} alt="edit button" onClick={() => (openModal("edit"))} />
               </div>
-              <div style={{ display: column == "done" ? 'inline' : 'none' }} className='finish-button' onClick={() => (deleteCard(task.id, column))}>
+              <div style={{ display: column == "done" ? 'inline' : 'none' }} className='finish-button' onClick={() => (finishTask())}>
                 <img src={finish} alt="finish card" />
               </div >
               <div className='delete-button' onClick={() => (deleteCard(task.id, column))}>
@@ -111,7 +118,7 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
         )}
       </Draggable>
       <EditCardModal closeModal={closeModal} modalEditIsOpen={modalEditIsOpen} task={task} column={column} reloadTask={reloadTask} />
-      <FinishCardModal closeModal={closeModal} finishModalIsOpen={finishModalIsOpen}/>
+      <FinishCardModal closeModal={closeModal} finishModalIsOpen={finishModalIsOpen} deadlineDate={deadlineDate} deadlineHours={deadlineHours} />
     </div>
   );
 }

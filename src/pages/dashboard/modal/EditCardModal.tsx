@@ -137,7 +137,7 @@ const EditCardModal = ({ closeModal, modalEditIsOpen, task, column, reloadTask }
                                 <div className='modal-fields'>
                                     <div >
                                         <p >Data Limite</p>
-                                        <input type="date" {...register("deadline", { required: true })} />
+                                        <input type="date" className='deadline-input'{...register("deadline", { required: true })} />
                                     </div>
                                     <div className='form-error'>
                                         {errors?.deadline?.type == 'required' && <p >Campo obrigatório</p>}
