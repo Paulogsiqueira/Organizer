@@ -57,6 +57,7 @@ const HourGraph
             <div>
                 <h3 className="graph-title">Horas Trabalhadas</h3>
                 <ReactApexChart options={state.options} series={state.series} type="pie" />
+                <h4 className="graph-title">Total de horas : {payedHours + extraHours}</h4>
             </div>
         );
     }

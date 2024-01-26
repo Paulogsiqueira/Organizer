@@ -1,0 +1,69 @@
+@use '../variables'
+
+.home-title__section
+    padding: 0 10px 0 10px
+    h2
+        color: variables.$medium-color
+        text-align: center
+        padding-top: 30px
+        font-size: 42px
+        padding-bottom: 20px
+
+.home-text
+    display: flex
+    flex-direction: column
+    align-items: center
+    margin-bottom: 20px
+    text-align: center
+    color: variables.$dark-gray
+
+.home-subsection
+    h2
+        color: variables.$medium-color
+        text-align: center
+        padding: 40px
+        font-size: 32px
+        padding-bottom: 20px
+    p
+        padding: 0px 20px 0 20px
+    .home-subsection__kanban
+        padding-top: 30px
+        display: flex
+        justify-content: space-evenly
+        padding-bottom: 50px
+        .kanban__part
+            display: flex
+            justify-content: center
+            width: 45%
+            img
+                width: 100%
+                border-radius: 5px
+            h3
+                color: variables.$medium-color
+                text-align: center
+                padding-top: 10px
+
+.kanban-benefits
+    width: 70%
+    padding: 0 20px 0 20px
+    border: 2px solid variables.$medium-color
+    border-radius: 10px
+    background-color: variables.$light-gray
+    ul
+        padding-top: 30px
+        padding-left: 10px
+        list-style-type: none
+        li
+            font-size: 18px
+            color: variables.$dark-gray
+            margin: 5px 0
+            padding-left: 20px
+            position: relative
+        li::before
+            content: '\2022'
+            color: variables.$medium-color
+            font-size: 1.5em
+            position: absolute
+            left: 0
+            top: 50%
+            transform: translateY(-50%)

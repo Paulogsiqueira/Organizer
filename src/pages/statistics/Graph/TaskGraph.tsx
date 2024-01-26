@@ -46,6 +46,7 @@ const TaskGraph = () => {
         <div>
             <h3 className="graph-title">Tarefas Entregues</h3>
             <ReactApexChart options={state.options} series={state.series} type="pie" />
+            <h4 className="graph-title">Total de tarefas : {completedTasks.inTime + completedTasks.outTime}</h4>
         </div>
     );
     }

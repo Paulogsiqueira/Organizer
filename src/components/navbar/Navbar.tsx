@@ -5,6 +5,7 @@ import { selectUser } from '@/redux/sliceUser'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/redux/store'
 import { logoutUser } from '@/redux/sliceUser'
+import organizer from '/navbar/organizer.png'
 
 const NavBar = () => {
     const user = useSelector(selectUser)
@@ -19,6 +20,7 @@ const NavBar = () => {
         <nav className='navbar'>
             <div className='navbar-logo'>
                 <Link to="/" className='logo-title'>
+                    <img src={organizer} alt="Icone Organizer"/>
                     <h2>Organizer</h2>
                 </Link>
             </div>
