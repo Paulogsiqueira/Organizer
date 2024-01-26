@@ -1,35 +1,19 @@
+import { compareAndSetDeadlineHours,compareAndSetDeadlineDate } from '@/methods/dashboard/dashboardMethods';
+import { getTask, tasksUserReorder, updateCompletedTasks } from '@/methods/dashboard/dashboardMethods';
+import { TaskInterface } from '@/interfaces/task';
+import { useSelector } from 'react-redux'
+import { selectUser } from '@/redux/sliceUser'
+import { TaskProps } from '@/interfaces/task';
 import { Draggable } from '@hello-pangea/dnd'
-import '@/style/dashboard/task/task.sass'
+import { useState } from 'react';
+import FinishCardModal from '../modal/FinishCardModal';
+import EditCardModal from '../modal/EditCardModal';
 import deleteButton from '/dashboard/delete.png';
 import editButton from '/dashboard/edit.png';
+import finish from '/dashboard/finish.png';
 import show from '/dashboard/show.png';
 import hide from '/dashboard/hide.png';
-import finish from '/dashboard/finish.png';
-import { getTask, tasksUserReorder, updateCompletedTasks } from '@/methods/dashboard/dashboardMethods';
-import { compareAndSetDeadlineHours,compareAndSetDeadlineDate } from '@/methods/dashboard/dashboardMethods';
-import { TaskInterface } from '@/interfaces/task';
-import { selectUser } from '@/redux/sliceUser'
-import { useSelector } from 'react-redux'
-import { useState } from 'react';
-import EditCardModal from '../modal/EditCardModal';
-import FinishCardModal from '../modal/FinishCardModal';
-
-
-interface TaskProps {
-  task: {
-    id: string;
-    name: string;
-    estimatedTime: string;
-    criticaly: string;
-    deadline: string;
-    timeWorked: string
-
-  },
-  index: number,
-  column: string,
-  reloadTask: () => void
-}
-
+import '@/style/dashboard/task/task.sass'
 
 const Task = ({ task, index, column, reloadTask }: TaskProps) => {
   const user = useSelector(selectUser)
@@ -41,7 +25,6 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
   const parts = task.deadline.split('-');
   const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
   const formatedCriticaly = task.criticaly == '1' ? 'Baixa' : task.criticaly == '2' ? 'Média' : 'Alta'
-
 
   const openModal = async  (type:string) => {
     if(type == "edit"){
@@ -57,7 +40,6 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
     }else{
       setFinishModalIsOpen(false) 
     }
-    
   }
 
   async function deleteCard(id: string, column: string) {

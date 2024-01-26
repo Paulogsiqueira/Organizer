@@ -1,13 +1,8 @@
+import { ModalFinishProps } from '@/interfaces/task';
 import Modal from 'react-modal';
 import '@/style/dashboard/modal/finishCardModal.sass'
 
-interface ModalFinishProps {
-    finishModalIsOpen: boolean,
-    closeModal: (type: string) => void;
-    deadlineDate: string;
-    deadlineHours: string
 
-}
 
 const FinishCardModal = ({ closeModal, finishModalIsOpen, deadlineDate, deadlineHours}: ModalFinishProps) => {
 

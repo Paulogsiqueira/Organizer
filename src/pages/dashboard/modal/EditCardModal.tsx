@@ -1,32 +1,15 @@
+import { useForm, SubmitHandler, UseFormReturn, Controller } from 'react-hook-form';
+import { ModalEditProps, TaskInterface } from '@/interfaces/task';
+import { getTask, tasksUserReorder } from '@/methods/dashboard/dashboardMethods';
+import { FormDataEdit } from '@/interfaces/task';
+import { useSelector } from 'react-redux'
+import { selectUser } from '@/redux/sliceUser'
 import Modal from 'react-modal';
 import '@/style/dashboard/modal/editCardModal.sass'
-import { TaskInterface } from '@/interfaces/task';
-import { getTask, tasksUserReorder } from '@/methods/dashboard/dashboardMethods';
-import { selectUser } from '@/redux/sliceUser'
-import { useSelector } from 'react-redux'
-import { useForm, SubmitHandler, UseFormReturn, Controller } from 'react-hook-form';
-
-
-interface ModalEditProps {
-    modalEditIsOpen: boolean,
-    closeModal: (type:string) => void;
-    task: TaskInterface,
-    column: string,
-    reloadTask: () => void
-}
-interface FormData {
-    activity: string;
-    estimatedTime: string;
-    criticaly: string;
-    column: "1" | "2" | "3";
-    deadline: string;
-    timeWorked: string;
-}
-
-
 
 const EditCardModal = ({ closeModal, modalEditIsOpen, task, column, reloadTask }: ModalEditProps) => {
-    const { register, handleSubmit, formState: { errors }, control }: UseFormReturn<FormData> = useForm<FormData>({
+    const user = useSelector(selectUser)
+    const { register, handleSubmit, formState: { errors }, control }: UseFormReturn<FormDataEdit> = useForm<FormDataEdit>({
         defaultValues: {
             activity: task.name,
             deadline: task.deadline,
@@ -34,17 +17,16 @@ const EditCardModal = ({ closeModal, modalEditIsOpen, task, column, reloadTask }
             criticaly: task.criticaly
         }
     })
-    const user = useSelector(selectUser)
-    const onSubmit: SubmitHandler<FormData> = (data) => {
+    const onSubmit: SubmitHandler<FormDataEdit> = (data) => {
         changeTask(data)
     };
 
-    async function changeTask(data: FormData) {
+    async function changeTask(data: FormDataEdit) {
         const list = await getTask(user.idUser, column)
         const arrayList = JSON.parse(list)
         console.log(arrayList)
         const newList = arrayList.map((item: TaskInterface) =>
-            item.id === task.id ? { ...item, name: data.activity, estimatedTime: data.estimatedTime,criticaly: data.criticaly, deadline: data.deadline, timeWorked: data.timeWorked } : item
+            item.id === task.id ? { ...item, name: data.activity, estimatedTime: data.estimatedTime, criticaly: data.criticaly, deadline: data.deadline, timeWorked: data.timeWorked } : item
         );
         let option: "1" | "2" | "3";
         if (column === 'done') {

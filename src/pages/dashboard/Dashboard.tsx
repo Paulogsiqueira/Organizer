@@ -22,7 +22,6 @@ const Dashboard = () => {
   function reloadTasks() {
     setTimeout(() => {
       getTasks(user.idUser, setToDo, setDoing, setDone);
-
     }, 100);
   }
   function addTask(acitivity: string, time: string, criticaly: string, option: "1" | "2" | "3", date: string) {

@@ -179,3 +179,4 @@ export const updateCompletedTasks = async (idUser: string,deadline:string,worked
   const newCompletedTasks= JSON.stringify(obCurrentCompletedTasks)
   setCompletedTasks(idUser,newCompletedTasks)
 }
+
