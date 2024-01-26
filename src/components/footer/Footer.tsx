@@ -1,6 +1,6 @@
-import '@/style/footer/footer.sass'
 import linkedin from '/footer/linkedin.png'
 import github from '/footer/github.png'
+import '@/style/footer/footer.sass'
 
 const Footer = () => {
   return (

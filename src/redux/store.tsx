@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import sliceUserReducer from './sliceUser';
 import { persistReducer } from 'redux-persist';
+import sliceUserReducer from './sliceUser';
 import storage from 'redux-persist/lib/storage'
 import persistStore from 'redux-persist/es/persistStore';
 

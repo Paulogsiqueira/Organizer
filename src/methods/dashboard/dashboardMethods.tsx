@@ -118,7 +118,6 @@ export function reorder<T>(list: T[], startIndex: number, endIndex: number) {
   return result
 }
 
-
 export const compareAndSetDeadlineHours = (estimated: string, worked: string, setDeadlineHours: Dispatch<SetStateAction<string>>) => {
   const minuEstimated = convertToMinutes(estimated.replace(/\s/g, ""))
   const minuWorked = convertToMinutes(worked)

@@ -1,5 +1,5 @@
-import '@/style/home/home.sass'
 import kanban from '/home/kanban.png';
+import '@/style/home/home.sass'
 
 const Home = () => {
   return (

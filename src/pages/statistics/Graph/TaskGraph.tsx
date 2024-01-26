@@ -1,24 +1,21 @@
-import { getCompletedTasks } from "@/methods/dashboard/dashboardMethods";
-import '@/style/statistics/graph/TaskGraph.sass'
 import ReactApexChart from "react-apexcharts";
-import '@/style/statistics/Statistics.sass'
-import { selectUser } from '@/redux/sliceUser'
-import { useSelector } from 'react-redux'
+import { getCompletedTasks } from "@/methods/dashboard/dashboardMethods";
+import { selectUser } from '@/redux/sliceUser';
+import { useSelector } from 'react-redux';
 import { useState, useEffect } from "react";
 
-
 const TaskGraph = () => {
-    const user = useSelector(selectUser)
+    const user = useSelector(selectUser);
     const [completedTasks, setCompletedTasks] = useState({inTime: 0, outTime: 0, extraMinutes: 0, payedMinutes: 0});
 
     const loadCompletedTasks = async () => {
-        const stringCompletedTasks = await getCompletedTasks(user.idUser)
-        const obCompletedTasks = JSON.parse(stringCompletedTasks)
-        setCompletedTasks(obCompletedTasks)
+        const stringCompletedTasks = await getCompletedTasks(user.idUser);
+        const obCompletedTasks = JSON.parse(stringCompletedTasks);
+        setCompletedTasks(obCompletedTasks);
     }
 
     useEffect(() => {
-        loadCompletedTasks()
+        loadCompletedTasks();
       }, []);
 
     const state = {
@@ -28,7 +25,7 @@ const TaskGraph = () => {
                 width: 380,
                 type: 'pie',
             },
-            labels: ['Entregues no prazo', 'Entregues atrasada '],
+            labels: ['Entregues no prazo', 'Entregues atrasada'],
             responsive: [{
                 breakpoint: 480,
                 options: {
@@ -40,8 +37,9 @@ const TaskGraph = () => {
                     }
                 }
             }]
-        },
+        } as ApexCharts.ApexOptions
     };
+
     return (
         <div>
             <h3 className="graph-title">Tarefas Entregues</h3>
@@ -49,6 +47,6 @@ const TaskGraph = () => {
             <h4 className="graph-title">Total de tarefas : {completedTasks.inTime + completedTasks.outTime}</h4>
         </div>
     );
-    }
+}
 
 export default TaskGraph;

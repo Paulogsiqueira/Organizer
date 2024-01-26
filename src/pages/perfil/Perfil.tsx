@@ -8,7 +8,7 @@ import noPhoto from '/user/NoPhoto.jpg';
 import '@/style/perfil/perfil.sass'
 
 const Perfil = () => {
-    const { register, setValue,handleSubmit, formState: { errors }, getValues } = useForm({shouldUnregister:false})
+    const { register, setValue, handleSubmit, formState: { errors }, getValues } = useForm({ shouldUnregister: false })
     const [message, setMessage] = useState('')
     const [userName, setUserName] = useState("")
     const [userEmail, setUserEmail] = useState("")

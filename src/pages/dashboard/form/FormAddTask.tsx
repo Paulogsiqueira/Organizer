@@ -1,16 +1,6 @@
 import { useForm, SubmitHandler, UseFormReturn, Controller } from 'react-hook-form';
+import { FormData, FormAdd} from '@/interfaces/task';
 import '@/style/dashboard/form/formAddTask.sass'
-
-interface FormData {
-    activity: string;
-    estimatedTime: string;
-    criticaly: string;
-    column: "1" | "2" | "3";
-    deadline: string;
-}
-interface FormAdd {
-    addTask: (activity: string, time: string, criticaly: string, option: "1" | "2" | "3", date: string) => void;
-}
 
 const FormAddTask = ({ addTask }: FormAdd) => {
     const { register, handleSubmit, formState: { errors }, control }: UseFormReturn<FormData> = useForm<FormData>()

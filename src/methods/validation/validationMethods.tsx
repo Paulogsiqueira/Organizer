@@ -1,6 +1,6 @@
 import { changeInfo } from "../user/userMethods";
 
-export const validForm = async (id : any,name: any,email: any,password: any,newPassword: any,confirmNewPassword:any) => {
+export const validForm = async (id : string,name: string,email: string,password: string,newPassword: string,confirmNewPassword:string) => {
     let msg = ""
 
     if(newPassword != "" && confirmNewPassword != ''){

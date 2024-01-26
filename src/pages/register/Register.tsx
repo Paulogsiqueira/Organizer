@@ -1,17 +1,17 @@
-import { useForm } from 'react-hook-form';
-import '@/style/register/Register.sass';
+import { cleanMessage } from '@/methods/others/othersMethods';
 import { userRegister } from '@/methods/user/userMethods';
 import { useState } from 'react';
-import { cleanMessage } from '@/methods/others/othersMethods';
+import { useForm } from 'react-hook-form';
+import '@/style/register/Register.sass';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors }, getValues } = useForm()
     const [message, setMessage] = useState('')
 
     const handleRegister = async () => {
-        const msg = await userRegister(getValues("name"),getValues('email'), getValues('password'), getValues('confirmPassword'))
+        const msg = await userRegister(getValues("name"), getValues('email'), getValues('password'), getValues('confirmPassword'))
         setMessage(msg)
-        cleanMessage( setMessage,'',2000)
+        cleanMessage(setMessage, '', 2000)
     }
 
     return (

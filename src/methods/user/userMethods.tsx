@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-export const changeInfo = async (id: any, name: any, email: any, password: any, newPassword: any) => {
+export const changeInfo = async (id: string, name: string, email: string, password: string, newPassword: string) => {
     try {
         const response = await Axios.post("http://localhost:3001/editUser", {
             userId: id,
@@ -17,7 +17,7 @@ export const changeInfo = async (id: any, name: any, email: any, password: any, 
     }
 }
 
-export const userLogin = async (email: any, password: any) => {
+export const userLogin = async (email: string, password: string) => {
     try {
         const response = await Axios.post("http://localhost:3001/login", {
             email: email,
@@ -47,7 +47,7 @@ export const userLogin = async (email: any, password: any) => {
 }
 
 
-export const userRegister = async (name: any, email: any, password: any, confirmPassword: any) => {
+export const userRegister = async (name: string, email: string, password: string, confirmPassword: string) => {
     try {
         const response = await Axios.post("http://localhost:3001/register", {
             name: name,

@@ -1,13 +1,13 @@
-import '@/style/dashboard/dashboard.sass'
-import { useState, useEffect } from "react";
-import { DragDropContext, Droppable } from '@hello-pangea/dnd'
-import Task from './task/Task';
 import { tasksUserReorder, reorder, getTask } from '@/methods/dashboard/dashboardMethods';
-import { selectUser } from '@/redux/sliceUser'
-import { useSelector } from 'react-redux'
+import { DragDropContext, Droppable } from '@hello-pangea/dnd'
+import { useState, useEffect } from "react";
 import { TaskInterface } from '@/interfaces/task';
+import { useSelector } from 'react-redux'
+import { selectUser } from '@/redux/sliceUser'
 import { getTasks } from '@/methods/dashboard/dashboardMethods';
 import FormAddTask from './form/FormAddTask';
+import Task from './task/Task';
+import '@/style/dashboard/dashboard.sass'
 
 const Dashboard = () => {
   const user = useSelector(selectUser)
@@ -27,10 +27,9 @@ const Dashboard = () => {
   }
   function addTask(acitivity: string, time: string, criticaly: string, option: "1" | "2" | "3", date: string) {
     let column = option === '1' ? toDo : option === '2' ? doing : done;
-    const timestamp = new Date().getTime(); 
-    const randomPart = Math.floor(Math.random() * 1000); 
-    let newId = (timestamp-randomPart).toString()
-    console.log(newId);
+    const timestamp = new Date().getTime();
+    const randomPart = Math.floor(Math.random() * 1000);
+    let newId = (timestamp - randomPart).toString()
     const newTask = {
       id: newId,
       name: acitivity,
@@ -39,7 +38,6 @@ const Dashboard = () => {
       deadline: date,
       timeWorked: '00:00'
     }
-    console.log(newTask);
     const newList = [...column, newTask]
     const listToString = JSON.stringify(newList)
     tasksUserReorder(user.idUser, listToString, option)
@@ -85,9 +83,6 @@ const Dashboard = () => {
       const finalListToString = JSON.stringify(endArray)
       tasksUserReorder(user.idUser, finalListToString, finalColumn)
       finalColumn === '1' ? setToDo(endArray) : finalColumn === '2' ? setDoing(endArray) : setDone(endArray);
-      console.log(endArray)
-
-
     }
   }
 
