@@ -19,7 +19,7 @@ export const changeInfo = async (id: string, name: string, email: string, passwo
 
 export const userLogin = async (email: string, password: string) => {
     try {
-        const response = await Axios.post("http://localhost:3001/login", {
+        const response = await Axios.post("https://organizerback-production.up.railway.app/login", {
             email: email,
             password: password
         });
