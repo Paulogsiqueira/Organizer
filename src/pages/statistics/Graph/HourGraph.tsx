@@ -8,8 +8,8 @@ import '@/style/statistics/Statistics.sass';
 
 const HourGraph = () => {
     const user = useSelector(selectUser);
-    const [payedHours, setPayedHours] = useState(1);
-    const [extraHours, setExtraHours] = useState(1);
+    const [payedHours, setPayedHours] = useState(0);
+    const [extraHours, setExtraHours] = useState(0);
 
     const loadCompletedTasks = async () => {
         const stringCompletedTasks = await getCompletedTasks(user.idUser);
