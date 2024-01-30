@@ -63,10 +63,11 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
     reloadTask()
   }
 
-  function finishTask() {
+  function finishTask(id: string, column: string) {
     compareAndSetDeadlineDate(task.deadline, setDeadlineDate)
     compareAndSetDeadlineHours(task.estimatedTime, task.timeWorked, setDeadlineHours)
     updateCompletedTasks(user.idUser, task.deadline, task.timeWorked, task.estimatedTime)
+    deleteCard(id,column)
     openModal("finish")
   }
 
@@ -86,7 +87,7 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
               <div className='edit-button'>
                 <img src={editButton} alt="edit button" onClick={() => (openModal("edit"))} />
               </div>
-              <div style={{ display: column == "done" ? 'inline' : 'none' }} className='finish-button' onClick={() => (finishTask())}>
+              <div style={{ display: column == "done" ? 'inline' : 'none' }} className='finish-button' onClick={() => (finishTask(task.id, column))}>
                 <img src={finish} alt="finish card" />
               </div >
               <div className='delete-button' onClick={() => (deleteCard(task.id, column))}>
