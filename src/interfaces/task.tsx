@@ -57,4 +57,7 @@ export interface ModalFinishProps {
   closeModal: (type: string) => void;
   deadlineDate: string;
   deadlineHours: string
+  deleteCard:(id: string, column: string) => void;
+  taskId: string;
+  column: string;
 }
