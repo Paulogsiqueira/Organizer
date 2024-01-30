@@ -17,8 +17,8 @@ const HourGraph = () => {
         const payedHours = parseFloat((obCompletedTasks.payedMinutes / 60).toFixed(2));
         const extraHours = parseFloat((obCompletedTasks.extraMinutes / 60).toFixed(2));
 
-        setPayedHours(payedHours > 0 ? payedHours : 2);
-        setExtraHours(extraHours > 0 ? extraHours : 2);
+        setPayedHours(payedHours > 0 ? payedHours : 0);
+        setExtraHours(extraHours > 0 ? extraHours : 0);
     };
 
     useEffect(() => {
