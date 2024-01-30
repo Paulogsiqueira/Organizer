@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/redux/store'
 import { logoutUser } from '@/redux/sliceUser'
 import organizer from '/navbar/organizer.png'
-import '@/style/navbar/Navbar.sass'
+import '@/style/navbar/navbar.sass'
 
 const NavBar = () => {
     const user = useSelector(selectUser)
