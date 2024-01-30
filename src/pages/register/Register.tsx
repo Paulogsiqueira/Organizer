@@ -1,5 +1,6 @@
 import { cleanMessage } from '@/methods/others/othersMethods';
 import { userRegister } from '@/methods/user/userMethods';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import '@/style/register/Register.sass';
@@ -7,11 +8,15 @@ import '@/style/register/Register.sass';
 const Register = () => {
     const { register, handleSubmit, formState: { errors }, getValues } = useForm()
     const [message, setMessage] = useState('')
+    const navigate = useNavigate()
 
     const handleRegister = async () => {
         const msg = await userRegister(getValues("name"), getValues('email'), getValues('password'), getValues('confirmPassword'))
         setMessage(msg)
         cleanMessage(setMessage, '', 2000)
+        setTimeout(() => {
+            navigate("/login")
+        }, 2000);
     }
 
     return (
