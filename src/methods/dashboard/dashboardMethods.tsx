@@ -12,7 +12,7 @@ interface Response {
 
 export const toDoUser = async (idUser: string) => {
   try {
-    const response = await Axios.post("http://localhost:3001/toDoUser", {
+    const response = await Axios.post("https://organizerback.up.railway.app/toDoUser", {
       idUser: idUser
     });
 
@@ -32,7 +32,7 @@ export const toDoUser = async (idUser: string) => {
 
 export const getCompletedTasks = async (idUser: string) => {
   try {
-    const response = await Axios.post("http://localhost:3001/getCompletedTasks", {
+    const response = await Axios.post("https://organizerback.up.railway.app/getCompletedTasks", {
       idUser: idUser
     });
 
@@ -51,7 +51,7 @@ export const getCompletedTasks = async (idUser: string) => {
 
 export const setCompletedTasks = async (idUser: string, completedTasks: string) => {
   try {
-    const response = await Axios.post("http://localhost:3001/setCompletedTasks", {
+    const response = await Axios.post("https://organizerback.up.railway.app/setCompletedTasks", {
       idUser: idUser,
       completedTasks: completedTasks
     });
@@ -65,10 +65,12 @@ export const setCompletedTasks = async (idUser: string, completedTasks: string) 
 }
 
 export const tasksUserReorder = async (idUser: string, list: string, option: '1' | '2' | '3'): Promise<string> => {
+  console.log(list)
+  console.log(option)
   const endpoints: Record<'1' | '2' | '3', string> = {
-    '1': 'http://localhost:3001/toDoReorder',
-    '2': 'http://localhost:3001/doingReorder',
-    '3': 'http://localhost:3001/doneReorder',
+    '1': 'https://organizerback.up.railway.app/toDoReorder',
+    '2': 'https://organizerback.up.railway.app/doingReorder',
+    '3': 'https://organizerback.up.railway.app/doneReorder',
   };
 
   const endpoint = endpoints[option];
@@ -95,7 +97,7 @@ const getOptionString = (option: '1' | '2' | '3'): string => {
 
 export async function getTasks(id: string, setToDo: React.Dispatch<React.SetStateAction<TaskInterface[]>>, setDoing: React.Dispatch<React.SetStateAction<TaskInterface[]>>, setDone: React.Dispatch<React.SetStateAction<TaskInterface[]>>): Promise<void> {
   const userInfo = await toDoUser(id);
-  const toDoString = userInfo[0].toDO
+  const toDoString = userInfo[0].toDo
   const doingString = userInfo[0].doing
   const doneString = userInfo[0].done
 
@@ -106,7 +108,7 @@ export async function getTasks(id: string, setToDo: React.Dispatch<React.SetStat
 
 export async function getTask(id: string, column: string) {
   const userInfo = await toDoUser(id);
-  let list = column === 'done' ? userInfo[0].done : column === 'doing' ? userInfo[0].doing : userInfo[0].toDO;
+  let list = column === 'done' ? userInfo[0].done : column === 'doing' ? userInfo[0].doing : userInfo[0].toDo;
 
   return list
 }

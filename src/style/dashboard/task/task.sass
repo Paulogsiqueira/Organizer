@@ -83,13 +83,14 @@
     flex-wrap: wrap
     font-weight: bold
     font-size: 18px
+    overflow-wrap: break-word
     
 
 .card-fields
     display: flex
     height: 30px
     p
-    font-size:14px
+        font-size:14px
 
 .dashboard-subtitle
     .lowCrit
@@ -98,3 +99,8 @@
         color: variables.$yellow
     .highCrit
         color: variables.$red
+
+@media (max-width: 960px)
+    .card-fields
+        p
+            font-size:12px

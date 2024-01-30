@@ -15,7 +15,7 @@ const Home = () => {
         <p className='home-text'>A adoção do Kanban em empresas representa uma transição estratégica para um método de gestão visual que busca otimizar a eficiência operacional e aprimorar a colaboração entre equipes.</p>
         <p className='home-text'>A simplicidade do Kanban, com seus quadros visuais e colunas representando diferentes estágios do processo, facilita a adaptação por parte dos colaboradores, promovendo uma transição suave para práticas mais eficientes. Além disso, a metodologia Kanban incentiva uma cultura de melhoria contínua, estimulando a equipe a refletir sobre seu desempenho e implementar ajustes constantes para aprimorar a produtividade.</p>
         <div className='home-subsection__kanban'>
-          <div className='kanban__part'>
+          <div className='kanban__part-img'>
             <img src={kanban} alt="Tabela do Kanban" />
           </div>
           <div className='kanban__part'>

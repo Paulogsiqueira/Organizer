@@ -1,11 +1,11 @@
-import { compareAndSetDeadlineHours,compareAndSetDeadlineDate } from '@/methods/dashboard/dashboardMethods';
+import { compareAndSetDeadlineHours, compareAndSetDeadlineDate } from '@/methods/dashboard/dashboardMethods';
 import { getTask, tasksUserReorder, updateCompletedTasks } from '@/methods/dashboard/dashboardMethods';
 import { TaskInterface } from '@/interfaces/task';
 import { useSelector } from 'react-redux'
 import { selectUser } from '@/redux/sliceUser'
 import { TaskProps } from '@/interfaces/task';
 import { Draggable } from '@hello-pangea/dnd'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FinishCardModal from '../modal/FinishCardModal';
 import EditCardModal from '../modal/EditCardModal';
 import deleteButton from '/dashboard/delete.png';
@@ -25,20 +25,31 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
   const parts = task.deadline.split('-');
   const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
   const formatedCriticaly = task.criticaly == '1' ? 'Baixa' : task.criticaly == '2' ? 'Média' : 'Alta'
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
-  const openModal = async  (type:string) => {
-    if(type == "edit"){
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [])
+
+  const openModal = async (type: string) => {
+    if (type == "edit") {
       setModalEditIsOpen(true)
-    }else{
-      setFinishModalIsOpen(true) 
+    } else {
+      setFinishModalIsOpen(true)
     }
   }
 
-  const closeModal = (type:string) => {
-    if(type == "edit"){
+  const closeModal = (type: string) => {
+    if (type == "edit") {
       setModalEditIsOpen(false)
-    }else{
-      setFinishModalIsOpen(false) 
+    } else {
+      setFinishModalIsOpen(false)
     }
   }
 
@@ -51,11 +62,11 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
     await tasksUserReorder(user.idUser, listToString, option)
     reloadTask()
   }
-  
+
   function finishTask() {
-    compareAndSetDeadlineDate(task.deadline,setDeadlineDate)
-    compareAndSetDeadlineHours(task.estimatedTime,task.timeWorked,setDeadlineHours)
-    updateCompletedTasks(user.idUser,task.deadline,task.timeWorked,task.estimatedTime)
+    compareAndSetDeadlineDate(task.deadline, setDeadlineDate)
+    compareAndSetDeadlineHours(task.estimatedTime, task.timeWorked, setDeadlineHours)
+    updateCompletedTasks(user.idUser, task.deadline, task.timeWorked, task.estimatedTime)
     openModal("finish")
   }
 
@@ -85,14 +96,12 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
             <p className='card-title'>{task.name}</p>
             <div style={{ display: showTask ? 'inline' : 'none' }}>
               <div className='card-fields'>
-                <p className='dashboard-subtitle'>Data limite: {formattedDate}</p>
-                {formatedCriticaly === "Baixa" && <p className='dashboard-subtitle'><p className="lowCrit"> Criticidade: {formatedCriticaly}</p></p>}
-                {formatedCriticaly === "Média" && <p className='dashboard-subtitle'><p className="mediumCrit">Criticidade: {formatedCriticaly}</p></p>}
-                {formatedCriticaly === "Alta" && <p className='dashboard-subtitle'><p className="highCrit">Criticidade: {formatedCriticaly}</p></p>}
+                <p className='dashboard-subtitle'>{windowWidth > 1420 ? 'Data Limite' : 'D. Limite'}: {formattedDate}</p>
+                <p className='dashboard-subtitle'><span className={formatedCriticaly === "Baixa" ? "lowCrit" : formatedCriticaly === "Média" ? "mediumCrit" : "highCrit"}>{windowWidth > 1420 ? 'Criticidade' : 'Critic.'}: {formatedCriticaly}</span></p>
               </div>
               <div className='card-fields'>
-                <p className='dashboard-subtitle'>Tempo estimado: {task.estimatedTime.replace(/\s/g, "")} hrs</p>
-                <p className='dashboard-subtitle'>Tempo trabalhado: {task.timeWorked != "" ? task.timeWorked : "00:00"} hrs</p>
+                <p className='dashboard-subtitle'>{windowWidth > 1420 ? 'Tempo Estimado' : 'T. Estimad.'}: {task.estimatedTime.replace(/\s/g, "")} hrs</p>
+                <p className='dashboard-subtitle'>{windowWidth > 1420 ? 'Tempo Trabalhado' : 'T. Trabalh.'}: {task.timeWorked != "" ? task.timeWorked : "00:00"} hrs</p>
               </div>
             </div>
 

@@ -40,6 +40,7 @@
 .form-input__short
     width: 30%
     margin-left: 4%
+    min-width: 230px
 
 .input-button
     display: flex
@@ -92,3 +93,56 @@
     p
         color: variables.$red
         font-size: 12px
+
+.form-section__2
+    display: flex
+    flex-direction: row
+
+@media (max-width: 970px)
+    .dashboard-form
+        width: 90%
+        margin-left: 5%
+    .form-input__short
+        width: 30%
+        margin-left: 2%
+
+@media (max-width: 750px)
+    .dashboard-form
+        width: 98%
+        margin-left: 1%
+
+@media (max-width: 690px)
+    .form-input__long
+        width: 40%
+    .form-input__veryshort
+        select
+            width: 60px
+
+@media (max-width: 550px)
+    .form-section__2
+        flex-direction: column
+        text-align: center
+        align-items: center
+        margin: 30px 0
+
+    .form-input__veryshort
+        select
+            width: 90px
+    .input-list
+        height: 40px
+
+@media (max-width: 470px)
+    .dashboard-form__body
+        p
+            font-size: 12px
+    .form-input__short
+        min-width: 230px
+        input
+            
+
+    .input-button
+        p
+            margin-right: 0px
+            text-align: center
+            justify-content: center
+ 

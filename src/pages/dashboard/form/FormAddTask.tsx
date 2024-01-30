@@ -45,9 +45,9 @@ const FormAddTask = ({ addTask }: FormAdd) => {
                         </div>
                     </div>
                 </section>
-                <section>
-                    <div className='form-input__short'>
-                        <div className='input-button'>
+                <section className='form-section__2'>
+                    <div className='form-input__veryshort'>
+                        <div className='input-button input-list'>
                             <p>Criticidade:</p>
                             <Controller
                                 name="criticaly"
@@ -63,8 +63,8 @@ const FormAddTask = ({ addTask }: FormAdd) => {
                             />
                         </div>
                     </div>
-                    <div className='form-input__short'>
-                        <div className='input-button'>
+                    <div className='form-input__veryshort'>
+                        <div className='input-button input-list'>
                             <p>Coluna:</p>
                             <Controller
                                 name="column"

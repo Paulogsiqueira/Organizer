@@ -25,7 +25,7 @@ const Register = () => {
                     <div className='register-input'>
                         <div className='details-input'>
                             <p>Nome</p>
-                            <input type="text" placeholder='Digite seu nome' {...register("name", { required: true })} />
+                            <input className='input-teste' type="text" placeholder='Digite seu nome' {...register("name", { required: true })} />
                         </div>
                         <div className='details-error'>
                             {errors?.name?.type == 'required' && <p >Campo obrigatório</p>}
@@ -36,7 +36,7 @@ const Register = () => {
                     <div className='register-input'>
                         <div className='details-input'>
                             <p>Email</p>
-                            <input type="text" placeholder='Digite seu email' {...register("email", { required: true, pattern: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/ })} />
+                            <input className='input-teste' type="text" placeholder='Digite seu email' {...register("email", { required: true, pattern: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/ })} />
                         </div>
                         <div className='details-error'>
                             {errors?.email?.type == 'required' && <p >Campo obrigatório</p>}
@@ -49,7 +49,7 @@ const Register = () => {
                     <div className='register-input'>
                         <div className='details-input'>
                             <p>Senha</p>
-                            <input type="password" placeholder='Digite sua senha' {...register("password", { required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/ })} />
+                            <input className='input-teste' type="password" placeholder='Digite sua senha' {...register("password", { required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/ })} />
                         </div>
                         <div className='details-error'>
                             {errors?.password?.type == 'required' && <p >Campo obrigatório</p>}
@@ -61,7 +61,7 @@ const Register = () => {
                     <div className='register-input'>
                         <div className='details-input'>
                             <p>Confirmar Senha</p>
-                            <input type="password" placeholder='Digite sua senha novamente' {...register("confirmPassword", { required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/ })} />
+                            <input className='input-teste' type="password" placeholder='Digite sua senha novamente' {...register("confirmPassword", { required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/ })} />
                         </div>
                         <div className='details-error'>
                             {errors?.confirmPassword?.type == 'required' && <p >Campo obrigatório</p>}
