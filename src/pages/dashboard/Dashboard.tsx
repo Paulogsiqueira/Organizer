@@ -14,6 +14,7 @@ const Dashboard = () => {
   const [toDo, setToDo] = useState<TaskInterface[]>([]);
   const [doing, setDoing] = useState<TaskInterface[]>([])
   const [done, setDone] = useState<TaskInterface[]>([])
+  console.log("git")
 
   useEffect(() => {
     getTasks(user.idUser, setToDo, setDoing, setDone);
