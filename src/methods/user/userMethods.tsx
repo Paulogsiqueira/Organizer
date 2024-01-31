@@ -26,6 +26,7 @@ export const userLogin = async (email: string, password: string) => {
 
         const msg = response.data.msg;
         const userInfo = response.data.user;
+        console.log(response)
 
         if (msg === "Usuário logado com sucesso!") {
             const matchResult = userInfo.match(/^(\d+)\|\/\|(.+)$/);

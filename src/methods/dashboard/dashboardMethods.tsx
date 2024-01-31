@@ -9,6 +9,28 @@ interface Response {
 }
 
 /*---------------- Conexões com o Back ------------------- */
+export async function cardColumnCard(idUser: string, inicialColumn: string, finalColumn: string, startIndex: number, endIndex: number) {
+  try {
+    const response = await Axios.post("https://organizerback.up.railway.app/changeColumnCard", {
+      idUser: idUser,
+      inicialColumn: inicialColumn,
+      finalColumn: finalColumn,
+      startIndex: startIndex,
+      endIndex: endIndex
+    });
+    const msg = response.data.msg;
+
+    if (msg === "Alterado") {
+      return "Alteração realizada"
+    } else {
+      return "Alteração inválida"
+    }
+  } catch (error) {
+    console.error("Erro ao processar a solicitação:", error);
+    throw error;
+  }
+}
+
 
 export const toDoUser = async (idUser: string) => {
   try {
@@ -148,7 +170,7 @@ export const compareAndSetDeadlineDate = (taskDate: string, setDeadlineDate: Dis
   }
 }
 
-export const deadLineDatePassed = (taskDate: string ) =>{
+export const deadLineDatePassed = (taskDate: string) => {
   const currentDate = new Date();
   const inputDateObj = new Date(taskDate);
 
@@ -159,26 +181,26 @@ export const deadLineDatePassed = (taskDate: string ) =>{
   }
 }
 
-export const updateCompletedTasks = async (idUser: string,deadline:string,workedTime:string,estimatedTime:string) => {
+export const updateCompletedTasks = async (idUser: string, deadline: string, workedTime: string, estimatedTime: string) => {
   const currentCompletedTasks = await getCompletedTasks(idUser)
   let obCurrentCompletedTasks = JSON.parse(currentCompletedTasks)
   const minutesWorked = convertToMinutes(workedTime)
   const minutesEstimated = convertToMinutes(estimatedTime)
   const deadlinePassed = deadLineDatePassed(deadline)
-  if(deadlinePassed){
+  if (deadlinePassed) {
     obCurrentCompletedTasks.outTime += 1
-  }else{
-    obCurrentCompletedTasks.inTime +=1
+  } else {
+    obCurrentCompletedTasks.inTime += 1
   }
 
-  if(minutesWorked < minutesEstimated){
+  if (minutesWorked < minutesEstimated) {
     obCurrentCompletedTasks.payedMinutes += minutesWorked
-  }else{
+  } else {
     obCurrentCompletedTasks.payedMinutes += minutesEstimated
     obCurrentCompletedTasks.extraMinutes += (minutesWorked - minutesEstimated)
   }
   console.log(obCurrentCompletedTasks)
-  const newCompletedTasks= JSON.stringify(obCurrentCompletedTasks)
-  setCompletedTasks(idUser,newCompletedTasks)
+  const newCompletedTasks = JSON.stringify(obCurrentCompletedTasks)
+  setCompletedTasks(idUser, newCompletedTasks)
 }
 

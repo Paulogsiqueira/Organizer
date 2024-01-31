@@ -1,4 +1,4 @@
-import { tasksUserReorder, reorder, getTask } from '@/methods/dashboard/dashboardMethods';
+import { tasksUserReorder, reorder, cardColumnCard } from '@/methods/dashboard/dashboardMethods';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd'
 import { useState, useEffect } from "react";
 import { TaskInterface } from '@/interfaces/task';
@@ -44,10 +44,11 @@ const Dashboard = () => {
   }
 
   async function onDragEnd(result: any) {
-    console.log(result)
     const finalColumn = result.destination.droppableId
     const startColumn = result.source.droppableId
-    console.log(startColumn + ' ' + finalColumn)
+    const startIndex = result.source.index
+    const finalIndex = result.destination.index
+
     if (!result.destination) {
       return;
     }
@@ -68,20 +69,8 @@ const Dashboard = () => {
     } else {
       let inicialColumn = startColumn === '1' ? 'toDo' : startColumn === '2' ? 'doing' : 'done'
       let endColumn = finalColumn === '1' ? 'toDo' : finalColumn === '2' ? 'doing' : 'done'
-
-      let startList = await getTask(user.idUser, inicialColumn)
-      let startArray = JSON.parse(startList)
-      let movedTask = startArray.splice(result.source.index, 1)
-      const listToString = JSON.stringify(startArray)
-      tasksUserReorder(user.idUser, listToString, startColumn)
-      startColumn === '1' ? setToDo(startArray) : startColumn === '2' ? setDoing(startArray) : setDone(startArray);
-
-      let endList = await getTask(user.idUser, endColumn)
-      let endArray = JSON.parse(endList)
-      endArray.splice(result.destination.index, 0, movedTask[0])
-      const finalListToString = JSON.stringify(endArray)
-      tasksUserReorder(user.idUser, finalListToString, finalColumn)
-      finalColumn === '1' ? setToDo(endArray) : finalColumn === '2' ? setDoing(endArray) : setDone(endArray);
+      
+     cardColumnCard(user.idUser,inicialColumn,endColumn,startIndex,finalIndex)
     }
   }
 
