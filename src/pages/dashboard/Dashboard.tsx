@@ -1,4 +1,4 @@
-import { tasksUserReorder, reorder, cardColumnCard } from '@/methods/dashboard/dashboardMethods';
+import { tasksUserReorder, reorder, cardColumnCard, toDoUser } from '@/methods/dashboard/dashboardMethods';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd'
 import { useState, useEffect } from "react";
 import { TaskInterface } from '@/interfaces/task';
@@ -70,7 +70,7 @@ const Dashboard = () => {
       const tasksString = JSON.stringify(items)
       tasksUserReorder(user.idUser, tasksString, result.destination.droppableId)
     } else {
-     cardColumnCard(user.idUser,startColumn,finalColumn,startIndex,finalIndex)
+     console.log(toDoUser(user.idUser))
     }
   }
 
