@@ -48,7 +48,7 @@ const Dashboard = () => {
     const startColumn = result.source.droppableId
     const startIndex = result.source.index
     const finalIndex = result.destination.index
-    console.log("coluna inicial: " + startColumn)
+    console.log("coluna inicial: " + startColumn + typeof(startColumn))
     console.log("Coluna final:" + finalColumn)
 
     if (!result.destination) {
