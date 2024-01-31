@@ -48,6 +48,7 @@ const Dashboard = () => {
     const startColumn = result.source.droppableId
     const startIndex = result.source.index
     const finalIndex = result.destination.index
+    console.log(startColumn)
 
     if (!result.destination) {
       return;
@@ -67,10 +68,7 @@ const Dashboard = () => {
       const tasksString = JSON.stringify(items)
       tasksUserReorder(user.idUser, tasksString, result.destination.droppableId)
     } else {
-      let inicialColumn = startColumn === '1' ? 'toDo' : startColumn === '2' ? 'doing' : 'done'
-      let endColumn = finalColumn === '1' ? 'toDo' : finalColumn === '2' ? 'doing' : 'done'
-      
-     cardColumnCard(user.idUser,inicialColumn,endColumn,startIndex,finalIndex)
+     cardColumnCard(user.idUser,startColumn,finalColumn,startIndex,finalIndex)
     }
   }
 
