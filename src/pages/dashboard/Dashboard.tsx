@@ -1,4 +1,4 @@
-import { tasksUserReorder, reorder, cardColumnCard, toDoUser } from '@/methods/dashboard/dashboardMethods';
+import { tasksUserReorder, reorder, toDoUser } from '@/methods/dashboard/dashboardMethods';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd'
 import { useState, useEffect } from "react";
 import { TaskInterface } from '@/interfaces/task';
@@ -47,8 +47,8 @@ const Dashboard = () => {
   async function onDragEnd(result: any) {
     const finalColumn = result.destination.droppableId
     const startColumn = result.source.droppableId
-    const startIndex = result.source.index
-    const finalIndex = result.destination.index
+    //const startIndex = result.source.index
+   //const finalIndex = result.destination.index
     console.log("coluna inicial: " + startColumn + typeof(startColumn))
     console.log("Coluna final:" + finalColumn)
 
