@@ -37,7 +37,7 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
     };
   }, [])
 
-  const openModal = async (type: string) => {
+  const openModal = (type: string) => {
     if (type == "edit") {
       setModalEditIsOpen(true)
     } else {
