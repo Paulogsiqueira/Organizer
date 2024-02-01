@@ -14,7 +14,6 @@ const Dashboard = () => {
   const [toDo, setToDo] = useState<TaskInterface[]>([]);
   const [doing, setDoing] = useState<TaskInterface[]>([])
   const [done, setDone] = useState<TaskInterface[]>([])
-  console.log("git")
 
   useEffect(() => {
     getTasks(user.idUser, setToDo, setDoing, setDone);
@@ -47,8 +46,8 @@ const Dashboard = () => {
   async function onDragEnd(result: any) {
     const finalColumn = result.destination.droppableId
     const startColumn = result.source.droppableId
-    //const startIndex = result.source.index
-   //const finalIndex = result.destination.index
+    const startIndex = result.source.index
+    const finalIndex = result.destination.index
     console.log("coluna inicial: " + startColumn + typeof(startColumn))
     console.log("Coluna final:" + finalColumn)
 
@@ -70,7 +69,23 @@ const Dashboard = () => {
       const tasksString = JSON.stringify(items)
       tasksUserReorder(user.idUser, tasksString, result.destination.droppableId)
     } else {
-     console.log(toDoUser(user.idUser))
+     const userInfo = await toDoUser(user.idUser)
+     const stringStartColumn = startColumn == '1' ?  userInfo[0].toDo : startColumn == '2' ? userInfo[0].doing : userInfo[0].done
+     const stringFinalColumn = finalColumn == '1' ?  userInfo[0].toDo : finalColumn == '2' ? userInfo[0].doing : userInfo[0].done
+    
+     const objStartColumn = JSON.parse(stringStartColumn)
+     const objFinalColumn = JSON.parse(stringFinalColumn)
+
+     const cardChange = objStartColumn.splice(startIndex,1)
+     startColumn == '1' ? setToDo(objStartColumn) : startColumn == '2' ? setDoing(objStartColumn) : setDone(objStartColumn)
+     objFinalColumn.splice(finalIndex,0,cardChange[0])
+     finalColumn == '1' ? setToDo(objFinalColumn) : finalColumn == '2' ? setDoing(objFinalColumn) : setDone(objFinalColumn)
+     const finalStringStartColumn = JSON.stringify(objStartColumn)
+     const finalStringFinalColumn = JSON.stringify(objFinalColumn)
+
+     tasksUserReorder(user.idUser,finalStringStartColumn,startColumn)
+     tasksUserReorder(user.idUser,finalStringFinalColumn,finalColumn)
+
     }
   }
 
