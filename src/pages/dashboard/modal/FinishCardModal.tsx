@@ -36,7 +36,7 @@ const FinishCardModal = ({ taskId,column,deleteCard,closeModal, finishModalIsOpe
                                 <span className="out-time"> FORA </span>
                             )}
                             das horas estimadas</p>
-                        <div className='dashboard-form__button'>
+                        <div className='modal-button'>
                             <button type="submit" onClick={() => (onSubmit())}>Concluir</button>
                         </div>
                     </div>
