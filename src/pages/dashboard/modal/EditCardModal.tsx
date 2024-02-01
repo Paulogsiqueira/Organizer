@@ -19,6 +19,9 @@ const EditCardModal = ({ closeModal, modalEditIsOpen, task, column, reloadTask }
     })
     const onSubmit: SubmitHandler<FormDataEdit> = (data) => {
         changeTask(data)
+        setTimeout(() => {
+            reloadTask()
+        }, 1000);
     };
 
     async function changeTask(data: FormDataEdit) {
@@ -39,7 +42,6 @@ const EditCardModal = ({ closeModal, modalEditIsOpen, task, column, reloadTask }
         const listToString = JSON.stringify(newList)
         tasksUserReorder(user.idUser, listToString, option)
         closeModal('edit')
-        reloadTask()
     }
 
     const handleInputChangeTime = (e: any) => {
