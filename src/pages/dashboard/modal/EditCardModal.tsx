@@ -14,7 +14,8 @@ const EditCardModal = ({ closeModal, modalEditIsOpen, task, column, reloadTask }
             activity: task.name,
             deadline: task.deadline,
             estimatedTime: task.estimatedTime,
-            criticaly: task.criticaly
+            criticaly: task.criticaly,
+            timeWorked:task.timeWorked
         }
     })
     const onSubmit: SubmitHandler<FormDataEdit> = (data) => {
