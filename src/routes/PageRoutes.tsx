@@ -15,11 +15,11 @@ const PageRoutes = () => {
     return (
         <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/register' element={ !userLogged ? <Register /> : <Home/>} />
-            <Route path='/login' element={ !userLogged ? <Login /> : <Home/>} />
-            <Route path='/dashboard' element={ userLogged ? <Dashboard /> : <Home/>} />
-            <Route path='/statistics' element={ userLogged ? <Statistics /> : <Home/>} />
-            <Route path='/perfil' element={ userLogged ? <Perfil /> : <Home/>} />
+            <Route path='/register' element={ <Register/>} />
+            <Route path='/login' element={ <Login/>} />
+            <Route path='/dashboard' element={<Dashboard/>} />
+            <Route path='/statistics' element={<Statistics/>} />
+            <Route path='/perfil' element={<Perfil/>} />
         </Routes>
     )
 }
