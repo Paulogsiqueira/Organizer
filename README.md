@@ -48,5 +48,3 @@ Fornece recursos para a análise e geração de estatísticas relacionadas ao de
 ## ✅ Deploy
 
 https://organizer-liard.vercel.app/
-
-Obs: Infelizmente o servidor onde está hospdedado o banco de dados era gratuito e excedeu o limite de uso, já esta sendo migrado para outro serviço de hospedagem
