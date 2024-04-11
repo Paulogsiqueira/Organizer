@@ -15,7 +15,8 @@ const Login = () => {
     const handleLogin = async () => {
         const msg = await userLogin(getValues('email'), getValues('password'))
         if (typeof msg === 'object') {
-            dispatch(loginUser(msg.idUser));
+            console.log(msg)
+            dispatch(loginUser({ idUser: msg.idUser, accessLevel: msg.accessLevel }))
             setMessage("Usuário logado com sucesso!")
             navigate("/dashboard")
         } else {

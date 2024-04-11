@@ -6,14 +6,16 @@ export const sliceUser = createSlice({
     name: 'user',
     initialState: {
         isLogged: false,
-        idUser:''
+        idUser:'',
+        accessLevel: "0"
     },
     reducers: {
-        loginUser(state, action: PayloadAction<string>) {
-            return { ...state, idUser: action.payload, isLogged: true };
+        loginUser(state, action: PayloadAction<{ idUser: string, accessLevel: string }>) {
+            const { idUser, accessLevel } = action.payload;
+            return { ...state, idUser, isLogged: true, accessLevel};
           },
         logoutUser(state) {
-            return { ...state,idUser:'', isLogged: false }
+            return { ...state, idUser:'', isLogged: false, accessLevel: '' }
         },
     }
 })

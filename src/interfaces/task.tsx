@@ -14,6 +14,7 @@ export interface FormData {
   criticaly: string;
   column: "1" | "2" | "3";
   deadline: string;
+  name: string
 }
 
 export interface FormAdd {

@@ -1,19 +1,26 @@
 import { useForm, SubmitHandler, UseFormReturn, Controller } from 'react-hook-form';
-import { FormData, FormAdd} from '@/interfaces/task';
+import { FormData, FormAdd } from '@/interfaces/task';
+import { FormControlLabel } from '@mui/material';
+import { useSelector } from 'react-redux'
+import { selectUser } from '@/redux/sliceUser'
+import { useState } from 'react';
+import Checkbox from '@mui/material/Checkbox';
 import '@/style/dashboard/form/formAddTask.sass'
 
 const FormAddTask = ({ addTask }: FormAdd) => {
     const { register, handleSubmit, formState: { errors }, control }: UseFormReturn<FormData> = useForm<FormData>()
+    const [taskForSomenone, setTaskForSomenone] = useState(false)
+    const user = useSelector(selectUser)
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
-        addTask(data.activity, data.estimatedTime, data.criticaly,data.column,data.deadline)
+        addTask(data.activity, data.estimatedTime, data.criticaly, data.column, data.deadline)
     };
 
-    const handleInputChangeTime = (e:any) => {
+    const handleInputChangeTime = (e: any) => {
         let time = e.target.value.replace(/\D/g, '');
         if (time.length == 4) {
             time = time.replace(/(\d{2})(\d{2})/, '$1 : $2')
-        }else if( time.length == 5){
+        } else if (time.length == 5) {
             time = time.replace(/(\d{3})(\d{2})/, '$1 : $2')
         }
         e.target.value = time
@@ -27,7 +34,7 @@ const FormAddTask = ({ addTask }: FormAdd) => {
                     <div className='form-input__long'>
                         <div className='input-button'>
                             <p>Atividade:</p>
-                            <input type="text" placeholder='Digite o nome da atividade' {...register("activity", { required: true , maxLength:43})} />
+                            <input type="text" placeholder='Digite o nome da atividade' {...register("activity", { required: true, maxLength: 43 })} />
                         </div>
                         <div className='form-error'>
                             {errors?.activity?.type == 'required' && <p >Campo obrigatório</p>}
@@ -87,6 +94,32 @@ const FormAddTask = ({ addTask }: FormAdd) => {
                         </div>
                         <div className='form-error'>
                             {errors?.deadline?.type == 'required' && <p >Campo obrigatório</p>}
+                        </div>
+                    </div>
+                </section>
+                <section style={{ display: user.accessLevel == "2" ? 'flex' : 'none' }}>
+                    <div className='taskForSomenone-checkbox'>
+                        <FormControlLabel control={<Checkbox sx={{color: '#5ABFA6', '&.Mui-checked': {color: '#5ABFA6'}}} onChange={() => { setTaskForSomenone(!taskForSomenone) }}/>} label="Adicionar tarefa para outra pessoa"/>
+                    </div>
+                    <div className='taskForSomenone-list'>
+                        <div className='select-button input-list' style={{ display: taskForSomenone == true ? 'flex' : 'none' }}>
+                            <p>Nome:</p>
+                            <Controller
+                                name="name"
+                                control={control}
+                                defaultValue="0"
+                                rules={{
+                                    validate: value => (value !== "0" || taskForSomenone == false) 
+                                }}
+                                render={({ field }) => (
+                                    <select {...field}>
+                                        <option value="0">Selecione...</option>
+                                        <option value='1'>Jorge Rafael</option>
+                                        <option value='2'>Matheus Augusto</option>
+                                        <option value='3'>Rafael Veiga</option>
+                                    </select>
+                                )}
+                            />
                         </div>
                     </div>
                 </section>
