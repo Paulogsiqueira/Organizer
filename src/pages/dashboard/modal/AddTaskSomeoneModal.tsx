@@ -1,4 +1,4 @@
-import '@/style/dashboard/modal/AddTaskSomeoneModal.sass'
+import '@/style/dashboard/modal/addTaskSomeoneModal.sass'
 import Modal from 'react-modal';
 
 const AddTaskSomeoneModal: React.FC<{ modalAddTaskSomeoneIsOpen: boolean, closeModal:(type:string) => void }> = ({ modalAddTaskSomeoneIsOpen,closeModal }) => {
