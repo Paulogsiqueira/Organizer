@@ -34,4 +34,20 @@ export const userInfo = async  (idUser:string) =>{
     }
 }
 
+export const getUsers = async () =>{
+    try {
+        const response = await Axios.post("https://organizerback.up.railway.app/getUsers");
 
+        const msg = response.data.msg;
+        const userInfo = response.data.user;
+
+        if (msg === "Usuários encontrados!") {
+            return userInfo
+        } else {
+            return "Usuários não encontrados"
+        }
+    } catch (error) {
+        console.error("Erro ao processar a solicitação:", error);
+        throw error;
+    }
+}

@@ -87,8 +87,6 @@ export const setCompletedTasks = async (idUser: string, completedTasks: string) 
 }
 
 export const tasksUserReorder = async (idUser: string, list: string, option: '1' | '2' | '3'): Promise<string> => {
-  console.log(list)
-  console.log(option)
   const endpoints: Record<'1' | '2' | '3', string> = {
     '1': 'https://organizerback.up.railway.app/toDoReorder',
     '2': 'https://organizerback.up.railway.app/doingReorder',
@@ -104,6 +102,21 @@ export const tasksUserReorder = async (idUser: string, list: string, option: '1'
     });
 
     return response.data.msg;
+  } catch (error) {
+    console.error("Erro ao processar a solicitação:", error);
+    throw error;
+  }
+};
+
+export const addTaskSomeone = async (idUser: string, task: TaskInterface, option: '1' | '2' | '3') => {
+  try {
+    const response = await Axios.post("https://organizerback.up.railway.app/addTaskSomeone", {
+      idUser: idUser,
+      task: task,
+      option: option
+    });
+    const msg = response.data.msg
+    return msg;
   } catch (error) {
     console.error("Erro ao processar a solicitação:", error);
     throw error;

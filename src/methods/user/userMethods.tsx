@@ -46,9 +46,7 @@ export const userLogin = async (email: string, password: string) => {
         console.error("Erro ao processar a solicitação:", error);
         throw error;
     }
-
 }
-
 
 export const userRegister = async (name: string, email: string, password: string, confirmPassword: string) => {
     try {
@@ -66,5 +64,5 @@ export const userRegister = async (name: string, email: string, password: string
         console.error("Erro ao processar a solicitação:", error);
         throw error;
     }
-
 }
+

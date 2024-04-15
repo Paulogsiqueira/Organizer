@@ -14,11 +14,11 @@ export interface FormData {
   criticaly: string;
   column: "1" | "2" | "3";
   deadline: string;
-  name: string
+  idUser: string
 }
 
 export interface FormAdd {
-  addTask: (activity: string, time: string, criticaly: string, option: "1" | "2" | "3", date: string) => void;
+  addTask: (activity: string, time: string, criticaly: string, option: "1" | "2" | "3", date: string, idUser:string) => void;
 }
 
 export interface TaskProps {

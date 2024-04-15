@@ -3,17 +3,29 @@ import { FormData, FormAdd } from '@/interfaces/task';
 import { FormControlLabel } from '@mui/material';
 import { useSelector } from 'react-redux'
 import { selectUser } from '@/redux/sliceUser'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import '@/style/dashboard/form/formAddTask.sass'
+import { getUsers } from '@/methods/others/othersMethods';
 
 const FormAddTask = ({ addTask }: FormAdd) => {
     const { register, handleSubmit, formState: { errors }, control }: UseFormReturn<FormData> = useForm<FormData>()
     const [taskForSomenone, setTaskForSomenone] = useState(false)
+    const [allUsers, setAllUsers] = useState([{idName:"teste"}])
     const user = useSelector(selectUser)
 
-    const onSubmit: SubmitHandler<FormData> = (data) => {
-        addTask(data.activity, data.estimatedTime, data.criticaly, data.column, data.deadline)
+    useEffect(() => {
+        if (taskForSomenone) {
+            const getAllUsers = async () => {
+                const users = await getUsers();
+                setAllUsers(users)
+            };
+            getAllUsers();
+        }
+    }, [(taskForSomenone)]);
+
+    const onSubmit: SubmitHandler<FormData> = async (data) => {
+        addTask(data.activity, data.estimatedTime, data.criticaly, data.column, data.deadline,data.idUser)
     };
 
     const handleInputChangeTime = (e: any) => {
@@ -99,24 +111,27 @@ const FormAddTask = ({ addTask }: FormAdd) => {
                 </section>
                 <section style={{ display: user.accessLevel == "2" ? 'flex' : 'none' }}>
                     <div className='taskForSomenone-checkbox'>
-                        <FormControlLabel control={<Checkbox sx={{color: '#5ABFA6', '&.Mui-checked': {color: '#5ABFA6'}}} onChange={() => { setTaskForSomenone(!taskForSomenone) }}/>} label="Adicionar tarefa para outra pessoa"/>
+                        <FormControlLabel control={<Checkbox sx={{ color: '#5ABFA6', '&.Mui-checked': { color: '#5ABFA6' } }} onChange={() => { setTaskForSomenone(!taskForSomenone) }} />} label="Adicionar tarefa para outra pessoa" />
                     </div>
                     <div className='taskForSomenone-list'>
                         <div className='select-button input-list' style={{ display: taskForSomenone == true ? 'flex' : 'none' }}>
                             <p>Nome:</p>
                             <Controller
-                                name="name"
+                                name="idUser"
                                 control={control}
                                 defaultValue="0"
                                 rules={{
-                                    validate: value => (value !== "0" || taskForSomenone == false) 
+                                    validate: value => (value !== "0" || taskForSomenone == false)
                                 }}
                                 render={({ field }) => (
                                     <select {...field}>
                                         <option value="0">Selecione...</option>
-                                        <option value='1'>Jorge Rafael</option>
-                                        <option value='2'>Matheus Augusto</option>
-                                        <option value='3'>Rafael Veiga</option>
+                                        {allUsers.map((user, index) => {
+                                            const match = user.idName.match(/^\s*(\d+)\s*-/);
+                                            const value = match ? match[1] : '21'
+                                            return <option key={index} value={value}>{user.idName}</option>})
+                                        }
+                                            
                                     </select>
                                 )}
                             />
