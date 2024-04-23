@@ -28,7 +28,8 @@ Permite que usuários marquem cards como concluídos, indicando que uma determin
 8.Geração de Estatísticas</br>
 Fornece recursos para a análise e geração de estatísticas relacionadas ao desempenho do usuário. Essas estatísticas oferecem insights valiosos para aprimorar a eficiência e o planejamento.
 
-
+9.Delegação de Tarefas</br>
+Baseado no nível de acesso da conta, ela consegue adicionar tarefas para usuários com nível de acesso inferior.
 ## ⚙️ Tecnologias utilizadas
 
 - React
