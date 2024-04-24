@@ -10,6 +10,7 @@ import FormAddTask from './form/FormAddTask';
 import Task from './task/Task';
 import '@/style/dashboard/dashboard.sass'
 import AddTaskSomeoneModal from './modal/AddTaskSomeoneModal';
+import TaskFromOtherUsers from './taskFromOtherUsers/TaskFromOtherUsers';
 
 const Dashboard = () => {
   const user = useSelector(selectUser)
@@ -22,6 +23,7 @@ const Dashboard = () => {
   useEffect(() => {
     getTasks(user.idUser, setToDo, setDoing, setDone);
   }, []);
+
 
   const openModal = (type: string) => {
     if (type == "Chance Column") {
@@ -131,6 +133,7 @@ const Dashboard = () => {
       <h1>Dashboard</h1>
       <p className='dashboard-subtitle'>Organize suas tarefas para conseguir gerenciar melhor o seu tempo</p>
       <FormAddTask addTask={addTask} />
+      {parseInt(user.accessLevel) > 1 ? <TaskFromOtherUsers/> : null}
       <section className='dashboard'>
         <DragDropContext onDragEnd={onDragEnd}>
           <div className='dashboard-column'>
