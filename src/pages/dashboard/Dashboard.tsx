@@ -10,7 +10,7 @@ import FormAddTask from './form/FormAddTask';
 import Task from './task/Task';
 import '@/style/dashboard/dashboard.sass'
 import AddTaskSomeoneModal from './modal/AddTaskSomeoneModal';
-import TaskFromOtherUsers from './taskFromOtherUsers/TaskFromOtherUsers';
+import TaskFromOtherUsers from './taskFromOthersUsers/TaskFromOthersUsers';
 
 const Dashboard = () => {
   const user = useSelector(selectUser)
@@ -21,8 +21,9 @@ const Dashboard = () => {
   const [addTaskModal, setAddTaskModal] = useState(false)
 
   useEffect(() => {
-    getTasks(user.idUser, setToDo, setDoing, setDone);
-  }, []);
+    const idWanted = parseInt(user.userIdWanted) > 0 ? user.userIdWanted : user.idUser
+    getTasks(idWanted, setToDo, setDoing, setDone);
+  }, [user.userIdWanted]);
 
 
   const openModal = (type: string) => {

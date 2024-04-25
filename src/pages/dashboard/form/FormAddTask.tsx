@@ -11,7 +11,7 @@ import { getUsers } from '@/methods/others/othersMethods';
 const FormAddTask = ({ addTask }: FormAdd) => {
     const { register, handleSubmit, formState: { errors }, control }: UseFormReturn<FormData> = useForm<FormData>()
     const [taskForSomenone, setTaskForSomenone] = useState(false)
-    const [allUsers, setAllUsers] = useState([{idName:"teste"}])
+    const [allUsers, setAllUsers] = useState([{idName:"Carregando..."}])
     const user = useSelector(selectUser)
 
     useEffect(() => {

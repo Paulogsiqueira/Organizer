@@ -17,10 +17,6 @@ const persistConfig = {
     },
   });
 
-  store.subscribe(() => {
-    console.log('State after dispatch:', store.getState());
-  });
-  
   export type RootState = ReturnType<typeof store.getState>; 
   
   export type AppDispatch = typeof store.dispatch;
