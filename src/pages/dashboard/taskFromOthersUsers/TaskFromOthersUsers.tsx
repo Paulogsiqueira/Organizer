@@ -10,6 +10,7 @@ const TaskFromOtherUsers = () => {
 
     const getAllUsers = async () => {
         const users = await getUsers();
+        console.log(allUsers)
         setAllUsers(users)
     };
     useEffect(() =>{

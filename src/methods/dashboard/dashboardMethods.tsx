@@ -32,12 +32,13 @@ export async function cardColumnCard(idUser: string, inicialColumn: string, fina
 }
 
 
-export const toDoUser = async (idUser: string) => {
+export const getAllTasksFromUser = async (idUser: string) => {
   try {
-    const response = await Axios.post("https://organizerback.up.railway.app/toDoUser", {
+    const response = await Axios.post("http://localhost:3001/allTasks", {
       idUser: idUser
     });
 
+    console.log(response)
     const msg = response.data.msg;
     const userInfo = response.data.user;
 
@@ -130,22 +131,12 @@ const getOptionString = (option: '1' | '2' | '3'): string => {
 
 /*---------------- Demais funções ------------------- */
 
-export async function getTasks(id: string, setToDo: React.Dispatch<React.SetStateAction<TaskInterface[]>>, setDoing: React.Dispatch<React.SetStateAction<TaskInterface[]>>, setDone: React.Dispatch<React.SetStateAction<TaskInterface[]>>): Promise<void> {
-  const userInfo = await toDoUser(id);
-  const toDoString = userInfo[0].toDo
-  const doingString = userInfo[0].doing
-  const doneString = userInfo[0].done
-
-  setToDo(toDoString === null ? [] : JSON.parse(toDoString));
-  setDoing(doingString === null ? [] : JSON.parse(doingString));
-  setDone(doneString === null ? [] : JSON.parse(doneString));
+export async function getTasks(id: string, ): Promise<void> {
+  
 }
 
-export async function getTask(id: string, column: string) {
-  const userInfo = await toDoUser(id);
-  let list = column === 'done' ? userInfo[0].done : column === 'doing' ? userInfo[0].doing : userInfo[0].toDo;
+export async function getTask(id: string,) {
 
-  return list
 }
 
 export function reorder<T>(list: T[], startIndex: number, endIndex: number) {

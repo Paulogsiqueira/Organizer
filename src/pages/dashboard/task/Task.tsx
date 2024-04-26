@@ -1,6 +1,5 @@
 import { compareAndSetDeadlineHours, compareAndSetDeadlineDate } from '@/methods/dashboard/dashboardMethods';
-import { getTask, tasksUserReorder, updateCompletedTasks } from '@/methods/dashboard/dashboardMethods';
-import { TaskInterface } from '@/interfaces/task';
+import { updateCompletedTasks } from '@/methods/dashboard/dashboardMethods';
 import { useSelector } from 'react-redux'
 import { selectUser } from '@/redux/sliceUser'
 import { TaskProps } from '@/interfaces/task';
@@ -53,14 +52,8 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
     }
   }
 
-  async function deleteCard(id: string, column: string) {
-    let option: "1" | "2" | "3" = column === 'done' ? '3' : column === 'doing' ? '2' : '1';
-    const list = await getTask(user.idUser, column)
-    const arrayList = JSON.parse(list)
-    const newList = arrayList.filter((item: TaskInterface) => item.id !== id);
-    const listToString = JSON.stringify(newList)
-    await tasksUserReorder(user.idUser, listToString, option)
-    reloadTask()
+  async function deleteCard(id: string) {
+
   }
 
   function finishTask() {
@@ -89,7 +82,7 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
               <div style={{ display: column == "done" ? 'inline' : 'none' }} className='finish-button' onClick={() => (finishTask())}>
                 <img src={finish} alt="finish card" />
               </div >
-              <div className='delete-button' onClick={() => (deleteCard(task.id, column))}>
+              <div className='delete-button' onClick={() => (deleteCard(task.id))}>
                 <img src={deleteButton} alt="delete button" />
               </div>
             </div>

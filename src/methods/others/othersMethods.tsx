@@ -8,7 +8,7 @@ export const cleanMessage = (func: Function, text: string, time: number) => {
 
 export const userInfo = async  (idUser:string) =>{
     try {
-        const response = await Axios.post("https://organizerback.up.railway.app/userInfo", {
+        const response = await Axios.post("http://localhost:3001/userInfo", {
             idUser:idUser
         });
 
@@ -36,13 +36,13 @@ export const userInfo = async  (idUser:string) =>{
 
 export const getUsers = async () =>{
     try {
-        const response = await Axios.post("https://organizerback.up.railway.app/getUsers");
+        const response = await Axios.post("http://localhost:3001/getUsers");
 
         const msg = response.data.msg;
-        const userInfo = response.data.user;
+        const users = response.data.user;
 
         if (msg === "Usuários encontrados!") {
-            return userInfo
+            return users
         } else {
             return "Usuários não encontrados"
         }
