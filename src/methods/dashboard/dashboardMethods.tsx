@@ -1,57 +1,8 @@
 import Axios from "axios";
-import { TaskInterface } from "@/interfaces/task";
+import { TaskInterface, position } from "@/interfaces/task";
 import { Dispatch, SetStateAction } from 'react';
 
-interface Response {
-  data: {
-    msg: string;
-  };
-}
-
 /*---------------- Conexões com o Back ------------------- */
-export async function cardColumnCard(idUser: string, inicialColumn: string, finalColumn: string, startIndex: number, endIndex: number) {
-  try {
-    const response = await Axios.post("https://organizerback.up.railway.app/changeColumnCard", {
-      idUser: idUser,
-      inicialColumn: inicialColumn,
-      finalColumn: finalColumn,
-      startIndex: startIndex,
-      endIndex: endIndex
-    });
-    const msg = response.data.msg;
-
-    if (msg === "Alterado") {
-      return "Alteração realizada"
-    } else {
-      return "Alteração inválida"
-    }
-  } catch (error) {
-    console.error("Erro ao processar a solicitação:", error);
-    throw error;
-  }
-}
-
-
-export const getAllTasksFromUser = async (idUser: string) => {
-  try {
-    const response = await Axios.post("http://localhost:3001/allTasks", {
-      idUser: idUser
-    });
-
-    console.log(response)
-    const msg = response.data.msg;
-    const userInfo = response.data.user;
-
-    if (msg === "Usuário encontrado") {
-      return userInfo;
-    } else {
-      return "Usuário inválido"
-    }
-  } catch (error) {
-    console.error("Erro ao processar a solicitação:", error);
-    throw error;
-  }
-}
 
 export const getCompletedTasks = async (idUser: string) => {
   try {
@@ -87,27 +38,6 @@ export const setCompletedTasks = async (idUser: string, completedTasks: string) 
   }
 }
 
-export const tasksUserReorder = async (idUser: string, list: string, option: '1' | '2' | '3'): Promise<string> => {
-  const endpoints: Record<'1' | '2' | '3', string> = {
-    '1': 'https://organizerback.up.railway.app/toDoReorder',
-    '2': 'https://organizerback.up.railway.app/doingReorder',
-    '3': 'https://organizerback.up.railway.app/doneReorder',
-  };
-
-  const endpoint = endpoints[option];
-
-  try {
-    const response: Response = await Axios.post(endpoint, {
-      idUser,
-      [`${getOptionString(option)}String`]: list,
-    });
-
-    return response.data.msg;
-  } catch (error) {
-    console.error("Erro ao processar a solicitação:", error);
-    throw error;
-  }
-};
 
 export const addTaskSomeone = async (idUser: string, task: TaskInterface, option: '1' | '2' | '3') => {
   try {
@@ -124,27 +54,71 @@ export const addTaskSomeone = async (idUser: string, task: TaskInterface, option
   }
 };
 
-const getOptionString = (option: '1' | '2' | '3'): string => {
-  return option === '1' ? 'toDo' : option === '2' ? 'doing' : 'done';
-};
-
-
-/*---------------- Demais funções ------------------- */
-
-export async function getTasks(id: string, ): Promise<void> {
-  
+export const getTasks = async (id: string, ): Promise<void> => {
+  try {
+    const response = await Axios.post("http://localhost:3001/allTasks", {
+      userId: id
+    });
+    const msg = response.data.tasks
+    console.log(response.data.tasks)
+    return msg;
+  } catch (error) {
+    console.error("Erro ao processar a solicitação:", error);
+    throw error;
+  }
 }
 
-export async function getTask(id: string,) {
-
+export const addTask = async (title:string,estimatedTime:string,criticaly: string,column:string,deadline:string,userId:string) =>{
+  try {
+    const response = await Axios.post("http://localhost:3001/addTask", {
+      title: title,
+      userId:userId,
+      column:column,
+      estimatedTime:estimatedTime,
+      criticaly: criticaly,
+      deadline:deadline
+    });
+    
+    return response;
+  } catch (error) {
+    console.error("Erro ao adicionar Task: ", error);
+    throw error;
+  }
 }
 
-export function reorder<T>(list: T[], startIndex: number, endIndex: number) {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1)
-  result.splice(endIndex, 0, removed)
-  return result
+export const deleteTask = async (taskId:number) =>{
+  try {
+    const response = await Axios.post("http://localhost:3001/deleteTask", {
+      taskId : taskId
+    });
+    
+    return response;
+  } catch (error) {
+    console.error("Erro ao deletar Task: ", error);
+    throw error;
+  }
 }
+
+export const changeTaskPosition = async (start : position,destination:position) => {
+  const initialPosition = start.index
+  const initialColumn = start.droppableId
+  const endPosition = destination.index
+  const endColumn = destination.droppableId
+  try {
+    const response = await Axios.post("http://localhost:3001/changeTask", {
+      initialPosition: initialPosition,
+      initialColumn: initialColumn,
+      endPosition: endPosition,
+      endColumn:  endColumn
+    });
+    
+    return response;
+  } catch (error) {
+    console.error("Erro ao processar a solicitação:", error);
+    throw error;
+  }
+}
+
 
 export const compareAndSetDeadlineHours = (estimated: string, worked: string, setDeadlineHours: Dispatch<SetStateAction<string>>) => {
   const minuEstimated = convertToMinutes(estimated.replace(/\s/g, ""))
@@ -157,7 +131,7 @@ export const compareAndSetDeadlineHours = (estimated: string, worked: string, se
   }
 }
 
-export function convertToMinutes(timeStr: string) {
+export const convertToMinutes = (timeStr: string) => {
   const [hours, minutes] = timeStr.split(':').map(Number);
   const totalMinutes = hours * 60 + minutes;
   return totalMinutes > 1 ? totalMinutes : 0

@@ -1,9 +1,9 @@
-import { compareAndSetDeadlineHours, compareAndSetDeadlineDate } from '@/methods/dashboard/dashboardMethods';
+import { compareAndSetDeadlineHours, compareAndSetDeadlineDate, deleteTask } from '@/methods/dashboard/dashboardMethods';
 import { updateCompletedTasks } from '@/methods/dashboard/dashboardMethods';
 import { useSelector } from 'react-redux'
 import { selectUser } from '@/redux/sliceUser'
 import { TaskProps } from '@/interfaces/task';
-import { Draggable } from '@hello-pangea/dnd'
+import { Draggable } from 'react-beautiful-dnd';
 import { useEffect, useState } from 'react';
 import FinishCardModal from '../modal/FinishCardModal';
 import EditCardModal from '../modal/EditCardModal';
@@ -14,7 +14,7 @@ import show from '/dashboard/show.png';
 import hide from '/dashboard/hide.png';
 import '@/style/dashboard/task/task.sass'
 
-const Task = ({ task, index, column, reloadTask }: TaskProps) => {
+const Task = ({ task, column, reloadTask }: TaskProps) => {
   const user = useSelector(selectUser)
   const [showTask, setShowTask] = useState(true)
   const [modalEditIsOpen, setModalEditIsOpen] = useState(false)
@@ -52,20 +52,20 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
     }
   }
 
-  async function deleteCard(id: string) {
-
+  async function deleteCard(taskId: number) {
+    deleteTask(taskId)
   }
 
   function finishTask() {
     compareAndSetDeadlineDate(task.deadline, setDeadlineDate)
-    compareAndSetDeadlineHours(task.estimatedTime, task.timeWorked, setDeadlineHours)
-    updateCompletedTasks(user.idUser, task.deadline, task.timeWorked, task.estimatedTime)
+    compareAndSetDeadlineHours(task.estimated_time, task.time_worked, setDeadlineHours)
+    updateCompletedTasks(user.idUser, task.deadline, task.time_worked, task.estimated_time)
     openModal("finish")
   }
 
   return (
     <div>
-      <Draggable draggableId={task.id} index={index} key={task.id}>
+      <Draggable draggableId={(task.task_id).toString()} index={parseInt(task.position)} key={task.task_id}>
         {(provided) => (
           <div className='dashboard-item'
             {...provided.dragHandleProps}
@@ -82,19 +82,19 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
               <div style={{ display: column == "done" ? 'inline' : 'none' }} className='finish-button' onClick={() => (finishTask())}>
                 <img src={finish} alt="finish card" />
               </div >
-              <div className='delete-button' onClick={() => (deleteCard(task.id))}>
+              <div className='delete-button' onClick={() => (deleteCard(parseInt(task.task_id)))}>
                 <img src={deleteButton} alt="delete button" />
               </div>
             </div>
-            <p className='card-title'>{task.name}</p>
+            <p className='card-title'>{task.title}</p>
             <div style={{ display: showTask ? 'inline' : 'none' }}>
               <div className='card-fields'>
                 <p className='dashboard-subtitle'>{windowWidth > 1420 ? 'Data Limite' : 'D. Limite'}: {formattedDate}</p>
                 <p className='dashboard-subtitle'><span className={formatedCriticaly === "Baixa" ? "lowCrit" : formatedCriticaly === "Média" ? "mediumCrit" : "highCrit"}>{windowWidth > 1420 ? 'Criticidade' : 'Critic.'}: {formatedCriticaly}</span></p>
               </div>
               <div className='card-fields'>
-                <p className='dashboard-subtitle'>{windowWidth > 1420 ? 'Tempo Estimado' : 'T. Estimad.'}: {task.estimatedTime.replace(/\s/g, "")} hrs</p>
-                <p className='dashboard-subtitle'>{windowWidth > 1420 ? 'Tempo Trabalhado' : 'T. Trabalh.'}: {task.timeWorked != "" ? task.timeWorked : "00:00"} hrs</p>
+                <p className='dashboard-subtitle'>{windowWidth > 1420 ? 'Tempo Estimado' : 'T. Estimad.'}: {task.estimated_time.replace(/\s/g, "")} hrs</p>
+                <p className='dashboard-subtitle'>{windowWidth > 1420 ? 'Tempo Trabalhado' : 'T. Trabalh.'}: {task.time_worked != "" ? task.time_worked : "00:00"} hrs</p>
               </div>
             </div>
 
@@ -102,7 +102,7 @@ const Task = ({ task, index, column, reloadTask }: TaskProps) => {
         )}
       </Draggable>
       <EditCardModal closeModal={closeModal} modalEditIsOpen={modalEditIsOpen} task={task} column={column} reloadTask={reloadTask} />
-      <FinishCardModal taskId={task.id} column={column} closeModal={closeModal} finishModalIsOpen={finishModalIsOpen} deadlineDate={deadlineDate} deadlineHours={deadlineHours} deleteCard={deleteCard} />
+      <FinishCardModal taskId={task.task_id} closeModal={closeModal} finishModalIsOpen={finishModalIsOpen} deadlineDate={deadlineDate} deadlineHours={deadlineHours} deleteCard={deleteCard} />
     </div>
   );
 }

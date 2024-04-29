@@ -7,11 +7,12 @@ import { useEffect, useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import '@/style/dashboard/form/formAddTask.sass'
 import { getUsers } from '@/methods/others/othersMethods';
+import { addTask } from '@/methods/dashboard/dashboardMethods';
 
-const FormAddTask = ({ addTask }: FormAdd) => {
+const FormAddTask = ({ addTaskConcluded }: FormAdd) => {
     const { register, handleSubmit, formState: { errors }, control }: UseFormReturn<FormData> = useForm<FormData>()
     const [taskForSomenone, setTaskForSomenone] = useState(false)
-    const [allUsers, setAllUsers] = useState([{idName:"Carregando..."}])
+    const [allUsers, setAllUsers] = useState([{ idName: "Carregando..." }])
     const user = useSelector(selectUser)
 
     useEffect(() => {
@@ -25,7 +26,8 @@ const FormAddTask = ({ addTask }: FormAdd) => {
     }, [(taskForSomenone)]);
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
-        addTask(data.activity, data.estimatedTime, data.criticaly, data.column, data.deadline,data.idUser)
+        addTask(data.activity, data.estimatedTime, data.criticaly, data.column, data.deadline, data.idUser)
+        addTaskConcluded()
     };
 
     const handleInputChangeTime = (e: any) => {
@@ -129,9 +131,10 @@ const FormAddTask = ({ addTask }: FormAdd) => {
                                         {allUsers.map((user, index) => {
                                             const match = user.idName.match(/^\s*(\d+)\s*-/);
                                             const value = match ? match[1] : '21'
-                                            return <option key={index} value={value}>{user.idName}</option>})
+                                            return <option key={index} value={value}>{user.idName}</option>
+                                        })
                                         }
-                                            
+
                                     </select>
                                 )}
                             />

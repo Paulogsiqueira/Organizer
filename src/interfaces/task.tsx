@@ -1,11 +1,16 @@
 
 export interface TaskInterface {
-  id: string;
-  name: string;
-  estimatedTime: string;
+  task_id: string;
+  title: string;
+  user_id: string;
+  column: string;
+  estimated_time: string;
   criticaly: string;
   deadline: string;
-  timeWorked: string
+  time_worked: string
+  completed: boolean;
+  delivery_date: string;
+  position: string;
 }
 
 export interface FormData {
@@ -17,21 +22,29 @@ export interface FormData {
   idUser: string
 }
 
+export interface position {
+  index:number;
+  droppableId: string;
+}
 export interface FormAdd {
-  addTask: (activity: string, time: string, criticaly: string, option: "1" | "2" | "3", date: string, idUser:string) => void;
+  addTaskConcluded: () => void;
 }
 
 export interface TaskProps {
   task: {
-    id: string;
-    name: string;
-    estimatedTime: string;
+    task_id: string;
+    title: string;
+    user_id: string;
+    column: string;
+    estimated_time: string;
     criticaly: string;
     deadline: string;
-    timeWorked: string
+    time_worked: string
+    completed: boolean;
+    delivery_date: string;
+    position: string;
 
   },
-  index: number,
   column: string,
   reloadTask: () => void
 }
@@ -58,7 +71,6 @@ export interface ModalFinishProps {
   closeModal: (type: string) => void;
   deadlineDate: string;
   deadlineHours: string
-  deleteCard:(id: string, column: string) => void;
+  deleteCard:(id: number) => void;
   taskId: string;
-  column: string;
 }

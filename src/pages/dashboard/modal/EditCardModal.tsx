@@ -1,21 +1,20 @@
 import { useForm, SubmitHandler, UseFormReturn, Controller } from 'react-hook-form';
 import { ModalEditProps, TaskInterface } from '@/interfaces/task';
-import { getTask, tasksUserReorder } from '@/methods/dashboard/dashboardMethods';
 import { FormDataEdit } from '@/interfaces/task';
 import { useSelector } from 'react-redux'
 import { selectUser } from '@/redux/sliceUser'
 import Modal from 'react-modal';
 import '@/style/dashboard/modal/editCardModal.sass'
 
-const EditCardModal = ({ closeModal, modalEditIsOpen, task, column, reloadTask }: ModalEditProps) => {
+const EditCardModal = ({ closeModal, modalEditIsOpen, task, reloadTask }: ModalEditProps) => {
     const user = useSelector(selectUser)
     const { register, handleSubmit, formState: { errors }, control }: UseFormReturn<FormDataEdit> = useForm<FormDataEdit>({
         defaultValues: {
-            activity: task.name,
+            activity: task.title,
             deadline: task.deadline,
-            estimatedTime: task.estimatedTime,
+            estimatedTime: task.estimated_time,
             criticaly: task.criticaly,
-            timeWorked:task.timeWorked
+            timeWorked:task.time_worked
         }
     })
     const onSubmit: SubmitHandler<FormDataEdit> = (data) => {
@@ -23,25 +22,11 @@ const EditCardModal = ({ closeModal, modalEditIsOpen, task, column, reloadTask }
         setTimeout(() => {
             reloadTask()
         }, 1000);
+        console.log("OK")
     };
 
     async function changeTask(data: FormDataEdit) {
-        const list = await getTask(user.idUser, column)
-        const arrayList = JSON.parse(list)
-        console.log(arrayList)
-        const newList = arrayList.map((item: TaskInterface) =>
-            item.id === task.id ? { ...item, name: data.activity, estimatedTime: data.estimatedTime, criticaly: data.criticaly, deadline: data.deadline, timeWorked: data.timeWorked } : item
-        );
-        let option: "1" | "2" | "3";
-        if (column === 'done') {
-            option = '3';
-        } else if (column === 'doing') {
-            option = '2';
-        } else {
-            option = '1';
-        }
-        const listToString = JSON.stringify(newList)
-        tasksUserReorder(user.idUser, listToString, option)
+        
         closeModal('edit')
     }
 
