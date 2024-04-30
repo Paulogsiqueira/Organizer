@@ -31,10 +31,10 @@ const Dashboard = () => {
       setDoing([])
       setDone([])
     } else {
-      const values = Object.values(allTasks as any)
-      setToDo(values[0] as any)
-      setDoing(values[1] as any)
-      setDone(values[2] as any)
+      const values = Object.values(allTasks as TaskInterface)
+      setToDo(values[0] as TaskInterface[])
+      setDoing(values[1] as TaskInterface[])
+      setDone(values[2] as TaskInterface[])
     }
 
   }
@@ -60,7 +60,7 @@ const Dashboard = () => {
     let idReload = ''
     if (parseInt(userWanted) > 0) {
       idReload = userWanted
-    }else{
+    } else {
       idReload = ownId
     }
     setTimeout(() => {
@@ -71,26 +71,64 @@ const Dashboard = () => {
   const showModalAddTask = () => {
     setAddTaskModal(true)
     setTimeout(() => {
-      const userWanted = user.userIdWanted
-      const ownId = user.idUser
-      let idReload = ''
-      if (parseInt(userWanted) > 0) {
-        idReload = userWanted
-      }else{
-        idReload = ownId
-      }
       setAddTaskModal(false)
       reloadTasks()
     }, 1000);
   }
 
   const onDragEnd = (result: any) => {
+    const initialPosition = result.source.index
+    const initialColumn = result.source.droppableId
+    if(result.destination != null) {
+      const endPosition = result.destination.index
+      const endColumn = result.destination.droppableId
+      console.log(result)
+      let dragTask = {} as TaskInterface
+      let index = 0
+      if (initialColumn == '1') {
+        index = toDo.findIndex(task => task.position === initialPosition);
+        dragTask = toDo.splice(index, 1)[0]
+      } else if (initialColumn == '2') {
+        index = doing.findIndex(task => task.position === initialPosition);
+        dragTask = doing.splice(index, 1)[0]
+      } else {
+        index = done.findIndex(task => task.position === initialPosition);
+        dragTask = done.splice(index, 1)[0]
+      }
+  
+      if (endColumn == '1') {
+        index = toDo.findIndex(task => task.position === endPosition);
+        if(index == -1) {
+          index = toDo.length
+        }
+        console.log(index)
+        toDo.forEach((task, position )=> {
+          position >= index ? task.position += 1 : ''
+        })
+        toDo.splice(index, 0, dragTask);
+      } else if (endColumn == '2') {
+        index = doing.findIndex(task => task.position === endPosition);
+        if(index == -1) {
+          index = doing.length
+        }
+        doing.forEach((task, position ) => {
+          position >= index ? task.position += 1 : ''
+        })
+        doing.splice(index, 0, dragTask);;
+      } else {
+        index = done.findIndex(task => task.position === endPosition);
+        if(index == -1) {
+          index = done.length
+        }
+        done.forEach((task, position ) => {
+          position >= index ? task.position += 1 : ''
+        })
+        done.splice(index, 0, dragTask);
+      }
+    }
+   
+
     changeTaskPosition(result.source, result.destination)
-    openModal()
-    const idWanted = parseInt(user.userIdWanted) > 0 ? user.userIdWanted : user.idUser
-    setTimeout(() => {
-      getAllTaks(idWanted);
-    }, 1000);
   }
 
   return (

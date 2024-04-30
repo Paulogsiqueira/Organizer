@@ -121,21 +121,24 @@ export const deleteTask = async (taskId:number) =>{
 export const changeTaskPosition = async (start : position,destination:position) => {
   const initialPosition = start.index
   const initialColumn = start.droppableId
-  const endPosition = destination.index
-  const endColumn = destination.droppableId
-  try {
-    const response = await Axios.post("http://localhost:3001/changeTaskPosition", {
-      initialPosition: initialPosition,
-      initialColumn: initialColumn,
-      endPosition: endPosition,
-      endColumn:  endColumn
-    });
-    
-    return response;
-  } catch (error) {
-    console.error("Erro ao processar a solicitação:", error);
-    throw error;
+  if(destination != null) {
+    const endPosition = destination.index
+    const endColumn = destination.droppableId
+    try {
+      const response = await Axios.post("http://localhost:3001/changeTaskPosition", {
+        initialPosition: initialPosition,
+        initialColumn: initialColumn,
+        endPosition: endPosition,
+        endColumn:  endColumn
+      });
+      
+      return response;
+    } catch (error) {
+      console.error("Erro ao processar a solicitação:", error);
+      throw error;
+    }
   }
+
 }
 
 
