@@ -14,10 +14,12 @@ import show from '/dashboard/show.png';
 import hide from '/dashboard/hide.png';
 import clock from '/dashboard/clock.png';
 import '@/style/dashboard/task/task.sass'
+import AddTimeModal from '../modal/AddTimeModal';
 
 const Task = ({ task, column, reloadTask }: TaskProps) => {
   const user = useSelector(selectUser)
   const [showTask, setShowTask] = useState(true)
+  const [modalAddTimeIsOpen, setModalAddTimeIsOpen] = useState(false)
   const [modalEditIsOpen, setModalEditIsOpen] = useState(false)
   const [finishModalIsOpen, setFinishModalIsOpen] = useState(false)
   const [deadlineDate, setDeadlineDate] = useState('')
@@ -41,22 +43,15 @@ const Task = ({ task, column, reloadTask }: TaskProps) => {
   const changeModal = (type: string) => {
     if (type == "edit") {
       setModalEditIsOpen(!modalEditIsOpen)
-    } else {
+    } else if(type == "add"){
+      setModalAddTimeIsOpen(!modalAddTimeIsOpen)
+    }else {
       setFinishModalIsOpen(!finishModalIsOpen)
     }
   }
 
-
   const deleteCard = (taskId: number) => {
     deleteTask(taskId)
-    const userWanted = user.userIdWanted
-    const ownId = user.idUser
-    let idReload = ''
-    if (parseInt(userWanted) > 0) {
-      idReload = userWanted
-    } else {
-      idReload = ownId
-    }
     setTimeout(() => {
       reloadTask()
     }, 0);
@@ -80,7 +75,7 @@ const Task = ({ task, column, reloadTask }: TaskProps) => {
           >
             <div className='task-button'>
               <div className='time-button'>
-                <img src={clock} alt="add worked time" onClick={() => (setShowTask(!showTask))} />
+                <img src={clock} alt="add worked time" onClick={() => (changeModal("add"))} />
               </div>
               <div className='show-button'>
                 <img src={showTask ? show : hide} alt="show" onClick={() => (setShowTask(!showTask))} />
@@ -114,6 +109,7 @@ const Task = ({ task, column, reloadTask }: TaskProps) => {
         )}
       </Draggable>
       <EditCardModal changeModal={changeModal} modalEditIsOpen={modalEditIsOpen} task={task} column={column} reloadTask={reloadTask} />
+      <AddTimeModal changeModal={changeModal} modalAddTimeIsOpen={modalAddTimeIsOpen} task={task} reloadTask={reloadTask} />
       <FinishCardModal taskId={task.task_id} changeModal={changeModal} finishModalIsOpen={finishModalIsOpen} deadlineDate={deadlineDate} deadlineHours={deadlineHours} deleteCard={deleteCard} />
     </div>
   );

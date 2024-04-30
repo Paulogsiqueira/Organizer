@@ -62,6 +62,13 @@ export interface ModalEditProps {
   reloadTask: () => void,
 }
 
+export interface ModalAddTimeProps {
+  modalAddTimeIsOpen: boolean,
+  changeModal: (type:string) => void;
+  task: TaskInterface,
+  reloadTask: () => void,
+}
+
 export interface FormDataEdit {
   activity: string;
   estimatedTime: string;

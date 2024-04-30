@@ -38,21 +38,19 @@ export const setCompletedTasks = async (idUser: string, completedTasks: string) 
   }
 }
 
-
-export const addTaskSomeone = async (idUser: string, task: TaskInterface, option: '1' | '2' | '3') => {
+export const addTimeWorked = async (timeWorked: string, taskId: string) =>{
   try {
-    const response = await Axios.post("https://organizerback.up.railway.app/addTaskSomeone", {
-      idUser: idUser,
-      task: task,
-      option: option
+    const response = await Axios.post("http://localhost:3001/addTimeWorked", {
+      taskId: taskId,
+      timeWorked: timeWorked
     });
-    const msg = response.data.msg
+    const msg = response.data.tasks
     return msg;
   } catch (error) {
     console.error("Erro ao processar a solicitação:", error);
     throw error;
   }
-};
+}
 
 export const getTasks = async (id: string, ): Promise<void> => {
   try {
