@@ -45,11 +45,11 @@ const AddTimeModal = ({ changeModal, modalAddTimeIsOpen, task, reloadTask }: Mod
                                 <div className='modal-fields' >
                                     <div >
                                         <p >Quantidade de horas</p>
-                                        <input type="text" placeholder='00 : 00' {...register("timeWorked", { required: true, pattern: /^(\d{2} : \d{2}|\d{3} : \d{2}|\d{4}|\d{5})$/, onChange: handleInputChangeTime })} />
+                                        <input type="text" placeholder='00 : 00' {...register("timeWorked", { required: true, pattern: /^(\d{2} : [0-5][0-9]|\d{3} : [0-5][0-9]|\d{4}|\d{5})$/, onChange: handleInputChangeTime })} />
                                     </div>
                                     <div className='form-error'>
-                                        {errors?.estimatedTime?.type == 'required' && <p >Campo obrigatório</p>}
-                                        {errors?.estimatedTime?.type == 'pattern' && <p >Número inválido</p>}
+                                        {errors?.timeWorked?.type == 'required' && <p >Campo obrigatório</p>}
+                                        {errors?.timeWorked?.type == 'pattern' && <p >Número inválido</p>}
                                     </div>
                                 </div>
                             </section>

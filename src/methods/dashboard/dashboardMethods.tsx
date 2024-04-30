@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { FormDataEdit, TaskInterface, position } from "@/interfaces/task";
+import { FormDataEdit, position } from "@/interfaces/task";
 import { Dispatch, SetStateAction } from 'react';
 
 /*---------------- Conexões com o Back ------------------- */

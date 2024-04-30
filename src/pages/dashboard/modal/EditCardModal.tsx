@@ -60,7 +60,7 @@ const EditCardModal = ({ changeModal, modalEditIsOpen, task, reloadTask }: Modal
                                 <div className='modal-fields' >
                                     <div >
                                         <p >Tempo estimado</p>
-                                        <input type="text" placeholder='00 : 00' {...register("estimatedTime", { required: true, pattern: /^(\d{2} : \d{2}|\d{3} : \d{2}|\d{4}|\d{5})$/, onChange: handleInputChangeTime })} />
+                                        <input type="text" placeholder='00 : 00' {...register("estimatedTime", { required: true, pattern: /^(\d{2} : [0-5][0-9]|\d{3} : [0-5][0-9]|\d{4}|\d{5})$/, onChange: handleInputChangeTime })} />
                                     </div>
                                     <div className='form-error'>
                                         {errors?.estimatedTime?.type == 'required' && <p >Campo obrigatório</p>}
