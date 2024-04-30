@@ -27,7 +27,8 @@ export interface position {
   droppableId: string;
 }
 export interface FormAdd {
-  addTaskConcluded: () => void;
+  showModalAddTask: () => void;
+  userId: string
 }
 
 export interface TaskProps {
@@ -51,7 +52,7 @@ export interface TaskProps {
 
 export interface ModalEditProps {
   modalEditIsOpen: boolean,
-  closeModal: (type:string) => void;
+  changeModal: (type:string) => void;
   task: TaskInterface,
   column: string,
   reloadTask: () => void
@@ -68,7 +69,7 @@ export interface FormDataEdit {
 
 export interface ModalFinishProps {
   finishModalIsOpen: boolean,
-  closeModal: (type: string) => void;
+  changeModal: (type: string) => void;
   deadlineDate: string;
   deadlineHours: string
   deleteCard:(id: number) => void;

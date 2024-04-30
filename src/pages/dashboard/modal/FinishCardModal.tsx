@@ -4,10 +4,10 @@ import '@/style/dashboard/modal/finishCardModal.sass'
 
 
 
-const FinishCardModal = ({ taskId,deleteCard,closeModal, finishModalIsOpen, deadlineDate, deadlineHours}: ModalFinishProps) => {
+const FinishCardModal = ({ taskId,deleteCard,changeModal, finishModalIsOpen, deadlineDate, deadlineHours}: ModalFinishProps) => {
 
     function onSubmit() {
-        closeModal("finish")
+        changeModal("finish")
         deleteCard(parseInt(taskId))
     }
 
@@ -15,7 +15,7 @@ const FinishCardModal = ({ taskId,deleteCard,closeModal, finishModalIsOpen, dead
         <div>
             <Modal
                 isOpen={finishModalIsOpen}
-                onRequestClose={() => closeModal("finish")}
+                onRequestClose={() => changeModal("finish")}
                 className='modal-content'>
                 <div className='modal'>
                     <div className='modal-finish__title'>

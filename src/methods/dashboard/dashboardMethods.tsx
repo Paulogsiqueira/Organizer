@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { TaskInterface, position } from "@/interfaces/task";
+import { FormDataEdit, TaskInterface, position } from "@/interfaces/task";
 import { Dispatch, SetStateAction } from 'react';
 
 /*---------------- Conexões com o Back ------------------- */
@@ -60,7 +60,6 @@ export const getTasks = async (id: string, ): Promise<void> => {
       userId: id
     });
     const msg = response.data.tasks
-    console.log(response.data.tasks)
     return msg;
   } catch (error) {
     console.error("Erro ao processar a solicitação:", error);
@@ -86,6 +85,25 @@ export const addTask = async (title:string,estimatedTime:string,criticaly: strin
   }
 }
 
+export const changeTask = async(data: FormDataEdit , taskId: string) =>{
+  console.log(data.estimatedTime)
+  try {
+    const response = await Axios.post("http://localhost:3001/changeTask", {
+      taskId: taskId,
+      title: data.activity,
+      timeWorked: data.timeWorked,
+      estimatedTime: data.estimatedTime,
+      criticaly: data.criticaly,
+      deadline: data.deadline   
+    });  
+    return response;
+  } catch (error) {
+    console.error("Erro ao editar Task: ", error);
+    throw error;
+  }
+
+}
+
 export const deleteTask = async (taskId:number) =>{
   try {
     const response = await Axios.post("http://localhost:3001/deleteTask", {
@@ -99,13 +117,14 @@ export const deleteTask = async (taskId:number) =>{
   }
 }
 
+
 export const changeTaskPosition = async (start : position,destination:position) => {
   const initialPosition = start.index
   const initialColumn = start.droppableId
   const endPosition = destination.index
   const endColumn = destination.droppableId
   try {
-    const response = await Axios.post("http://localhost:3001/changeTask", {
+    const response = await Axios.post("http://localhost:3001/changeTaskPosition", {
       initialPosition: initialPosition,
       initialColumn: initialColumn,
       endPosition: endPosition,

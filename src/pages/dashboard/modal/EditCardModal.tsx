@@ -1,34 +1,25 @@
 import { useForm, SubmitHandler, UseFormReturn, Controller } from 'react-hook-form';
-import { ModalEditProps, TaskInterface } from '@/interfaces/task';
+import { ModalEditProps } from '@/interfaces/task';
 import { FormDataEdit } from '@/interfaces/task';
-import { useSelector } from 'react-redux'
-import { selectUser } from '@/redux/sliceUser'
 import Modal from 'react-modal';
 import '@/style/dashboard/modal/editCardModal.sass'
+import { changeTask } from '@/methods/dashboard/dashboardMethods';
 
-const EditCardModal = ({ closeModal, modalEditIsOpen, task, reloadTask }: ModalEditProps) => {
-    const user = useSelector(selectUser)
+const EditCardModal = ({ changeModal, modalEditIsOpen, task, reloadTask }: ModalEditProps) => {
     const { register, handleSubmit, formState: { errors }, control }: UseFormReturn<FormDataEdit> = useForm<FormDataEdit>({
         defaultValues: {
             activity: task.title,
             deadline: task.deadline,
             estimatedTime: task.estimated_time,
             criticaly: task.criticaly,
-            timeWorked:task.time_worked
+            timeWorked: task.time_worked
         }
     })
     const onSubmit: SubmitHandler<FormDataEdit> = (data) => {
-        changeTask(data)
-        setTimeout(() => {
-            reloadTask()
-        }, 1000);
-        console.log("OK")
+        changeTask(data, task.task_id)
+        changeModal('edit')
+        reloadTask()
     };
-
-    async function changeTask(data: FormDataEdit) {
-        
-        closeModal('edit')
-    }
 
     const handleInputChangeTime = (e: any) => {
         let time = e.target.value.replace(/\D/g, '');
@@ -44,7 +35,7 @@ const EditCardModal = ({ closeModal, modalEditIsOpen, task, reloadTask }: ModalE
         <div>
             <Modal
                 isOpen={modalEditIsOpen}
-                onRequestClose={() => closeModal("edit")}
+                onRequestClose={() => changeModal("edit")}
                 className='modal-content'>
                 <div className='modal'>
                     <div className='modal-title'>

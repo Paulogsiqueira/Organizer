@@ -10,7 +10,6 @@ const TaskFromOtherUsers = () => {
 
     const getAllUsers = async () => {
         const users = await getUsers();
-        console.log(allUsers)
         setAllUsers(users)
     };
     useEffect(() =>{
@@ -19,7 +18,6 @@ const TaskFromOtherUsers = () => {
     
     const setWantedUser = (id: string) => {
         dispatch(wantedUser({userIdWanted:id}))
-        console.log(id)
     }
     return (
         <div>

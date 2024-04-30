@@ -9,25 +9,27 @@ import '@/style/dashboard/form/formAddTask.sass'
 import { getUsers } from '@/methods/others/othersMethods';
 import { addTask } from '@/methods/dashboard/dashboardMethods';
 
-const FormAddTask = ({ addTaskConcluded }: FormAdd) => {
+const FormAddTask = ({ showModalAddTask, userId }: FormAdd) => {
     const { register, handleSubmit, formState: { errors }, control }: UseFormReturn<FormData> = useForm<FormData>()
     const [taskForSomenone, setTaskForSomenone] = useState(false)
     const [allUsers, setAllUsers] = useState([{ idName: "Carregando..." }])
     const user = useSelector(selectUser)
 
+    const getAllUsers = async () => {
+        const users = await getUsers();
+        setAllUsers(users)
+    };
+
     useEffect(() => {
         if (taskForSomenone) {
-            const getAllUsers = async () => {
-                const users = await getUsers();
-                setAllUsers(users)
-            };
             getAllUsers();
         }
     }, [(taskForSomenone)]);
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
-        addTask(data.activity, data.estimatedTime, data.criticaly, data.column, data.deadline, data.idUser)
-        addTaskConcluded()
+        const userIdent = taskForSomenone == true ? data.idUser : userId
+        addTask(data.activity, data.estimatedTime, data.criticaly, data.column, data.deadline, userIdent)
+        showModalAddTask()
     };
 
     const handleInputChangeTime = (e: any) => {

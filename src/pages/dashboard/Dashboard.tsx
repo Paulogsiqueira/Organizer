@@ -27,7 +27,6 @@ const Dashboard = () => {
   const getAllTaks = async (id: string) => {
     const allTasks = await getTasks(id)
     const values = Object.values(allTasks as any)
-    console.log(values)
     setToDo(values[0] as any)
     setDoing(values[1] as any)
     setDone(values[2] as any)
@@ -38,7 +37,6 @@ const Dashboard = () => {
     setTimeout(() => {
       setModalChangeColumnIsOpen(false)
     }, 2000);
-
   }
 
   const closeModal = (type: string) => {
@@ -51,11 +49,11 @@ const Dashboard = () => {
 
   const reloadTasks = () => {
     setTimeout(() => {
-      getTasks(user.idUser);
+      getAllTaks(user.idUser);
     }, 100);
   }
 
-  const addTaskConcluded = () => {
+  const showModalAddTask = () => {
     setAddTaskModal(true)
     setTimeout(() => {
       setAddTaskModal(false)
@@ -75,7 +73,7 @@ const Dashboard = () => {
     <div className="dashboard-page">
       <h1>Dashboard</h1>
       <p className='dashboard-subtitle'>Organize suas tarefas para conseguir gerenciar melhor o seu tempo</p>
-      <FormAddTask addTaskConcluded={addTaskConcluded} />
+      <FormAddTask showModalAddTask={showModalAddTask} userId={user.idUser} />
       {parseInt(user.accessLevel) > 1 ? <TaskFromOtherUsers /> : null}
       <section className='dashboard'>
         <DragDropContext onDragEnd={onDragEnd}>

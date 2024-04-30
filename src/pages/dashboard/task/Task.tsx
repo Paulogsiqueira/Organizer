@@ -36,31 +36,24 @@ const Task = ({ task, column, reloadTask }: TaskProps) => {
     };
   }, [])
 
-  const openModal = (type: string) => {
+  const changeModal = (type: string) => {
     if (type == "edit") {
-      setModalEditIsOpen(true)
+      setModalEditIsOpen(!modalEditIsOpen)
     } else {
-      setFinishModalIsOpen(true)
+      setFinishModalIsOpen(!finishModalIsOpen)
     }
   }
 
-  const closeModal = (type: string) => {
-    if (type == "edit") {
-      setModalEditIsOpen(false)
-    } else {
-      setFinishModalIsOpen(false)
-    }
-  }
 
-  async function deleteCard(taskId: number) {
+  const deleteCard = (taskId: number) => {
     deleteTask(taskId)
   }
 
-  function finishTask() {
+  const finishTask = () => {
     compareAndSetDeadlineDate(task.deadline, setDeadlineDate)
     compareAndSetDeadlineHours(task.estimated_time, task.time_worked, setDeadlineHours)
     updateCompletedTasks(user.idUser, task.deadline, task.time_worked, task.estimated_time)
-    openModal("finish")
+    changeModal("finish")
   }
 
   return (
@@ -77,7 +70,7 @@ const Task = ({ task, column, reloadTask }: TaskProps) => {
                 <img src={showTask ? show : hide} alt="show" onClick={() => (setShowTask(!showTask))} />
               </div>
               <div className='edit-button'>
-                <img src={editButton} alt="edit button" onClick={() => (openModal("edit"))} />
+                <img src={editButton} alt="edit button" onClick={() => (changeModal("edit"))} />
               </div>
               <div style={{ display: column == "done" ? 'inline' : 'none' }} className='finish-button' onClick={() => (finishTask())}>
                 <img src={finish} alt="finish card" />
@@ -101,8 +94,8 @@ const Task = ({ task, column, reloadTask }: TaskProps) => {
           </div>
         )}
       </Draggable>
-      <EditCardModal closeModal={closeModal} modalEditIsOpen={modalEditIsOpen} task={task} column={column} reloadTask={reloadTask} />
-      <FinishCardModal taskId={task.task_id} closeModal={closeModal} finishModalIsOpen={finishModalIsOpen} deadlineDate={deadlineDate} deadlineHours={deadlineHours} deleteCard={deleteCard} />
+      <EditCardModal changeModal={changeModal} modalEditIsOpen={modalEditIsOpen} task={task} column={column} reloadTask={reloadTask} />
+      <FinishCardModal taskId={task.task_id} changeModal={changeModal} finishModalIsOpen={finishModalIsOpen} deadlineDate={deadlineDate} deadlineHours={deadlineHours} deleteCard={deleteCard} />
     </div>
   );
 }
