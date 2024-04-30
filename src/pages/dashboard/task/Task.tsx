@@ -12,6 +12,7 @@ import editButton from '/dashboard/edit.png';
 import finish from '/dashboard/finish.png';
 import show from '/dashboard/show.png';
 import hide from '/dashboard/hide.png';
+import clock from '/dashboard/clock.png';
 import '@/style/dashboard/task/task.sass'
 
 const Task = ({ task, column, reloadTask }: TaskProps) => {
@@ -24,6 +25,7 @@ const Task = ({ task, column, reloadTask }: TaskProps) => {
   const parts = task.deadline.split('-');
   const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
   const formatedCriticaly = task.criticaly == '1' ? 'Baixa' : task.criticaly == '2' ? 'Média' : 'Alta'
+  const formatedType = task.type == '1' ? 'Trabalho' : task.type == '2' ? 'Retrabalho' : task.type == '3' ? 'Suporte' : 'Reunião'
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
   useEffect(() => {
@@ -47,6 +49,17 @@ const Task = ({ task, column, reloadTask }: TaskProps) => {
 
   const deleteCard = (taskId: number) => {
     deleteTask(taskId)
+    const userWanted = user.userIdWanted
+    const ownId = user.idUser
+    let idReload = ''
+    if (parseInt(userWanted) > 0) {
+      idReload = userWanted
+    } else {
+      idReload = ownId
+    }
+    setTimeout(() => {
+      reloadTask()
+    }, 0);
   }
 
   const finishTask = () => {
@@ -66,6 +79,9 @@ const Task = ({ task, column, reloadTask }: TaskProps) => {
             ref={provided.innerRef}
           >
             <div className='task-button'>
+              <div className='time-button'>
+                <img src={clock} alt="add worked time" onClick={() => (setShowTask(!showTask))} />
+              </div>
               <div className='show-button'>
                 <img src={showTask ? show : hide} alt="show" onClick={() => (setShowTask(!showTask))} />
               </div>
@@ -83,6 +99,9 @@ const Task = ({ task, column, reloadTask }: TaskProps) => {
             <div style={{ display: showTask ? 'inline' : 'none' }}>
               <div className='card-fields'>
                 <p className='dashboard-subtitle'>{windowWidth > 1420 ? 'Data Limite' : 'D. Limite'}: {formattedDate}</p>
+              </div>
+              <div className='card-fields'>
+                <p className='dashboard-subtitle'>Tipo: {formatedType}</p>
                 <p className='dashboard-subtitle'><span className={formatedCriticaly === "Baixa" ? "lowCrit" : formatedCriticaly === "Média" ? "mediumCrit" : "highCrit"}>{windowWidth > 1420 ? 'Criticidade' : 'Critic.'}: {formatedCriticaly}</span></p>
               </div>
               <div className='card-fields'>

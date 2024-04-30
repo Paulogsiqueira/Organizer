@@ -11,6 +11,7 @@ export interface TaskInterface {
   completed: boolean;
   delivery_date: string;
   position: string;
+  type: string;
 }
 
 export interface FormData {
@@ -19,7 +20,9 @@ export interface FormData {
   criticaly: string;
   column: "1" | "2" | "3";
   deadline: string;
-  idUser: string
+  idUser: string;
+  type: string
+
 }
 
 export interface position {
@@ -44,6 +47,7 @@ export interface TaskProps {
     completed: boolean;
     delivery_date: string;
     position: string;
+    type: string
 
   },
   column: string,
@@ -55,7 +59,7 @@ export interface ModalEditProps {
   changeModal: (type:string) => void;
   task: TaskInterface,
   column: string,
-  reloadTask: () => void
+  reloadTask: () => void,
 }
 
 export interface FormDataEdit {
@@ -65,6 +69,7 @@ export interface FormDataEdit {
   column: "1" | "2" | "3";
   deadline: string;
   timeWorked: string;
+  type: string
 }
 
 export interface ModalFinishProps {

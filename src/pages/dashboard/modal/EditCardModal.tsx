@@ -12,7 +12,8 @@ const EditCardModal = ({ changeModal, modalEditIsOpen, task, reloadTask }: Modal
             deadline: task.deadline,
             estimatedTime: task.estimated_time,
             criticaly: task.criticaly,
-            timeWorked: task.time_worked
+            timeWorked: task.time_worked,
+            type: task.type
         }
     })
     const onSubmit: SubmitHandler<FormDataEdit> = (data) => {
@@ -59,26 +60,42 @@ const EditCardModal = ({ changeModal, modalEditIsOpen, task, reloadTask }: Modal
                                 <div className='modal-fields' >
                                     <div >
                                         <p >Tempo estimado</p>
-                                        <input type="text" placeholder='00:00' {...register("estimatedTime", { required: true, pattern: /^(\d{2} : \d{2}|\d{3} : \d{2}|\d{4}|\d{5})$/, onChange: handleInputChangeTime })} />
+                                        <input type="text" placeholder='00 : 00' {...register("estimatedTime", { required: true, pattern: /^(\d{2} : \d{2}|\d{3} : \d{2}|\d{4}|\d{5})$/, onChange: handleInputChangeTime })} />
                                     </div>
                                     <div className='form-error'>
                                         {errors?.estimatedTime?.type == 'required' && <p >Campo obrigatório</p>}
                                         {errors?.estimatedTime?.type == 'pattern' && <p >Número inválido</p>}
                                     </div>
                                 </div>
-                                <div className='modal-fields'>
+                                <div className='modal-fields' >
                                     <div >
-                                        <p >Tempo trabalhado</p>
-                                        <input type="text" placeholder='00:00' {...register("timeWorked", { required: false, pattern: /^(\d{2} : \d{2}|\d{3} : \d{2}|\d{4}|\d{5})$/, onChange: handleInputChangeTime })} />
-                                    </div>
-                                    <div className='form-error'>
-                                        {errors?.estimatedTime?.type == 'required' && <p >Campo obrigatório</p>}
-                                        {errors?.estimatedTime?.type == 'pattern' && <p >Número inválido</p>}
+                                        <p>Tipo</p>
+                                        <Controller
+                                            name="type"
+                                            control={control}
+                                            render={({ field }) => (
+                                                <select {...field}>
+                                                    <option value='1'>Trabalho</option>
+                                                    <option value='2'>Retrabalho</option>
+                                                    <option value='3'>Suporte</option>
+                                                    <option value='4'>Reunião</option>
+                                                </select>
+                                            )}
+                                        />
                                     </div>
                                 </div>
 
                             </section>
                             <section className='modal-section'>
+                                <div className='modal-fields'>
+                                    <div >
+                                        <p >Data Limite</p>
+                                        <input type="date" className='deadline-input'{...register("deadline", { required: true })} />
+                                    </div>
+                                    <div className='form-error'>
+                                        {errors?.deadline?.type == 'required' && <p >Campo obrigatório</p>}
+                                    </div>
+                                </div>
                                 <div className='modal-fields' >
                                     <div >
                                         <p>Criticidade</p>
@@ -93,15 +110,6 @@ const EditCardModal = ({ changeModal, modalEditIsOpen, task, reloadTask }: Modal
                                                 </select>
                                             )}
                                         />
-                                    </div>
-                                </div>
-                                <div className='modal-fields'>
-                                    <div >
-                                        <p >Data Limite</p>
-                                        <input type="date" className='deadline-input'{...register("deadline", { required: true })} />
-                                    </div>
-                                    <div className='form-error'>
-                                        {errors?.deadline?.type == 'required' && <p >Campo obrigatório</p>}
                                     </div>
                                 </div>
                             </section>

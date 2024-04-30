@@ -28,7 +28,7 @@ const FormAddTask = ({ showModalAddTask, userId }: FormAdd) => {
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         const userIdent = taskForSomenone == true ? data.idUser : userId
-        addTask(data.activity, data.estimatedTime, data.criticaly, data.column, data.deadline, userIdent)
+        addTask(data.activity, data.estimatedTime, data.criticaly, data.column, data.deadline, userIdent, data.type)
         showModalAddTask()
     };
 
@@ -81,6 +81,24 @@ const FormAddTask = ({ showModalAddTask, userId }: FormAdd) => {
                                         <option value='1'>Baixa</option>
                                         <option value='2'>Média</option>
                                         <option value='3'>Alta</option>
+                                    </select>
+                                )}
+                            />
+                        </div>
+                    </div>
+                    <div className='form-input__veryshort'>
+                        <div className='input-button input-list'>
+                            <p>Tipo:</p>
+                            <Controller
+                                name="type"
+                                control={control}
+                                defaultValue="1"
+                                render={({ field }) => (
+                                    <select {...field}>
+                                        <option value='1'>Trabalho</option>
+                                        <option value='2'>Retrabalho</option>
+                                        <option value='3'>Suporte</option>
+                                        <option value='4'>Reunião</option>
                                     </select>
                                 )}
                             />

@@ -67,15 +67,16 @@ export const getTasks = async (id: string, ): Promise<void> => {
   }
 }
 
-export const addTask = async (title:string,estimatedTime:string,criticaly: string,column:string,deadline:string,userId:string) =>{
+export const addTask = async (title:string,estimatedTime:string,criticaly: string,column:string,deadline:string,userId:string,type:string) =>{
   try {
     const response = await Axios.post("http://localhost:3001/addTask", {
       title: title,
       userId:userId,
       column:column,
       estimatedTime:estimatedTime,
-      criticaly: criticaly,
-      deadline:deadline
+      criticaly: parseInt(criticaly),
+      deadline:deadline,
+      type:parseInt(type)
     });
     
     return response;
@@ -94,7 +95,8 @@ export const changeTask = async(data: FormDataEdit , taskId: string) =>{
       timeWorked: data.timeWorked,
       estimatedTime: data.estimatedTime,
       criticaly: data.criticaly,
-      deadline: data.deadline   
+      deadline: data.deadline,
+      type: data.type
     });  
     return response;
   } catch (error) {

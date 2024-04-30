@@ -26,10 +26,17 @@ const Dashboard = () => {
 
   const getAllTaks = async (id: string) => {
     const allTasks = await getTasks(id)
-    const values = Object.values(allTasks as any)
-    setToDo(values[0] as any)
-    setDoing(values[1] as any)
-    setDone(values[2] as any)
+    if (allTasks === undefined) {
+      setToDo([])
+      setDoing([])
+      setDone([])
+    } else {
+      const values = Object.values(allTasks as any)
+      setToDo(values[0] as any)
+      setDoing(values[1] as any)
+      setDone(values[2] as any)
+    }
+
   }
 
   const openModal = () => {
@@ -48,15 +55,32 @@ const Dashboard = () => {
   }
 
   const reloadTasks = () => {
+    const userWanted = user.userIdWanted
+    const ownId = user.idUser
+    let idReload = ''
+    if (parseInt(userWanted) > 0) {
+      idReload = userWanted
+    }else{
+      idReload = ownId
+    }
     setTimeout(() => {
-      getAllTaks(user.idUser);
+      getAllTaks(idReload);
     }, 100);
   }
 
   const showModalAddTask = () => {
     setAddTaskModal(true)
     setTimeout(() => {
+      const userWanted = user.userIdWanted
+      const ownId = user.idUser
+      let idReload = ''
+      if (parseInt(userWanted) > 0) {
+        idReload = userWanted
+      }else{
+        idReload = ownId
+      }
       setAddTaskModal(false)
+      reloadTasks()
     }, 1000);
   }
 
