@@ -1,7 +1,4 @@
-import { compareAndSetDeadlineHours, compareAndSetDeadlineDate, deleteTask } from '@/methods/dashboard/dashboardMethods';
-import { updateCompletedTasks } from '@/methods/dashboard/dashboardMethods';
-import { useSelector } from 'react-redux'
-import { selectUser } from '@/redux/sliceUser'
+import { changeTaskStatus } from '@/methods/dashboard/dashboardMethods';
 import { TaskProps } from '@/interfaces/task';
 import { Draggable } from 'react-beautiful-dnd';
 import { useEffect, useState } from 'react';
@@ -17,13 +14,10 @@ import '@/style/dashboard/task/task.sass'
 import AddTimeModal from '../modal/AddTimeModal';
 
 const Task = ({ task, column, reloadTask }: TaskProps) => {
-  const user = useSelector(selectUser)
   const [showTask, setShowTask] = useState(true)
   const [modalAddTimeIsOpen, setModalAddTimeIsOpen] = useState(false)
   const [modalEditIsOpen, setModalEditIsOpen] = useState(false)
   const [finishModalIsOpen, setFinishModalIsOpen] = useState(false)
-  const [deadlineDate, setDeadlineDate] = useState('')
-  const [deadlineHours, setDeadlineHours] = useState('')
   const parts = task.deadline.split('-');
   const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
   const formatedCriticaly = task.criticaly == '1' ? 'Baixa' : task.criticaly == '2' ? 'Média' : 'Alta'
@@ -50,17 +44,14 @@ const Task = ({ task, column, reloadTask }: TaskProps) => {
     }
   }
 
-  const deleteCard = (taskId: number) => {
-    deleteTask(taskId)
+  const changeCardStatus = (taskId: number, situation: number) => {
+    changeTaskStatus(taskId,situation)
     setTimeout(() => {
       reloadTask()
     }, 0);
   }
 
   const finishTask = () => {
-    compareAndSetDeadlineDate(task.deadline, setDeadlineDate)
-    compareAndSetDeadlineHours(task.estimated_time, task.time_worked, setDeadlineHours)
-    updateCompletedTasks(user.idUser, task.deadline, task.time_worked, task.estimated_time)
     changeModal("finish")
   }
 
@@ -86,7 +77,7 @@ const Task = ({ task, column, reloadTask }: TaskProps) => {
               <div style={{ display: column == "done" ? 'inline' : 'none' }} className='finish-button' onClick={() => (finishTask())}>
                 <img src={finish} alt="finish card" />
               </div >
-              <div className='delete-button' onClick={() => (deleteCard(parseInt(task.task_id)))}>
+              <div className='delete-button' onClick={() => (changeCardStatus(parseInt(task.task_id), 2))}>
                 <img src={deleteButton} alt="delete button" />
               </div>
             </div>
@@ -110,7 +101,7 @@ const Task = ({ task, column, reloadTask }: TaskProps) => {
       </Draggable>
       <EditCardModal changeModal={changeModal} modalEditIsOpen={modalEditIsOpen} task={task} column={column} reloadTask={reloadTask} />
       <AddTimeModal changeModal={changeModal} modalAddTimeIsOpen={modalAddTimeIsOpen} task={task} reloadTask={reloadTask} />
-      <FinishCardModal taskId={task.task_id} changeModal={changeModal} finishModalIsOpen={finishModalIsOpen} deadlineDate={deadlineDate} deadlineHours={deadlineHours} deleteCard={deleteCard} />
+      <FinishCardModal taskId={task.task_id} changeModal={changeModal} finishModalIsOpen={finishModalIsOpen} changeCardStatus={changeCardStatus} />
     </div>
   );
 }

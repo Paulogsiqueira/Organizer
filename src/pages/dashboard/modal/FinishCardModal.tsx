@@ -4,11 +4,11 @@ import '@/style/dashboard/modal/finishCardModal.sass'
 
 
 
-const FinishCardModal = ({ taskId,deleteCard,changeModal, finishModalIsOpen, deadlineDate, deadlineHours}: ModalFinishProps) => {
+const FinishCardModal = ({ taskId,changeCardStatus,changeModal, finishModalIsOpen}: ModalFinishProps) => {
 
     function onSubmit() {
         changeModal("finish")
-        deleteCard(parseInt(taskId))
+        changeCardStatus(parseInt(taskId), 1)
     }
 
     return (
@@ -23,21 +23,8 @@ const FinishCardModal = ({ taskId,deleteCard,changeModal, finishModalIsOpen, dea
                     </div>
                     <div className='modal-body'>
                         <p className='modal-body__text'>A tarefa foi finalizada e os dados foram guardados para gerarem estatísticas</p>
-                        <p className='modal-body__text'> Você encerrou a tarefa
-                            {deadlineDate === "in-time" ? (
-                                <span className="in-time"> DENTRO </span>
-                            ) : (
-                                <span className="out-time"> FORA </span>
-                            )}
-                            da data limite e
-                            {deadlineHours === "in-time" ? (
-                                <span className="in-time"> DENTRO </span>
-                            ) : (
-                                <span className="out-time"> FORA </span>
-                            )}
-                            das horas estimadas</p>
                         <div className='modal-button'>
-                            <button type="submit" onClick={() => (onSubmit())}>Concluir</button>
+                            <button type="submit" onClick={() => (onSubmit())}>Confirmar</button>
                         </div>
                     </div>
                 </div>

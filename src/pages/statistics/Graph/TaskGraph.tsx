@@ -9,9 +9,9 @@ const TaskGraph = () => {
     const [completedTasks, setCompletedTasks] = useState({inTime: 0, outTime: 0, extraMinutes: 0, payedMinutes: 0});
 
     const loadCompletedTasks = async () => {
-        const stringCompletedTasks = await getCompletedTasks(user.idUser);
-        const obCompletedTasks = JSON.parse(stringCompletedTasks);
-        setCompletedTasks(obCompletedTasks);
+        console.log(user.idUser)
+        getCompletedTasks(user.idUser);
+
     }
 
     useEffect(() => {

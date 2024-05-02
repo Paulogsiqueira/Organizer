@@ -36,22 +36,10 @@ const Dashboard = () => {
       setDoing(values[1] as TaskInterface[])
       setDone(values[2] as TaskInterface[])
     }
-
   }
 
-  const openModal = () => {
-    setModalChangeColumnIsOpen(true)
-    setTimeout(() => {
-      setModalChangeColumnIsOpen(false)
-    }, 2000);
-  }
-
-  const closeModal = (type: string) => {
-    if (type == "Change Column") {
-      setModalChangeColumnIsOpen(false)
-    } else {
-      setAddTaskModal(false)
-    }
+  const closeModal = () => {
+    setModalChangeColumnIsOpen(false)
   }
 
   const reloadTasks = () => {
@@ -92,6 +80,8 @@ const Dashboard = () => {
       if (index == -1) {
         index = columnFinal.length
       }
+      dragTask.position = endPosition
+      dragTask.column = endColumn
       columnFinal.forEach((task, position) => {
         position >= index ? task.position += 1 : ''
       })

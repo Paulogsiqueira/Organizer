@@ -82,8 +82,6 @@ export interface FormDataEdit {
 export interface ModalFinishProps {
   finishModalIsOpen: boolean,
   changeModal: (type: string) => void;
-  deadlineDate: string;
-  deadlineHours: string
-  deleteCard:(id: number) => void;
+  changeCardStatus:(id: number, situation: number) => void;
   taskId: string;
 }

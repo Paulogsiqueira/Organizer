@@ -6,7 +6,7 @@ const AddTaskSomeoneModal: React.FC<{ modalAddTaskSomeoneIsOpen: boolean, closeM
         <div>
             <Modal
                 isOpen={modalAddTaskSomeoneIsOpen}
-                onRequestClose={() => closeModal("addTask")}
+                onRequestClose={() => closeModal}
                 className='modal-content'>
                 <div className='modal'>
                     <div className='modal-finish__title'>
