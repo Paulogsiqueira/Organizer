@@ -79,56 +79,28 @@ const Dashboard = () => {
   const onDragEnd = (result: any) => {
     const initialPosition = result.source.index
     const initialColumn = result.source.droppableId
-    if(result.destination != null) {
+    if (result.destination != null) {
       const endPosition = result.destination.index
       const endColumn = result.destination.droppableId
-      console.log(result)
       let dragTask = {} as TaskInterface
       let index = 0
-      if (initialColumn == '1') {
-        index = toDo.findIndex(task => task.position === initialPosition);
-        dragTask = toDo.splice(index, 1)[0]
-      } else if (initialColumn == '2') {
-        index = doing.findIndex(task => task.position === initialPosition);
-        dragTask = doing.splice(index, 1)[0]
-      } else {
-        index = done.findIndex(task => task.position === initialPosition);
-        dragTask = done.splice(index, 1)[0]
-      }
-  
-      if (endColumn == '1') {
-        index = toDo.findIndex(task => task.position === endPosition);
-        if(index == -1) {
-          index = toDo.length
-        }
-        console.log(index)
-        toDo.forEach((task, position )=> {
-          position >= index ? task.position += 1 : ''
-        })
-        toDo.splice(index, 0, dragTask);
-      } else if (endColumn == '2') {
-        index = doing.findIndex(task => task.position === endPosition);
-        if(index == -1) {
-          index = doing.length
-        }
-        doing.forEach((task, position ) => {
-          position >= index ? task.position += 1 : ''
-        })
-        doing.splice(index, 0, dragTask);;
-      } else {
-        index = done.findIndex(task => task.position === endPosition);
-        if(index == -1) {
-          index = done.length
-        }
-        done.forEach((task, position ) => {
-          position >= index ? task.position += 1 : ''
-        })
-        done.splice(index, 0, dragTask);
-      }
-    }
-   
+      let columnInitial = initialColumn == 1 ? toDo : initialColumn == 2 ? doing : done
+      let columnFinal = endColumn == 1 ? toDo : endColumn == 2 ? doing : done
 
-    changeTaskPosition(result.source, result.destination)
+      index = columnInitial.findIndex(task => task.position === initialPosition);
+      dragTask = columnInitial.splice(index, 1)[0]
+
+      index = columnFinal.findIndex(task => task.position === endPosition);
+      if (index == -1) {
+        index = columnFinal.length
+      }
+      columnFinal.forEach((task, position) => {
+        position >= index ? task.position += 1 : ''
+      })
+      columnFinal.splice(index, 0, dragTask);
+
+      changeTaskPosition(result.source, result.destination)
+    }
   }
 
   return (
