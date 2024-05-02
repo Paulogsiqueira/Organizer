@@ -82,13 +82,11 @@ const Dashboard = () => {
     if (result.destination != null) {
       const endPosition = result.destination.index
       const endColumn = result.destination.droppableId
-      let dragTask = {} as TaskInterface
-      let index = 0
       let columnInitial = initialColumn == 1 ? toDo : initialColumn == 2 ? doing : done
       let columnFinal = endColumn == 1 ? toDo : endColumn == 2 ? doing : done
 
-      index = columnInitial.findIndex(task => task.position === initialPosition);
-      dragTask = columnInitial.splice(index, 1)[0]
+      let index = columnInitial.findIndex(task => task.position === initialPosition);
+      let dragTask = columnInitial.splice(index, 1)[0]
 
       index = columnFinal.findIndex(task => task.position === endPosition);
       if (index == -1) {
