@@ -85,3 +85,14 @@ export interface ModalFinishProps {
   changeCardStatus:(id: number, situation: number) => void;
   taskId: string;
 }
+
+export interface completedTasks{
+  taskId: number,
+  type: number,
+  deadline: string,
+  deliveryDate: string,
+  estimatedTime: string,
+  timeWorked: string
+  extraTime: string,
+  deliveryStatus: string
+}

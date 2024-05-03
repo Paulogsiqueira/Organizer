@@ -1,50 +1,51 @@
 import ReactApexChart from "react-apexcharts";
-import { getCompletedTasks } from "@/methods/dashboard/dashboardMethods";
-import { selectUser } from '@/redux/sliceUser';
-import { useSelector } from 'react-redux';
 import { useState, useEffect } from "react";
+import { completedTasks } from "@/interfaces/task";
 
-const TaskGraph = () => {
-    const user = useSelector(selectUser);
-    const [completedTasks, setCompletedTasks] = useState({inTime: 0, outTime: 0, extraMinutes: 0, payedMinutes: 0});
+const TaskGraph = ({ completedTasksList }: { completedTasksList: completedTasks[] }) => {
 
-    const loadCompletedTasks = async () => {
-        console.log(user.idUser)
-        getCompletedTasks(user.idUser);
+    const [deliveryTasks ,setDeliveryTasks] = useState({inTime: 0, outTime: 0});
 
+    const withinOrOutsideTheDeadline = async () => {
+       completedTasksList.forEach(task => {
+        if(task.deliveryStatus == "out-of-time"){
+            setDeliveryTasks(prevState => ({
+                ...prevState,
+                outTime: prevState.outTime + 1
+              }));
+        }else{
+            setDeliveryTasks(prevState => ({
+                ...prevState,
+                inTime: prevState.inTime + 1
+              }));
+        }
+       })
     }
 
     useEffect(() => {
-        loadCompletedTasks();
-      }, []);
+        withinOrOutsideTheDeadline();
+      }, [completedTasksList]);
 
     const state = {
-        series: [completedTasks.inTime, completedTasks.outTime],
+        series: [deliveryTasks.inTime, deliveryTasks.outTime],
         options: {
-            chart: {
-                width: 380,
-                type: 'pie',
-            },
-            labels: ['Entregues no prazo', 'Entregues atrasada'],
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
+            labels: ['No prazo', 'Atrasada'],
+            legend:{
+                position: 'right',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                labels:{
+                    colors: '#5ABFA6'
                 }
-            }]
+                
+            }
         } as ApexCharts.ApexOptions
     };
 
     return (
-        <div>
-            <h3 className="graph-title">Tarefas Entregues</h3>
-            <ReactApexChart options={state.options} series={state.series} type="pie" />
-            <h4 className="graph-title">Total de tarefas : {completedTasks.inTime + completedTasks.outTime}</h4>
+        <div className="graph-content">
+            <h3 className="graph-title">Prazo de Tarefas Entregues</h3>
+            <ReactApexChart options={state.options} series={state.series} type='pie' />
         </div>
     );
 }

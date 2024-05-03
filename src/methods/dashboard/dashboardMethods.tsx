@@ -11,12 +11,7 @@ export const getCompletedTasks = async (userId: string) => {
     });
 
     const completedtasks = response.data.tasks;
-    console.log(completedtasks)
-    // if (userInfo[0].completedTasks == null || userInfo[0].completedTasks == "") {
-    //   return '{"inTime":0,"outTime":0,"extraMinutes":0,"payedMinutes":0}'
-    // } else {
-    //   return userInfo[0].completedTasks
-    // }
+    return completedtasks
   } catch (error) {
     console.error("Erro ao processar a solicitação:", error);
     throw error;
@@ -127,11 +122,7 @@ export const changeTaskPosition = async (start : position,destination:position) 
 
 }
 
-export const convertToMinutes = (timeStr: string) => {
-  const [hours, minutes] = timeStr.split(':').map(Number);
-  const totalMinutes = hours * 60 + minutes;
-  return totalMinutes > 1 ? totalMinutes : 0
-}
+
 
 
 
