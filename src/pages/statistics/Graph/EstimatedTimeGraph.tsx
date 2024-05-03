@@ -49,7 +49,7 @@ const HourGraph = ({ completedTasksList }: { completedTasksList: completedTasks[
     return (
         <div className="graph-content">
             <h3 className="graph-title">Tarefas que Excederam a Estimativa de Horas</h3>
-            <ReactApexChart class="grafico" options={state.options} series={state.series} type='pie'  />
+            <ReactApexChart options={state.options} series={state.series} type='pie'  />
         </div>
     );
 };

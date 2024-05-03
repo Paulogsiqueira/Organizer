@@ -10,7 +10,7 @@
         text-align: center
         padding-top: 30px
         font-size: 28px
-        padding-bottom: 20px
+        padding-bottom: 40px
     .graphboard-info
         padding: 20px 0 40px 40px
         color: variables.$medium-color
@@ -21,3 +21,46 @@
         flex-wrap: wrap
         justify-content: space-evenly
         padding-bottom: 50px
+
+.graphboard-form
+    display: flex
+    margin-left: 20px
+    .graphboard-field
+        display: flex
+        flex-direction: row
+        input
+            margin: 0 10px
+            border-radius: 10px
+            width: 150px
+            height: 25px
+            padding: 10px
+            border: 2px solid variables.$medium-dark-color
+        p
+            color: variables.$medium-color
+            font-weight: bold
+            font-size: 18px
+    .graphboard-error
+        height: 25px
+        display: flex
+        align-items: center
+        justify-content: end
+        width: 100%
+        .first-input
+            padding-right: 10%
+        .second-input
+            padding-right: 15%
+        p
+            color: variables.$red
+            font-size: 12px
+.btn-filter
+    width: 10%
+    height: 35px
+    border: none
+    border-radius: 15px
+    color: variables.$white-color
+    background: variables.$medium-color
+    font-size: 18px
+    &:hover
+        background: variables.$medium-two-color
+        cursor: pointer
+        scale: 1.1
