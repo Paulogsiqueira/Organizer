@@ -2,7 +2,7 @@ import Axios from "axios";
 
 export const changeInfo = async (id: string, name: string, email: string, password: string, newPassword: string) => {
     try {
-        const response = await Axios.post("http://localhost:3001/editUser", {
+        const response = await Axios.post("https://organizerback.up.railway.app/editUser", {
             userId: id,
             name: name,
             email: email,
@@ -19,7 +19,7 @@ export const changeInfo = async (id: string, name: string, email: string, passwo
 
 export const userLogin = async (email: string, password: string) => {
     try {
-        const response = await Axios.post("http://localhost:3001/login", {
+        const response = await Axios.post("https://organizerback.up.railway.app/login", {
             email: email,
             password: password
         });
@@ -49,7 +49,7 @@ export const userLogin = async (email: string, password: string) => {
 
 export const userRegister = async (name: string, email: string, password: string, confirmPassword: string) => {
     try {
-        const response = await Axios.post("http://localhost:3001/register", {
+        const response = await Axios.post("https://organizerback.up.railway.app/register", {
             name: name,
             email: email,
             password: password,

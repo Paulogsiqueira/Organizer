@@ -8,7 +8,7 @@ export const cleanMessage = (func: Function, text: string, time: number) => {
 
 export const userInfo = async  (idUser:string) =>{
     try {
-        const response = await Axios.post("http://localhost:3001/userInfo", {
+        const response = await Axios.post("https://organizerback.up.railway.app/userInfo", {
             idUser:idUser
         });
 
@@ -36,7 +36,7 @@ export const userInfo = async  (idUser:string) =>{
 
 export const getUsers = async () =>{
     try {
-        const response = await Axios.post("http://localhost:3001/getUsers");
+        const response = await Axios.post("https://organizerback.up.railway.app/getUsers");
 
         const msg = response.data.msg;
         const users = response.data.user;

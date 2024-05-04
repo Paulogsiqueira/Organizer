@@ -6,7 +6,7 @@ import { FormDataEdit, position } from "@/interfaces/task";
 
 export const getCompletedTasks = async (userId: string) => {
   try {
-    const response = await Axios.post("http://localhost:3001/getCompletedTasks", {
+    const response = await Axios.post("https://organizerback.up.railway.app/getCompletedTasks", {
       userId: userId
     });
 
@@ -20,7 +20,7 @@ export const getCompletedTasks = async (userId: string) => {
 
 export const addTimeWorked = async (timeWorked: string, taskId: string) =>{
   try {
-    const response = await Axios.post("http://localhost:3001/addTimeWorked", {
+    const response = await Axios.post("https://organizerback.up.railway.app/addTimeWorked", {
       taskId: taskId,
       timeWorked: timeWorked
     });
@@ -34,7 +34,7 @@ export const addTimeWorked = async (timeWorked: string, taskId: string) =>{
 
 export const getTasks = async (id: string, ): Promise<void> => {
   try {
-    const response = await Axios.post("http://localhost:3001/allTasks", {
+    const response = await Axios.post("https://organizerback.up.railway.app/allTasks", {
       userId: id
     });
     const msg = response.data.tasks
@@ -47,7 +47,7 @@ export const getTasks = async (id: string, ): Promise<void> => {
 
 export const addTask = async (title:string,estimatedTime:string,criticaly: string,column:string,deadline:string,userId:string,type:string) =>{
   try {
-    const response = await Axios.post("http://localhost:3001/addTask", {
+    const response = await Axios.post("https://organizerback.up.railway.app/addTask", {
       title: title,
       userId:userId,
       column:column,
@@ -67,7 +67,7 @@ export const addTask = async (title:string,estimatedTime:string,criticaly: strin
 export const changeTask = async(data: FormDataEdit , taskId: string) =>{
   console.log(data.estimatedTime)
   try {
-    const response = await Axios.post("http://localhost:3001/changeTask", {
+    const response = await Axios.post("https://organizerback.up.railway.app/changeTask", {
       taskId: taskId,
       title: data.activity,
       timeWorked: data.timeWorked,
@@ -86,7 +86,7 @@ export const changeTask = async(data: FormDataEdit , taskId: string) =>{
 
 export const changeTaskStatus = async (taskId:number, situation: number) =>{
   try {
-    const response = await Axios.post("http://localhost:3001/changeTaskStatus", {
+    const response = await Axios.post("https://organizerback.up.railway.app/changeTaskStatus", {
       taskId : taskId,
       situation : situation
     });
@@ -106,7 +106,7 @@ export const changeTaskPosition = async (start : position,destination:position) 
     const endPosition = destination.index
     const endColumn = destination.droppableId
     try {
-      const response = await Axios.post("http://localhost:3001/changeTaskPosition", {
+      const response = await Axios.post("https://organizerback.up.railway.app/changeTaskPosition", {
         initialPosition: initialPosition,
         initialColumn: initialColumn,
         endPosition: endPosition,
