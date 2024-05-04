@@ -68,7 +68,7 @@ const FormAddTask = ({ showModalAddTask, userId }: FormAdd) => {
                         </div>
                     </div>
                 </section>
-                <section className='form-section__2'>
+                <section className='form-section'>
                     <div className='form-input__veryshort'>
                         <div className='input-button input-list'>
                             <p>Criticidade:</p>
@@ -131,7 +131,7 @@ const FormAddTask = ({ showModalAddTask, userId }: FormAdd) => {
                         </div>
                     </div>
                 </section>
-                <section style={{ display: user.accessLevel == "2" ? 'flex' : 'none' }}>
+                <section className="sectionForSomeone" style={{ display: user.accessLevel == "2" ? 'flex' : 'none' }}>
                     <div className='taskForSomenone-checkbox'>
                         <FormControlLabel control={<Checkbox sx={{ color: '#5ABFA6', '&.Mui-checked': { color: '#5ABFA6' } }} onChange={() => { setTaskForSomenone(!taskForSomenone) }} />} label="Adicionar tarefa para outra pessoa" />
                     </div>

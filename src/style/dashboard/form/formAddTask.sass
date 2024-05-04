@@ -16,6 +16,12 @@
         padding: 5px
         margin-bottom: 10px
 
+.input-list
+    margin-bottom: 20px
+
+.sectionForSomeone
+    margin-top: 20px
+
 .dashboard-form__body
     padding: 10px
     section
@@ -96,7 +102,7 @@
         color: variables.$red
         font-size: 12px
 
-.form-section__2
+.form-section
     display: flex
     flex-direction: row
 
@@ -130,6 +136,12 @@
         border: 1px solid #c4c3c3
         height: 25px
 
+@media (max-width: 1130px)
+    .form-section
+        flex-wrap: wrap
+        min-height: 80px
+    .input-short__date
+
 @media (max-width: 970px)
     .dashboard-form
         width: 90%
@@ -151,8 +163,8 @@
             width: 60px
 
 @media (max-width: 550px)
-    .form-section__2
-        flex-direction: column
+    .form-section
+
         text-align: center
         align-items: center
         margin: 30px 0
@@ -169,6 +181,14 @@
             font-size: 12px
     .form-input__short
         min-width: 230px
+
+    .input-title__date
+        min-width: 80px
+
+    .form-input__short
+        width: 30%
+        margin-left: 4%
+        min-width: 195px
 
     .input-button
         p

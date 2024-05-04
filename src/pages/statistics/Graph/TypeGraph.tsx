@@ -7,6 +7,7 @@ const TaskGraph = ({ completedTasksList }: { completedTasksList: completedTasks[
     const [deliveryTasks, setDeliveryTasks] = useState({ work: 0, rework: 0, support: 0, meeting: 0 });
 
     const typesOfTasksDelivered = async () => {
+        setDeliveryTasks({ work: 0, rework: 0, support: 0, meeting: 0 })
         completedTasksList.forEach(task => {
             if (task.type == 1) {
                 setDeliveryTasks(prevState => ({
@@ -40,14 +41,23 @@ const TaskGraph = ({ completedTasksList }: { completedTasksList: completedTasks[
         series: [deliveryTasks.work, deliveryTasks.rework, deliveryTasks.support, deliveryTasks.meeting],
         options: {
             labels: ['Trabalho', 'Retrabalho', 'Suporte', 'Reunião'],
-            legend:{
+            responsive: [{
+                breakpoint: 900,
+                options: {
+                    legend: {
+                        position: 'bottom',
+                        width: 300
+                    }
+                },
+            }],
+            legend: {
                 position: 'right',
                 fontSize: '14px',
                 fontWeight: 'bold',
-                labels:{
+                labels: {
                     colors: '#5ABFA6'
                 }
-                
+
             }
 
         } as ApexCharts.ApexOptions
@@ -55,7 +65,7 @@ const TaskGraph = ({ completedTasksList }: { completedTasksList: completedTasks[
 
     return (
         <div className="graph-content">
-            <h3 className="graph-title">Tipo de Tarefas Entregues</h3>
+            <p className="graph-title">Tipo de Tarefas Entregues</p>
             <ReactApexChart options={state.options} series={state.series} type='pie' />
         </div>
     );

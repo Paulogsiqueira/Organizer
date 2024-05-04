@@ -1,23 +1,25 @@
 import { getUsers } from "@/methods/others/othersMethods";
 import { useEffect, useState } from "react";
-import { wantedUser } from "@/redux/sliceUser";
-import { useDispatch } from "react-redux";
 import '@/style/dashboard/taskFromOthersUsers/taskFromOthersUsers.sass'
+import { TaskFromOtherUsersProps } from "@/interfaces/task";
+import { useSelector } from 'react-redux'
+import { selectUser } from '@/redux/sliceUser'
 
-const TaskFromOtherUsers = () => {
+const TaskFromOtherUsers: React.FC<TaskFromOtherUsersProps> = ({ changeIdUser }) => {
     const [allUsers, setAllUsers] = useState([{ idName: "Carregando..." }])
-    const dispatch = useDispatch()
+    const user = useSelector(selectUser)
 
     const getAllUsers = async () => {
         const users = await getUsers();
         setAllUsers(users)
     };
-    useEffect(() =>{
+    useEffect(() => {
         getAllUsers();
-    },[])
-    
+    }, [])
+
     const setWantedUser = (id: string) => {
-        dispatch(wantedUser({userIdWanted:id}))
+        id = id === '0' ? user.idUser : id;
+        changeIdUser(id)
     }
     return (
         <div>

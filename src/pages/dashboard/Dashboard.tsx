@@ -18,12 +18,15 @@ const Dashboard = () => {
   const [done, setDone] = useState<TaskInterface[]>([])
   const [modalChangeColumnIsOpen, setModalChangeColumnIsOpen] = useState(false)
   const [addTaskModal, setAddTaskModal] = useState(false)
+  const [idUser, setIdUser] = useState(user.idUser)
 
   useEffect(() => {
-    const idWanted = parseInt(user.userIdWanted) > 0 ? user.userIdWanted : user.idUser
-    getAllTaks(idWanted);
-  }, [user.userIdWanted]);
+    getAllTaks(idUser);
+  }, [idUser]);
 
+  const changeIdUser = (idUser: string) =>{
+    setIdUser(idUser);
+  }
   const getAllTaks = async (id: string) => {
     const allTasks = await getTasks(id)
     if (allTasks === undefined) {
@@ -43,17 +46,7 @@ const Dashboard = () => {
   }
 
   const reloadTasks = () => {
-    const userWanted = user.userIdWanted
-    const ownId = user.idUser
-    let idReload = ''
-    if (parseInt(userWanted) > 0) {
-      idReload = userWanted
-    } else {
-      idReload = ownId
-    }
-    setTimeout(() => {
-      getAllTaks(idReload);
-    }, 100);
+      getAllTaks(idUser);
   }
 
   const showModalAddTask = () => {
@@ -96,7 +89,7 @@ const Dashboard = () => {
       <h1>Dashboard</h1>
       <p className='dashboard-subtitle'>Organize suas tarefas para conseguir gerenciar melhor o seu tempo</p>
       <FormAddTask showModalAddTask={showModalAddTask} userId={user.idUser} />
-      {parseInt(user.accessLevel) > 1 ? <TaskFromOtherUsers /> : null}
+      {parseInt(user.accessLevel) > 1 ? <TaskFromOtherUsers changeIdUser={changeIdUser}/> : null}
       <section className='dashboard'>
         <DragDropContext onDragEnd={onDragEnd}>
           <div className='dashboard-column'>

@@ -96,3 +96,10 @@ export interface completedTasks{
   extraTime: string,
   deliveryStatus: string
 }
+
+export interface GraphBoardFormProps {
+  submitFilter: (firstDate: string, secondDate: string) => Promise<void>;
+}
+export interface TaskFromOtherUsersProps {
+  changeIdUser: (idUser: string) => void;
+}

@@ -9,6 +9,8 @@ const HourGraph = ({ completedTasksList }: { completedTasksList: completedTasks[
     const [extraHours, setExtraHours] = useState(0);
 
     const loadCompletedTasks = async () => {
+        setExtraHours(0)
+        setPayedHours(0)
         completedTasksList.forEach(task => {
             const [hours, minutes] = task.extraTime.split(' : ').map(Number);
             const extraHoursWorked = parseFloat((hours + (minutes / 60)).toFixed(2));
@@ -36,10 +38,21 @@ const HourGraph = ({ completedTasksList }: { completedTasksList: completedTasks[
         series: [payedHours, extraHours],
         options: {
             labels: ['Horas pagas', 'Horas não pagas'],
+            responsive: [{
+                breakpoint: 900,
+                options: {
+                    legend:{
+                        position: 'bottom',
+                        width: 300
+                    }
+                },
+                
+            }],
             legend:{
                 position: 'right',
                 fontSize: '14px',
                 fontWeight: 'bold',
+                width: 150,
                 labels:{
                     colors: '#5ABFA6'
                 }
@@ -50,7 +63,7 @@ const HourGraph = ({ completedTasksList }: { completedTasksList: completedTasks[
 
     return (
         <div className="graph-content">
-            <h3 className="graph-title">Horas Trabalhadas</h3>
+            <p className="graph-title">Horas Trabalhadas</p>
             <ReactApexChart options={state.options} series={state.series} type='pie' />
         </div>
     );
