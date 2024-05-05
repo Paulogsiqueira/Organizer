@@ -5,6 +5,7 @@ import { loginUser } from '@/redux/sliceUser'
 import { useDispatch } from 'react-redux'
 import { cleanMessage } from '@/methods/others/othersMethods';
 import { useNavigate } from 'react-router-dom';
+import '../../style/login/Login.sass'
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, getValues } = useForm()
@@ -21,19 +22,19 @@ const Login = () => {
         } else {
             setMessage("Usuário inválido!")
         }
-        cleanMessage( setMessage,'',2000)
+        cleanMessage(setMessage, '', 2000)
     }
 
     return (
-        <div className='register-page'>
-            <div className='register-text'>
+        <div className='login-page'>
+            <div className='login-text'>
                 <h2>Login</h2>
                 <p>Entre com sua conta para gerenciar suas atividades</p>
             </div>
-            <form className='register-form' onSubmit={handleSubmit(handleLogin)}>
+            <form className='login-form' onSubmit={handleSubmit(handleLogin)}>
 
-                <label className='register-label'>
-                    <div className='register-input'>
+                <label className='login-label'>
+                    <div className='login-input'>
                         <div className='details-input'>
                             <p>Email</p>
                             <input type="text" placeholder='Digite seu email' {...register("email", { required: true, pattern: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/ })} />
@@ -45,8 +46,8 @@ const Login = () => {
                     </div>
                 </label>
 
-                <label className='register-label'>
-                    <div className='register-input'>
+                <label className='login-label'>
+                    <div className='login-input'>
                         <div className='details-input'>
                             <p>Senha</p>
                             <input type="password" placeholder='Digite sua senha' {...register("password", { required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/ })} />
@@ -59,8 +60,16 @@ const Login = () => {
                 </label>
 
                 <p className={`${message == "Usuário logado com sucesso!" ? 'message-success' : 'message-error'}`}>{message}</p>
-                <button className='btn-register' type="submit">Login</button>
+                <button className='btn-login' type="submit">Login</button>
             </form >
+            <div className='login-sugestion'>
+                <h3>Sugestão de Login</h3>
+                <p>As credenciais abaixo dão acesso a um usuário com nível de acesso superior, disponibilizando algumas funcionalidades adicionais</p>
+                <div className='login-credentials'>
+                    <p>Email: wallace@hotmail.com</p>
+                    <p>Senha: 123123q</p>
+                </div>
+            </div>
         </div>
     )
 }
