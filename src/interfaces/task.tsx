@@ -54,6 +54,17 @@ export interface TaskProps {
   reloadTask: () => void
 }
 
+export interface activityRegister{
+  activityId:number,
+  userId:number,
+  taskId:number,
+  hoursAdded: string,
+  finalHours: string,
+  activityDate: string,
+  title:string,
+  estimatedTime:string
+}
+
 export interface ModalEditProps {
   modalEditIsOpen: boolean,
   changeModal: (type:string) => void;
@@ -97,7 +108,8 @@ export interface completedTasks{
   deliveryStatus: string
 }
 
-export interface GraphBoardFormProps {
+
+export interface FilterDateFormProps {
   submitFilter: (firstDate: string, secondDate: string) => Promise<void>;
 }
 export interface TaskFromOtherUsersProps {

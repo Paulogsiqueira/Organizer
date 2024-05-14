@@ -1,8 +1,8 @@
-import { GraphBoardFormProps } from '@/interfaces/task';
+import { FilterDateFormProps } from '@/interfaces/task';
 import { useForm } from 'react-hook-form';
-import '@/style/statistics/form/GraphBoardForm.sass';
+import '@/style/statistics/form/FilterDateForm.sass';
 
-const GraphBoardForm: React.FC<GraphBoardFormProps> = ({ submitFilter }) => {
+const FilterDateForm: React.FC<FilterDateFormProps> = ({ submitFilter }) => {
     const { register, handleSubmit, formState: { errors }, getValues } = useForm()
 
     const handleFilter = async () => {
@@ -40,4 +40,4 @@ const GraphBoardForm: React.FC<GraphBoardFormProps> = ({ submitFilter }) => {
   )
 }
 
-export default GraphBoardForm
+export default FilterDateForm

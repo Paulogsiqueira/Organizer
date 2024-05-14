@@ -7,6 +7,7 @@ import Login from '../pages/login/Login'
 import Perfil from '@/pages/perfil/Perfil'
 import Dashboard from '@/pages/dashboard/Dashboard'
 import Statistics from '@/pages/statistics/Statistics'
+import Historic from '@/pages/historic/Historic'
 
 const PageRoutes = () => {
     const user = useSelector(selectUser)
@@ -18,6 +19,7 @@ const PageRoutes = () => {
             <Route path='/register' element={ !userLogged ? <Register /> : <Home/>} />
             <Route path='/login' element={ !userLogged ? <Login /> : <Home/>} />
             <Route path='/dashboard' element={ userLogged ? <Dashboard /> : <Home/>} />
+            <Route path='/historic' element={ userLogged ? <Historic /> : <Home/>} />
             <Route path='/statistics' element={ userLogged ? <Statistics /> : <Home/>} />
             <Route path='/perfil' element={ userLogged ? <Perfil /> : <Home/>} />
         </Routes>

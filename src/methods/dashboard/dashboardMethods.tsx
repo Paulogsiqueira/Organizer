@@ -18,6 +18,21 @@ export const getCompletedTasks = async (userId: string) => {
   }
 }
 
+export const getHoursAdded = async (userId: string) => {
+  try {
+    const response = await Axios.post("https://organizerback.up.railway.app/getHoursAdded", {
+      userId: userId
+    });
+
+    const hoursAdded = response.data.activities;
+    console.log(hoursAdded)
+    return hoursAdded
+  } catch (error) {
+    console.error("Erro ao processar a solicitação:", error);
+    throw error;
+  }
+}
+
 export const addTimeWorked = async (timeWorked: string, taskId: string) =>{
   try {
     const response = await Axios.post("https://organizerback.up.railway.app/addTimeWorked", {

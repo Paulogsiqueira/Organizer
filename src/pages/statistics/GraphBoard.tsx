@@ -8,8 +8,9 @@ import { useEffect, useState } from 'react'
 import { selectUser } from '@/redux/sliceUser';
 import { useSelector } from 'react-redux';
 import { getCompletedTasks } from '@/methods/dashboard/dashboardMethods'
-import GraphBoardForm from './Form/GraphBoardForm'
+import FilterDateForm from './Form/FilterDateForm'
 import TaskFromOtherUsers from '../dashboard/taskFromOthersUsers/TaskFromOthersUsers'
+
 
 const GraphBoard = () => {
     const user = useSelector(selectUser);
@@ -66,7 +67,7 @@ const GraphBoard = () => {
             <TaskFromOtherUsers changeIdUser={changeIdUser}/>
             <div className="graphboard">
                 <h3>Dados e Gráficos</h3>
-                <GraphBoardForm submitFilter={submitFilter} />
+                <FilterDateForm submitFilter={submitFilter} />
                 <div className="graphboard-info">
                     <ul>
                         <li><p> Tarefas Entregues: {completedTasksList.length}</p></li>
